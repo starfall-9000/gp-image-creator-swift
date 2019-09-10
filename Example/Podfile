@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'GPImageEditor_Example' do
+  pod 'GPImageEditor', :path => '../'
+
+  target 'GPImageEditor_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
