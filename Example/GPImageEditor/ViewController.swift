@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FittedSheets
+import GPImageEditor
 
 class ViewController: UIViewController {
 
@@ -18,6 +20,19 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func showStickerPicker() {
+        let stickerVM = StickerPickerViewModel(model: nil)
+        let stickerVC = StickerPickerPage(viewModel: stickerVM, completion:({ [weak self] image
+            let sticker = UIImageView(image: image)
+            self.view.addSubview(sticker)
+        }))
+        var sheetController = SheetViewController(controller: stickerVM, sizes: [SheetSize.fullScreen])
+        sheetController.topCornersRadius = 16
+        sheetController.adjustForBottomSafeArea = true
+        sheetController.blurBottomSafeArea = true
+        self.present(sheetController, animated: false, completion: nil)
     }
 
 }
