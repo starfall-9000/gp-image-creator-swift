@@ -11,11 +11,12 @@ import FittedSheets
 import GPImageEditor
 
 class ViewController: UIViewController {
+    @IBOutlet weak var originalImageView: UIImageView!
+    @IBOutlet weak var resultImageView: UIImageView!
     @IBOutlet weak var stickerLayer: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,7 +26,7 @@ class ViewController: UIViewController {
     
     @IBAction func showStickerPicker() {
         let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer, completion: { [weak self] (sticker) in
-            self?.dismiss(animated: true, completion: nil)
+            
         })
         let sheetController = SheetViewController(controller: stickerVC, sizes: [SheetSize.fullScreen])
         sheetController.topCornersRadius = 16
@@ -35,5 +36,10 @@ class ViewController: UIViewController {
         self.present(sheetController, animated: false, completion: nil)
     }
 
+    @IBAction func doneAction() {
+        StickerPickerPage.mixedImage(originalImage: originalImageView.image!, view: stickerLayer) { [weak self] (image) in
+            self?.resultImageView.image = image
+        }
+    }
 }
 

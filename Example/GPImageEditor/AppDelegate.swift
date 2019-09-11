@@ -8,6 +8,7 @@
 
 import UIKit
 import DTMvvm
+import GPImageEditor
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        DependencyManager.shared.registerDefaults()
+        let dependencyManager = DependencyManager.shared
+        dependencyManager.registerDefaults()
+        GPImageEditorConfigs.dependencyManager = dependencyManager
+        GPImageEditorConfigs.apiDomain = "https://staging-api.gapo.vn/main/v1.1"
+        GPImageEditorConfigs.stickersAPIPath = "/stickers"
+        GPImageEditorConfigs.userToken = ""
+        GPImageEditorConfigs.debugAPI = true
+        
         return true
     }
 

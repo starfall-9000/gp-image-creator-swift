@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 private let kStickerWidth: CGFloat = 100
 
@@ -216,6 +217,28 @@ public class StickersLayerView: UIView {
                 }
             }
         }
+    }
+}
+
+extension StickersLayerView {
+    func buildImage(image: UIImage) -> UIImage? {
+        var layer: CALayer? = nil
+        var scale: CGFloat = 1
+        DispatchQueue.main.async {
+            layer = self.layer
+            scale = image.size.width / self.frame.width
+        }
+    
+        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+        image.draw(at: .zero)
+        if let context = UIGraphicsGetCurrentContext() {
+            context.scaleBy(x: scale, y: scale)
+            layer?.render(in: context)
+            let tmpImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return tmpImage
+        }
+        return nil
     }
 }
 
