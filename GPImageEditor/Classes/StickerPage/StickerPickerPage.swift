@@ -28,7 +28,14 @@ public class StickerPickerPage: CollectionPage<StickerPickerViewModel> {
     
     override public func initialize() {
         super.initialize()
-        view.backgroundColor = UIColor(r: 255, g: 255, b: 255, a: 0.3)
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        view.addSubview(blurEffectView)
+        blurEffectView.autoPinEdgesToSuperviewEdges()
+        view.bringSubview(toFront: collectionView)
+        
+        view.backgroundColor = .clear
         collectionView.backgroundColor = .clear
         collectionView.register(StickerCell.self, forCellWithReuseIdentifier: StickerCell.identifier)
         
