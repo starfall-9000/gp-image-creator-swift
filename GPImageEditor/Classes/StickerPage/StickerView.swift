@@ -15,6 +15,7 @@ public class StickersLayerView: UIView {
     var offSet: CGPoint!
     var viewTransform: CGAffineTransform!
     var viewSize: CGSize!
+    var isDragging = false
     
     var deleteButton: UIButton = {
         let button = UIButton(type: .system)
@@ -154,20 +155,26 @@ public class StickersLayerView: UIView {
         let translation = gest.translation(in: self)
         switch (gest.state) {
         case .began:
-            showDeleteButton()
-            offSet = CGPoint(x: stickerView.horizontalConstraint.constant, y: stickerView.verticalConstraint.constant)
+            if let stickerView = findActiveStickerView(location: gest.location(in: self)) {
+                activeView = stickerView
+                showDeleteButton()
+                isDragging = true
+                offSet = CGPoint(x: stickerView.horizontalConstraint.constant, y: stickerView.verticalConstraint.constant)
+            }
             break;
             
         case .changed:
-            stickerView.horizontalConstraint.constant = offSet.x + translation.x
-            stickerView.verticalConstraint.constant = offSet.y + translation.y
-            
-            deleteButton.tintColor = stickerView.frame.intersects(deleteButton.frame) ? .black : .white
-            
-            layoutIfNeeded()
+            if isDragging {
+                stickerView.horizontalConstraint.constant = offSet.x + translation.x
+                stickerView.verticalConstraint.constant = offSet.y + translation.y
+                deleteButton.tintColor = stickerView.frame.intersects(deleteButton.frame) ? .black : .white
+                
+                layoutIfNeeded()
+            }
             break
             
         case .ended:
+            isDragging = false
             hideDeleteButton()
             if stickerView.frame.intersects(deleteButton.frame) {
                 deleteSticker(stickerView: stickerView)
@@ -205,18 +212,23 @@ public class StickersLayerView: UIView {
     }
     
     @objc func tap(sender: UITapGestureRecognizer) {
+        let location = sender.location(in: self)
+        activeView = findActiveStickerView(location: location)
+    }
+    
+    func findActiveStickerView(location: CGPoint) -> StickerView? {
         let subviews = self.subviews.sorted { (view1, view2) -> Bool in
             view1.layer.zPosition > view2.layer.zPosition
         }
-        let location = sender.location(in: self)
+        
         for view in subviews {
             if view is StickerView {
                 if view.frame.contains(location) {
-                    activeView = view as? StickerView
-                    return
+                    return view as? StickerView
                 }
             }
         }
+        return nil
     }
 }
 
