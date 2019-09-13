@@ -8,8 +8,6 @@
 import Foundation
 import CoreGraphics
 
-private let kStickerWidth: CGFloat = 100
-
 public class StickersLayerView: UIView {
     
     var offSet: CGPoint!
@@ -32,8 +30,8 @@ public class StickersLayerView: UIView {
         }
     }
     
-    public static func addSticker(image: UIImage, toView: UIView) -> StickerView {
-        let stickerView = StickerView(image: image)
+    public static func addSticker(image: UIImage, size: CGSize, toView: UIView) -> StickerView {
+        let stickerView = StickerView(image: image, size: size)
         var stickersLayer = toView.subviews.first{ $0 is StickersLayerView } as? StickersLayerView
         if stickersLayer == nil {
             stickersLayer = StickersLayerView(frame: .zero)
@@ -213,7 +211,9 @@ public class StickersLayerView: UIView {
     
     @objc func tap(sender: UITapGestureRecognizer) {
         let location = sender.location(in: self)
-        activeView = findActiveStickerView(location: location)
+        if let view = findActiveStickerView(location: location) {
+            activeView = view
+        }
     }
     
     func findActiveStickerView(location: CGPoint) -> StickerView? {
@@ -273,7 +273,7 @@ public class StickerView: UIView {
         horizontalConstraint = autoAlignAxis(.vertical, toSameAxisOf: view)
     }
     
-    public init(image: UIImage) {
+    public init(image: UIImage, size: CGSize) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         
@@ -281,8 +281,8 @@ public class StickerView: UIView {
         addSubview(imageView)
         imageView.autoPinEdgesToSuperviewEdges()
         
-        widthConstraint = autoSetDimension(.width, toSize: kStickerWidth)
-        heightConstraint = autoSetDimension(.height, toSize: image.size.height/image.size.width * kStickerWidth)
+        widthConstraint = autoSetDimension(.width, toSize: size.width)
+        heightConstraint = autoSetDimension(.height, toSize: image.size.height/image.size.width * size.width)
     }
     
     required init?(coder aDecoder: NSCoder) {

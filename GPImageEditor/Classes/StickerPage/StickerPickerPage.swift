@@ -10,20 +10,64 @@ import RxCocoa
 import RxSwift
 import DTMvvm
 
-let padding: CGFloat = 20
-
-public class StickerPickerPage: CollectionPage<StickerPickerViewModel> {
+public class StickerPickerPage: Page<StickerPickerViewModel> {
+    private var completion: ((UIImage?, CGSize) -> Void)? = nil
     
-    private var completion: ((UIImage?) -> Void)? = nil
-    private var loadingView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+    var indicatorLineOffset: NSLayoutConstraint!
     
-    init(viewModel: StickerPickerViewModel? = nil, completion: ((UIImage?) -> Void)?) {
+    var scrollView: ScrollLayout = {
+        let scrollView = ScrollLayout(axis: .horizontal)
+        scrollView.isPagingEnabled = true
+        return scrollView
+    }()
+    
+    var headerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(r: 255, g: 255, b: 255, a: 0.1)
+        return view
+    }()
+    
+    var indicatorLine: UIImageView = {
+        let line = UIImageView()
+        line.backgroundColor = .white
+        line.autoSetDimensions(to: CGSize(width: 32, height: 2))
+        return line
+    }()
+    
+    let buttonStack = StackLayout().direction(.horizontal).alignItems(.fill).justifyContent(.fillEqually).spacing(16)
+    var stickerButton: UIButton {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "ic_stickers", in: GPImageEditorBundle.getBundle(), compatibleWith: nil), for: .normal)
+        button.tintColor = .white
+        button.tag = 0
+        button.addTarget(self, action: #selector(selectTab), for: .touchUpInside)
+        return button
+    }
+    
+    var emojiButton: UIButton {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "ic_emoji", in: GPImageEditorBundle.getBundle(), compatibleWith: nil), for: .normal)
+        button.tintColor = .white
+        button.tag = 1
+        button.addTarget(self, action: #selector(selectTab), for: .touchUpInside)
+        return button
+    }
+    
+    var stickerListView: StickerListView!
+    var emojiListView: EmojiListView!
+    
+    init(viewModel: StickerPickerViewModel? = nil, completion: ((UIImage?, CGSize) -> Void)?) {
         super.init(viewModel: viewModel)
         self.completion = completion
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func selectTab(sender: UIButton) {
+        scrollView.setContentOffset(CGPoint(x: scrollView.frame.width * CGFloat(sender.tag), y: 0), animated: true)
+        indicatorLineOffset.constant = sender.tag == 0 ? 4 : 60
     }
     
     override public func initialize() {
@@ -33,74 +77,68 @@ public class StickerPickerPage: CollectionPage<StickerPickerViewModel> {
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         view.addSubview(blurEffectView)
         blurEffectView.autoPinEdgesToSuperviewEdges()
-        view.bringSubview(toFront: collectionView)
         
         view.backgroundColor = .clear
-        collectionView.backgroundColor = .clear
-        collectionView.register(StickerCell.self, forCellWithReuseIdentifier: StickerCell.identifier)
+       
+        view.addSubview(headerView)
+        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        headerView.autoSetDimension(.height, toSize: 48)
+        headerView.addSubview(buttonStack)
+        buttonStack.children([stickerButton, emojiButton])
+        buttonStack.autoSetDimensions(to: CGSize(width: 96, height: 40))
+        buttonStack.autoCenterInSuperview()
         
-        view.addSubview(loadingView)
-        loadingView.autoCenterInSuperview()
-    }
-    
-    override public func bindViewAndViewModel() {
-        super.bindViewAndViewModel()
-        guard let viewModel = viewModel else { return }
-        viewModel.rxLoading ~> loadingView.rx.isAnimating => disposeBag
-        viewModel.rxLoading.map{ !$0 } ~> loadingView.rx.isHidden => disposeBag
-    }
-    
-    override public func cellIdentifier(_ cellViewModel: StickerCellViewModel) -> String {
-        return StickerCell.identifier
-    }
-    
-    override public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let viewWidth = collectionView.frame.width
+        headerView.addSubview(indicatorLine)
+        indicatorLine.autoPinEdge(.bottom, to: .bottom, of: headerView, withOffset: -6)
+        indicatorLineOffset = indicatorLine.autoPinEdge(.left, to: .left, of: buttonStack, withOffset: 4)
         
-        let numOfCols: CGFloat = 3
+        view.addSubview(scrollView)
+        scrollView.autoPinEdge(.top, to: .bottom, of: headerView)
+        scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
+        stickerListView = StickerListView(viewModel: StickerListViewModel(), completion: { [weak self] (image, size) in
+            self?.finishedPickImage(image: image, size: size)
+        })
         
-        let contentWidth = viewWidth - ((numOfCols + 1) * padding)
-        let width = contentWidth / numOfCols
-        return CGSize(width: width, height: width)
+        emojiListView = EmojiListView(viewModel: EmojiListViewModel(), completion: { [weak self] (image, size) in
+            self?.finishedPickImage(image: image, size: size)
+        })
+        
+        scrollView.appendChildren([stickerListView, emojiListView])
+        
+        stickerListView.autoMatch(.width, to: .width, of: scrollView)
+        stickerListView.autoMatch(.height, to: .height, of: scrollView)
+        emojiListView.autoMatch(.width, to: .width, of: scrollView)
+        emojiListView.autoMatch(.height, to: .height, of: scrollView)
+        
+        scrollView.rx.contentOffset
+            .subscribe(onNext: { offset in
+                let width = self.scrollView.frame.width
+                let index = width > 0 ? Int((offset.x + (0.5 * width)) / width) : 0
+                self.indicatorLineOffset.constant = index == 0 ? 4 : 60
+            }) => disposeBag
     }
     
-    override public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return padding
+    func finishedPickImage(image: UIImage?, size: CGSize) {
+        completion?(image, size)
+        dismiss(animated: true, completion: { [weak self] in
+            self?.destroy()
+        })
     }
+}
+
+public class StickerPickerViewModel: ViewModel<Model> {
     
-    override public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return padding
-    }
-    
-    override public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .all(padding)
-    }
-    
-    override public func selectedItemDidChange(_ cellViewModel: StickerCellViewModel) {
-        guard let indexPath = cellViewModel.indexPath,
-            let cell = collectionView(collectionView, cellForItemAt: indexPath) as? StickerCell
-            else { return }
-        completion?(cell.photoImg.image)
-        dismiss(animated: true) {
-            self.destroy()
-        }
-    }
 }
 
 extension StickerPickerPage {
     public static func addSticker(toView view: UIView, completion: ((StickerView?) -> Void)?) -> StickerPickerPage {
-        let vm = StickerPickerViewModel(model: nil)
-        return StickerPickerPage(viewModel: vm, completion: { image in
+        let vm = StickerPickerViewModel()
+        return StickerPickerPage(viewModel: vm, completion: { (image, size) in
             if let image = image {
-                let stickerView = StickersLayerView.addSticker(image: image, toView: view)
+                let stickerView = StickersLayerView.addSticker(image: image, size: size, toView: view)
                 completion?(stickerView)
             }
         })
-    }
-    
-    static func getInstance(completion: ((UIImage?) -> Void)?) -> StickerPickerPage {
-        let vm = StickerPickerViewModel(model: nil)
-        return StickerPickerPage(viewModel: vm, completion: completion)
     }
     
     public static func mixedImage(originalImage: UIImage, view: UIView, completion: @escaping ((UIImage?) -> Void)) {
@@ -117,35 +155,5 @@ extension StickerPickerPage {
                 completion(image)
             }
         }
-    }
-}
-
-public class StickerPickerViewModel: ListViewModel<Model, StickerCellViewModel> {
-    let rxLoading = BehaviorRelay<Bool>(value: false)
-    let stickerService: StickerAPIService? = GPImageEditorConfigs.dependencyManager?.getService()
-    var page: Int = 0
-    
-    override public func react() {
-        rxLoading.accept(true)
-        
-        getStickers(page: 0)
-    }
-    
-    func getStickers(page: Int) {
-        self.page = page
-        if page == 0 {
-            itemsSource.reset([[]], animated: false)
-        }
-        stickerService?.getStickerList(page: page)
-            .subscribe(onSuccess: { [weak self] (response) in
-                guard let self = self else { return }
-                self.rxLoading.accept(false)
-                if response.code == .success {
-                    let stickers = response.stickers.map{ StickerCellViewModel(model: $0) }
-                    self.itemsSource.append(stickers, animated: false)
-                }
-            }, onError: { [weak self] (error) in
-                self?.rxLoading.accept(false)
-            }) => disposeBag
     }
 }
