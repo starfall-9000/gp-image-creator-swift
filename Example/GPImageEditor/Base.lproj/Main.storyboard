@@ -72,9 +72,22 @@
                                     <action selector="showStickerPicker" destination="vXZ-lx-hvc" eventType="touchUpInside" id="M2c-j4-rdn"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdL-6f-7xx">
+                                <rect key="frame" x="169" y="43" width="48" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="7I9-0P-1Lk"/>
+                                    <constraint firstAttribute="height" constant="40" id="NV0-PH-IZS"/>
+                                </constraints>
+                                <state key="normal" title="Effect"/>
+                                <connections>
+                                    <action selector="showEffectScreen" destination="vXZ-lx-hvc" eventType="touchUpInside" id="J5e-7n-Gyq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="VK4-Oa-7PS" firstAttribute="leading" secondItem="hdL-6f-7xx" secondAttribute="trailing" constant="40" id="2fc-6m-wkY"/>
+                            <constraint firstItem="hdL-6f-7xx" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="23" id="83n-g4-nQP"/>
                             <constraint firstItem="VK4-Oa-7PS" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="23" id="948-h7-Jgo"/>
                             <constraint firstAttribute="trailing" secondItem="ZXc-pH-Eh8" secondAttribute="trailing" id="Hdo-Nd-bQf"/>
                             <constraint firstItem="u1G-E5-Abl" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="L0z-94-Aju"/>

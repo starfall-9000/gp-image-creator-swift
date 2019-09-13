@@ -26,11 +26,6 @@ class ViewController: UIViewController {
             print(familyName, fontNames)
         })
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @IBAction func showStickerPicker() {
         let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer, completion: nil)
@@ -50,6 +45,11 @@ class ViewController: UIViewController {
     
     @IBAction func addTextAction() {
         GPTextEditorTool.show(inView: stickerLayer)
+    }
+
+    @IBAction func showEffectScreen() {
+        let effectVC = EffectPage.create(with: originalImageView.image)
+        present(effectVC!, animated: true, completion: nil)
     }
 }
 
