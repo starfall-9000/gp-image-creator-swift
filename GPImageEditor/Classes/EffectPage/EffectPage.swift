@@ -6,24 +6,56 @@
 //
 
 import UIKit
+import FittedSheets
 
-class EffectPage: UIViewController {
+public class EffectPage: UIViewController {
 
-    override func viewDidLoad() {
+    var sourceImage: UIImage?
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var showEffectButton: UIButton!
+    @IBOutlet var gradientTopConstaint: NSLayoutConstraint!
+    @IBOutlet weak var collectionView: UICollectionView!
+    private var isShowingEffectsView: Bool = true
+    
+    public static func create(with image: UIImage?) -> EffectPage? {
+        let bundle = Bundle(for: EffectPage.self)
+        let vc = EffectPage(nibName: "EffectPage", bundle: bundle)
+        vc.sourceImage = image
+        return vc
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        imageView.image = sourceImage
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func backAction() {
+        dismiss(animated: true, completion: nil)
     }
-    */
+    
+    @IBAction func hideShowEffectsTapped() {
+        isShowingEffectsView = !isShowingEffectsView
+        gradientTopConstaint.constant = isShowingEffectsView ? 0 : 125
+        let imageName = isShowingEffectsView ? "arrow-down-icon.png" : "arrow-top-icon.png"
+        let bundle = Bundle(for: EffectPage.self)
+        showEffectButton.setImage(UIImage(named: imageName, in: bundle, compatibleWith: nil),
+                                  for: .normal)
+    }
+    
+    @IBAction func stickerTapped() {
+        
+    }
+    
+    @IBAction func textTapped() {
+    
+    }
+    
+    @IBAction func drawTapped() {
+    
+    }
+    
+    @IBAction func otherEditTapped() {
+    
+    }
 
 }

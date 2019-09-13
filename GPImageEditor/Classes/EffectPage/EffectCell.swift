@@ -7,6 +7,9 @@
 
 import UIKit
 
-class EffectCell: UICollectionViewCell {
+public class EffectCell: UICollectionViewCell {
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
     
 }

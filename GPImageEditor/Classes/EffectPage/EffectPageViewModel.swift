@@ -6,7 +6,11 @@
 //
 
 import UIKit
+import DTMvvm
+import RxSwift
+import RxCocoa
+import Action
 
-class EffectPageViewModel: ViewModel {
-
+public class EffectPageViewModel: ViewModel<UIImage> {
+    
 }
