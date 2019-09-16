@@ -48,8 +48,11 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showEffectScreen() {
-        let effectVC = EffectPage.create(with: originalImageView.image)
-        present(effectVC!, animated: true, completion: nil)
+        if let image = originalImageView.image {
+            EffectPage.presentImageEditor(from: self, image: image, animated: true, finished: { [weak self] (image) in
+                self?.resultImageView.image = image
+            }, completion: nil)
+        }
     }
 }
 

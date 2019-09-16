@@ -10,9 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EffectPage" customModule="GPImageEditor" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EffectPage" customModule="GPImageEditor_Example" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="xeZ-ci-qQi" id="WmI-Br-r5s"/>
+                <outlet property="doneButton" destination="ATH-Iq-wQM" id="FXS-qR-ct0"/>
                 <outlet property="gradientTopConstaint" destination="ChX-vK-b56" id="mAz-Zs-j0x"/>
                 <outlet property="imageView" destination="xTM-QD-XmF" id="BZ3-9r-GIf"/>
                 <outlet property="showEffectButton" destination="Ivt-dS-Gyr" id="TQ1-dq-Ec4"/>
@@ -88,17 +89,21 @@
                     <rect key="frame" x="0.0" y="675" width="414" height="187"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradient-bottom-effect.png" translatesAutoresizingMaskIntoConstraints="NO" id="ffL-1w-yCH">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="16"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="187"/>
                         </imageView>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xeZ-ci-qQi">
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xeZ-ci-qQi">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uLH-a6-kD9">
-                                <size key="itemSize" width="50" height="50"/>
+                                <size key="itemSize" width="75" height="50"/>
                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                             </collectionViewFlowLayout>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="iwB-Mo-dj6"/>
+                                <outlet property="delegate" destination="-1" id="Ydf-5Q-YoP"/>
+                            </connections>
                         </collectionView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ivt-dS-Gyr">
                             <rect key="frame" x="5" y="136" width="160" height="36"/>
@@ -119,6 +124,9 @@
                                 <constraint firstAttribute="height" constant="36" id="ixW-Ln-Q6L"/>
                             </constraints>
                             <state key="normal" title="Xong"/>
+                            <connections>
+                                <action selector="doneTapped" destination="-1" eventType="touchUpInside" id="3Pc-mT-sWI"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
