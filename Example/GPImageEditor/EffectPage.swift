@@ -13,6 +13,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
 
     var doneBlock: ((UIImage) -> Void)?
     
+    let cellSize = CGSize(width: 70, height: 130)
     let cellName = "EffectCell"
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var doneButton: UIButton!
@@ -83,9 +84,17 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func doneTapped() {
-        StickerPickerPage.mixedImage(originalImage: imageView.image!, view: stickerLayer) { [weak self] (image) in
+        guard let image = imageView.image else {
+            self.doneBlock?(viewModel!.sourceImage)
+            return;
+        }
+        StickerPickerPage.mixedImage(originalImage: image, view: stickerLayer) { [weak self] (mixedImage) in
+            if let mixed = mixedImage {
+                self?.doneBlock?(mixed)
+            } else {
+                self?.doneBlock?(image)
+            }
             self?.dismiss(animated: true, completion: nil)
-            self?.doneBlock?(image!)
         }
     }
 
@@ -94,7 +103,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 70, height: 130)
+        return cellSize
     }
     
 }

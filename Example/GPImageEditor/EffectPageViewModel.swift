@@ -19,8 +19,8 @@ public class EffectPageViewModel: NSObject {
     let rxSelectedFilter = BehaviorRelay<GPImageFilter?>(value: nil)
     
     init(image: UIImage) {
-        sourceImage = image
-        thumbImage = image.thumbImage()
+        sourceImage = image.fixedOrientation()
+        thumbImage = sourceImage.thumbImage()
         super.init()
         rxSelectedFilter.accept(items.first)
     }
