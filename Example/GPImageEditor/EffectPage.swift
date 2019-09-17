@@ -7,6 +7,7 @@
 
 import UIKit
 import FittedSheets
+import GPImageEditor
 
 public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
 
@@ -18,6 +19,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var showEffectButton: UIButton!
     @IBOutlet var gradientTopConstaint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var stickerLayer: UIView!
     private var isShowingEffectsView: Bool = true
     var viewModel: EffectPageViewModel?
     
@@ -58,7 +60,14 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func stickerTapped() {
+        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer, completion: { (sticker) in
+        })
+        let sheetController = SheetViewController(controller: stickerVC, sizes: [SheetSize.fullScreen])
+        sheetController.topCornersRadius = 16
+        sheetController.adjustForBottomSafeArea = false
+        sheetController.blurBottomSafeArea = false
         
+        self.present(sheetController, animated: false, completion: nil)
     }
     
     @IBAction func textTapped() {
@@ -74,8 +83,10 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func doneTapped() {
-        dismiss(animated: true, completion: nil)
-        doneBlock?(imageView.image!)
+        StickerPickerPage.mixedImage(originalImage: imageView.image!, view: stickerLayer) { [weak self] (image) in
+            self?.dismiss(animated: true, completion: nil)
+            self?.doneBlock?(image!)
+        }
     }
 
     open func collectionViewLayout() -> UICollectionViewLayout {
@@ -84,14 +95,6 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 70, height: 130)
-    }
- 
-    // MARK: - Open picker
-    class func presentImageEditor(from viewController: UIViewController, image: UIImage, animated: Bool, finished: @escaping ((UIImage) -> Void), completion: (() -> Void)? = nil) {
-        let viewModel = EffectPageViewModel(image: image)
-        let vc = EffectPage.create(with: viewModel)
-        vc.doneBlock = finished
-        viewController.present(vc, animated: animated, completion: completion)
     }
     
 }

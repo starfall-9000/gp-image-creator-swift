@@ -49,7 +49,7 @@ class ViewController: UIViewController {
 
     @IBAction func showEffectScreen() {
         if let image = originalImageView.image {
-            EffectPage.presentImageEditor(from: self, image: image, animated: true, finished: { [weak self] (image) in
+            GPImageEditor.present(from: self, image: image, animated: true, finished: { [weak self] (image) in
                 self?.resultImageView.image = image
             }, completion: nil)
         }

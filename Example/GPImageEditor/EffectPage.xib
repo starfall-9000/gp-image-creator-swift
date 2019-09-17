@@ -17,6 +17,7 @@
                 <outlet property="gradientTopConstaint" destination="ChX-vK-b56" id="mAz-Zs-j0x"/>
                 <outlet property="imageView" destination="xTM-QD-XmF" id="BZ3-9r-GIf"/>
                 <outlet property="showEffectButton" destination="Ivt-dS-Gyr" id="TQ1-dq-Ec4"/>
+                <outlet property="stickerLayer" destination="0kA-E7-pkG" id="6kw-8y-5Rk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,6 +29,10 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xTM-QD-XmF">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0kA-E7-pkG">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradient-top-effect.png" translatesAutoresizingMaskIntoConstraints="NO" id="NHN-ip-8BM">
                     <rect key="frame" x="0.0" y="-2" width="450" height="100"/>
                     <constraints>
@@ -163,10 +168,13 @@
                 <constraint firstItem="49S-G2-szV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4vA-bS-StQ"/>
                 <constraint firstItem="3HS-0W-T6Z" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="66X-zp-lVG"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="J5d-5z-pmU" secondAttribute="trailing" constant="5" id="6E6-Sc-jdb"/>
+                <constraint firstItem="0kA-E7-pkG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7o7-hv-WMO"/>
                 <constraint firstItem="3Gj-ku-NAy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="BQU-Os-hic"/>
                 <constraint firstItem="q8T-ib-RT2" firstAttribute="top" secondItem="49S-G2-szV" secondAttribute="bottom" id="EAp-2f-gdd"/>
                 <constraint firstAttribute="trailing" secondItem="xTM-QD-XmF" secondAttribute="trailing" id="ECM-v5-xGK"/>
+                <constraint firstItem="0kA-E7-pkG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="EZS-NF-MWy"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="49S-G2-szV" secondAttribute="trailing" id="FVS-EG-cnF"/>
+                <constraint firstItem="0kA-E7-pkG" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Gln-Ie-qHz"/>
                 <constraint firstItem="J5d-5z-pmU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="HGh-RY-hmj"/>
                 <constraint firstItem="J5d-5z-pmU" firstAttribute="leading" secondItem="3Gj-ku-NAy" secondAttribute="trailing" constant="5" id="IGy-34-Z0B"/>
                 <constraint firstItem="uED-sa-dnT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Lep-Yj-z92"/>
@@ -180,6 +188,7 @@
                 <constraint firstItem="NHN-ip-8BM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ddt-Rx-lZH"/>
                 <constraint firstItem="NHN-ip-8BM" firstAttribute="bottom" secondItem="Nrd-iK-qp2" secondAttribute="bottom" constant="10" id="eRj-gJ-4P0"/>
                 <constraint firstItem="q8T-ib-RT2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gQp-tw-DHC"/>
+                <constraint firstAttribute="bottom" secondItem="0kA-E7-pkG" secondAttribute="bottom" id="kun-cy-i3G"/>
                 <constraint firstItem="xTM-QD-XmF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uoQ-NE-urf"/>
                 <constraint firstAttribute="trailing" secondItem="q8T-ib-RT2" secondAttribute="trailing" id="vSR-yI-0db"/>
             </constraints>
