@@ -10,49 +10,40 @@ import Foundation
 import CoreImage
 import UIKit
 
-//public typealias FilterApplierType = ((_ image: CIImage) -> CIImage?)
+public typealias FilterApplierType = ((_ image: CIImage) -> CIImage?)
 
 public class GPImageFilter: NSObject {
     
     var name = ""
-    var coreImageFilterName = ""
+    var applier: FilterApplierType?
     
     public init(name: String, coreImageFilterName: String) {
         super.init()
         self.name = name
-        self.coreImageFilterName = coreImageFilterName
-//        self.applier = GPImageFilter.coreImageFilter(name: coreImageFilterName)
+        self.applier = GPImageFilter.coreImageFilter(name: coreImageFilterName)
+    }
+    
+    public init(name: String, applier: FilterApplierType?) {
+        super.init()
+        self.name = name
+        self.applier = applier
     }
     
     func applyFilter(image: UIImage) -> UIImage? {
-        guard let ciImage = image.toCIImage() else {
-            return image
-        }
-        if coreImageFilterName == "" {
-            return image
-        }
+        guard let ciImage = image.toCIImage() else { return image }
+        guard let filter = applier else { return image }
         
-        if coreImageFilterName.lowercased() == "clarendon" {
-            return GPImageFilter.clarendonFilter(foregroundImage: ciImage)?.toUIImage()
-        }
-        if coreImageFilterName.lowercased() == "nashville" {
-            return GPImageFilter.nashvilleFilter(foregroundImage: ciImage)?.toUIImage()
-        }
-        if coreImageFilterName.lowercased() == "toaster" {
-            return GPImageFilter.toasterFilter(ciImage: ciImage)?.toUIImage()
-        }
-        
-        let outputCiImage = ciImage.applyingFilter(coreImageFilterName, parameters: [:])
-        return outputCiImage.toUIImage()
+        let outputImage = filter(ciImage)
+        return outputImage?.toUIImage()
     }
     
-//    public static func coreImageFilter(name: String) -> FilterApplierType {
-//        return { (image: CIImage) -> CIImage? in
-//            let filter = CIFilter(name: name)
-//            filter?.setValue(image, forKey: kCIInputImageKey)
-//            return filter?.outputImage!
-//        }
-//    }
+    public static func coreImageFilter(name: String) -> FilterApplierType {
+        return { (image: CIImage) -> CIImage? in
+            let filter = CIFilter(name: name)
+            filter?.setValue(image, forKey: kCIInputImageKey)
+            return filter?.outputImage!
+        }
+    }
     
     public static func clarendonFilter(foregroundImage: CIImage) -> CIImage? {
         let backgroundImage = getColorImage(red: 127, green: 187, blue: 227, alpha: Int(255 * 0.2), rect: foregroundImage.extent)

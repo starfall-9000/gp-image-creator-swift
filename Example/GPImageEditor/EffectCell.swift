@@ -35,7 +35,7 @@ public class EffectCell: UICollectionViewCell {
     func setup() {
         titleLabel.text = model?.name
         var thumb = UIImage(named: "filter-example-image")
-        if model?.coreImageFilterName == "" {
+        if model?.applier == nil {
             thumb = viewModel?.thumbImage
         }
         let image = model?.applyFilter(image: thumb!)

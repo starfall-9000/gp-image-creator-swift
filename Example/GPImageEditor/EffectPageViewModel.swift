@@ -26,10 +26,10 @@ public class EffectPageViewModel: NSObject {
     }
     
     public var items: [GPImageFilter] = [
-        GPImageFilter(name: "Ảnh gốc", coreImageFilterName: ""),
-        GPImageFilter(name: "Giá lạnh", coreImageFilterName: "clarendon"),
-        GPImageFilter(name: "Trầm lắng", coreImageFilterName: "nashville"),
-        GPImageFilter(name: "Sôi động", coreImageFilterName: "toaster"),
+        GPImageFilter(name: "Ảnh gốc", applier: nil),
+        GPImageFilter(name: "Giá lạnh", applier: GPImageFilter.clarendonFilter),
+        GPImageFilter(name: "Trầm lắng", applier: GPImageFilter.nashvilleFilter),
+        GPImageFilter(name: "Sôi động", applier: GPImageFilter.toasterFilter),
         GPImageFilter(name: "Chrome", coreImageFilterName: "CIPhotoEffectChrome"),
         GPImageFilter(name: "Instant", coreImageFilterName: "CIPhotoEffectInstant"),
         GPImageFilter(name: "Mono", coreImageFilterName: "CIPhotoEffectMono"),

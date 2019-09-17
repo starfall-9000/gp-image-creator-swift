@@ -18,7 +18,6 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var showEffectButton: UIButton!
     @IBOutlet var gradientTopConstaint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet var topButtons: [UIButton]!
     private var isShowingEffectsView: Bool = true
     var viewModel: EffectPageViewModel?
     
@@ -118,8 +117,7 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
         guard let sourceImage = viewModel?.sourceImage else {
             return
         }
-        let image = filter.applyFilter(image: sourceImage)
-        imageView.image = image
+        imageView.image = filter.applyFilter(image: sourceImage)
     }
 
 }
