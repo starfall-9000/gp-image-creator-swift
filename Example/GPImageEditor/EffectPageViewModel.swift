@@ -29,10 +29,17 @@ public class EffectPageViewModel: NSObject {
     
     static func createFilterItems(image: UIImage) -> [GPImageFilter] {
         let origin = GPImageFilter(name: "Ảnh gốc", coreImageFilterName: "")
-        let tramlang = GPImageFilter(name: "Trầm lắng", coreImageFilterName: "clarendon")
-        let soidong = GPImageFilter(name: "Sôi động", coreImageFilterName: "nashville")
-        let gialanh = GPImageFilter(name: "Giá lạnh", coreImageFilterName: "toaster")
-        return [origin, tramlang, soidong, gialanh]
+        let gialanh = GPImageFilter(name: "Giá lạnh", coreImageFilterName: "clarendon")
+        let tramlang = GPImageFilter(name: "Trầm lắng", coreImageFilterName: "nashville")
+        let soidong = GPImageFilter(name: "Sôi động", coreImageFilterName: "toaster")
+        let chrome = GPImageFilter(name: "Chrome", coreImageFilterName: "CIPhotoEffectChrome")
+        let instant = GPImageFilter(name: "Instant", coreImageFilterName: "CIPhotoEffectInstant")
+        let mono = GPImageFilter(name: "Mono", coreImageFilterName: "CIPhotoEffectMono")
+        let tone = GPImageFilter(name: "Tone", coreImageFilterName: "CILinearToSRGBToneCurve")
+        let noir = GPImageFilter(name: "Noir", coreImageFilterName: "CIPhotoEffectNoir")
+        let process = GPImageFilter(name: "Process", coreImageFilterName: "CIPhotoEffectProcess")
+        let transfer = GPImageFilter(name: "Transfer", coreImageFilterName: "CIPhotoEffectTransfer")
+        return [origin, tramlang, soidong, gialanh, chrome, instant, mono, tone, noir, process, transfer]
     }
     
 }

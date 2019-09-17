@@ -31,7 +31,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     public override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = viewModel?.sourceImage
-        doneButton.cornerRadius = 16
+        doneButton.cornerRadius = 19
         setupCollectionView()
     }
     
@@ -83,7 +83,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 75, height: 135)
+        return CGSize(width: 70, height: 135)
     }
  
     // MARK: - Open picker

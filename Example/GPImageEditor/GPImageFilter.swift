@@ -24,21 +24,26 @@ public class GPImageFilter: NSObject {
 //        self.applier = GPImageFilter.coreImageFilter(name: coreImageFilterName)
     }
     
-    func applyFilter(image: UIImage) -> UIImage {
+    func applyFilter(image: UIImage) -> UIImage? {
         guard let ciImage = image.toCIImage() else {
+            return image
+        }
+        if coreImageFilterName == "" {
             return image
         }
         
         if coreImageFilterName.lowercased() == "clarendon" {
-            return UIImage(ciImage: GPImageFilter.clarendonFilter(foregroundImage: ciImage)!)
+            return GPImageFilter.clarendonFilter(foregroundImage: ciImage)?.toUIImage()
         }
         if coreImageFilterName.lowercased() == "nashville" {
-            return UIImage(ciImage: GPImageFilter.nashvilleFilter(foregroundImage: ciImage)!)
+            return GPImageFilter.nashvilleFilter(foregroundImage: ciImage)?.toUIImage()
         }
         if coreImageFilterName.lowercased() == "toaster" {
-            return UIImage(ciImage: GPImageFilter.toasterFilter(ciImage: ciImage)!)
+            return GPImageFilter.toasterFilter(ciImage: ciImage)?.toUIImage()
         }
-        return image
+        
+        let outputCiImage = ciImage.applyingFilter(coreImageFilterName, parameters: [:])
+        return outputCiImage.toUIImage()
     }
     
 //    public static func coreImageFilter(name: String) -> FilterApplierType {

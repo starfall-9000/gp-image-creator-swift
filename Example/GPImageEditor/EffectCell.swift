@@ -34,10 +34,11 @@ public class EffectCell: UICollectionViewCell {
 
     func setup() {
         titleLabel.text = model?.name
-        
-        guard let filter = model, let thumb = viewModel?.thumbImage else { return }
-        let image = filter.applyFilter(image: thumb)
-        imageView.contentMode = .scaleAspectFill
+        var thumb = UIImage(named: "filter-example-image")
+        if model?.coreImageFilterName == "" {
+            thumb = viewModel?.thumbImage
+        }
+        let image = model?.applyFilter(image: thumb!)
         imageView.image = image
     }
     
@@ -47,6 +48,8 @@ public class EffectCell: UICollectionViewCell {
             guard let self = self else { return }
             let selected = filter == self.model
             let color = selected ? UIColor(hexString: "#6FBE49") : UIColor.white
+            let borderColor = selected ? UIColor.white : .clear
+            self.imageView.setBorder(with: borderColor, width: 1)
             self.titleLabel.textColor = color
             self.titleLabel.font = selected ? UIFont.boldSystemFont(ofSize: 12) : UIFont.systemFont(ofSize: 12)
         }) => disposeBag
