@@ -63,7 +63,7 @@ public class EmojiListView: CollectionView<EmojiListViewModel> {
         guard let indexPath = cellViewModel.indexPath,
             let cell = collectionView(collectionView, cellForItemAt: indexPath) as? EmojiCell
             else { return }
-        completion?(UIImage.imageWithLabel(label: cell.emojiLabel, size: cell.bounds.size), cell.bounds.size)
+        completion?(UIImage.imageWithView(view: cell.emojiLabel, size: cell.bounds.size), cell.bounds.size)
     }
 }
 

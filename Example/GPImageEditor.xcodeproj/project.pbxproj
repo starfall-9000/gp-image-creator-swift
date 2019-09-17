@@ -14,6 +14,15 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		7041AE262330C08900A0C2D8 /* BalooPaaji-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7041AE212330C08900A0C2D8 /* BalooPaaji-Regular.ttf */; };
+		7041AE272330C08900A0C2D8 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7041AE222330C08900A0C2D8 /* Nunito-Regular.ttf */; };
+		7041AE282330C08900A0C2D8 /* Oswald-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7041AE232330C08900A0C2D8 /* Oswald-Regular.ttf */; };
+		7041AE292330C08900A0C2D8 /* HeptaSlab-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7041AE242330C08900A0C2D8 /* HeptaSlab-Regular.ttf */; };
+		7041AE2A2330C08900A0C2D8 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7041AE252330C08900A0C2D8 /* DancingScript-Regular.ttf */; };
+		708BB0B423309AC600309539 /* GPTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708BB0B323309AC600309539 /* GPTextEditorView.swift */; };
+		70A80986232B78950055CF5A /* GPTextEditorTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A80985232B78950055CF5A /* GPTextEditorTool.swift */; };
+		70A80988232B7CCD0055CF5A /* GPTextEditorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70A80987232B7CCD0055CF5A /* GPTextEditorView.xib */; };
+		70E224E5232F7301001ECE7D /* GPTextEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E224E4232F7301001ECE7D /* GPTextEditorViewModel.swift */; };
 		8DB1335839003330E6D04483 /* Pods_GPImageEditor_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5CDF5236424D9F13636685 /* Pods_GPImageEditor_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +51,15 @@
 		607FACE51AFB9204008FA782 /* GPImageEditor_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GPImageEditor_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		7041AE212330C08900A0C2D8 /* BalooPaaji-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BalooPaaji-Regular.ttf"; sourceTree = "<group>"; };
+		7041AE222330C08900A0C2D8 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
+		7041AE232330C08900A0C2D8 /* Oswald-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Regular.ttf"; sourceTree = "<group>"; };
+		7041AE242330C08900A0C2D8 /* HeptaSlab-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HeptaSlab-Regular.ttf"; sourceTree = "<group>"; };
+		7041AE252330C08900A0C2D8 /* DancingScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DancingScript-Regular.ttf"; sourceTree = "<group>"; };
+		708BB0B323309AC600309539 /* GPTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTextEditorView.swift; sourceTree = "<group>"; };
+		70A80985232B78950055CF5A /* GPTextEditorTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTextEditorTool.swift; sourceTree = "<group>"; };
+		70A80987232B7CCD0055CF5A /* GPTextEditorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GPTextEditorView.xib; sourceTree = "<group>"; };
+		70E224E4232F7301001ECE7D /* GPTextEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTextEditorViewModel.swift; sourceTree = "<group>"; };
 		7F2B9F2695B11EC480E3A0A8 /* GPImageEditor.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = GPImageEditor.podspec; path = ../GPImageEditor.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		AB0A2C9965E2DD9C4D2A488C /* Pods-GPImageEditor_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPImageEditor_Example.debug.xcconfig"; path = "Target Support Files/Pods-GPImageEditor_Example/Pods-GPImageEditor_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B3D6D13EA2DAC659C24AEBD8 /* Pods-GPImageEditor_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPImageEditor_Tests.debug.xcconfig"; path = "Target Support Files/Pods-GPImageEditor_Tests/Pods-GPImageEditor_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -106,6 +124,8 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				7041AE202330C08900A0C2D8 /* Fonts */,
+				70A80984232B72FF0055CF5A /* TextTool */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -148,6 +168,29 @@
 				318EAF7AAD58AED200562657 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		7041AE202330C08900A0C2D8 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				7041AE212330C08900A0C2D8 /* BalooPaaji-Regular.ttf */,
+				7041AE222330C08900A0C2D8 /* Nunito-Regular.ttf */,
+				7041AE232330C08900A0C2D8 /* Oswald-Regular.ttf */,
+				7041AE242330C08900A0C2D8 /* HeptaSlab-Regular.ttf */,
+				7041AE252330C08900A0C2D8 /* DancingScript-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = SOURCE_ROOT;
+		};
+		70A80984232B72FF0055CF5A /* TextTool */ = {
+			isa = PBXGroup;
+			children = (
+				70A80985232B78950055CF5A /* GPTextEditorTool.swift */,
+				70E224E4232F7301001ECE7D /* GPTextEditorViewModel.swift */,
+				708BB0B323309AC600309539 /* GPTextEditorView.swift */,
+				70A80987232B7CCD0055CF5A /* GPTextEditorView.xib */,
+			);
+			name = TextTool;
 			sourceTree = "<group>";
 		};
 		731197E98DC3193188B49ED1 /* Frameworks */ = {
@@ -248,9 +291,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7041AE272330C08900A0C2D8 /* Nunito-Regular.ttf in Resources */,
+				7041AE262330C08900A0C2D8 /* BalooPaaji-Regular.ttf in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				7041AE282330C08900A0C2D8 /* Oswald-Regular.ttf in Resources */,
+				7041AE292330C08900A0C2D8 /* HeptaSlab-Regular.ttf in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				70A80988232B7CCD0055CF5A /* GPTextEditorView.xib in Resources */,
+				7041AE2A2330C08900A0C2D8 /* DancingScript-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +407,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				708BB0B423309AC600309539 /* GPTextEditorView.swift in Sources */,
+				70E224E5232F7301001ECE7D /* GPTextEditorViewModel.swift in Sources */,
+				70A80986232B78950055CF5A /* GPTextEditorTool.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,6 +9,9 @@
 import UIKit
 import FittedSheets
 import GPImageEditor
+import RxCocoa
+import DTMvvm
+import RxSwift
 
 class ViewController: UIViewController {
     @IBOutlet weak var originalImageView: UIImageView!
@@ -17,6 +20,11 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        UIFont.familyNames.forEach({ familyName in
+            let fontNames = UIFont.fontNames(forFamilyName: familyName)
+            print(familyName, fontNames)
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,9 +33,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showStickerPicker() {
-        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer, completion: { [weak self] (sticker) in
-            
-        })
+        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer, completion: nil)
         let sheetController = SheetViewController(controller: stickerVC, sizes: [SheetSize.fullScreen])
         sheetController.topCornersRadius = 16
         sheetController.adjustForBottomSafeArea = false
@@ -40,6 +46,10 @@ class ViewController: UIViewController {
         StickerPickerPage.mixedImage(originalImage: originalImageView.image!, view: stickerLayer) { [weak self] (image) in
             self?.resultImageView.image = image
         }
+    }
+    
+    @IBAction func addTextAction() {
+        GPTextEditorTool.show(inView: stickerLayer)
     }
 }
 

@@ -1,6 +1,8 @@
 {
     "code": 1,
     "message": "success",
+    "page": 1,
+    "page_count": 10,
     "data": [{"id": "1", "url": "", "filename": "ie_sticker_01"},
         {"id": "2", "url": "", "filename": "ie_sticker_02"},
         {"id": "3", "url": "", "filename": "ie_sticker_03"},

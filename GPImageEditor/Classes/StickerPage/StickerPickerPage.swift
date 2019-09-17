@@ -135,7 +135,8 @@ extension StickerPickerPage {
         let vm = StickerPickerViewModel()
         return StickerPickerPage(viewModel: vm, completion: { (image, size) in
             if let image = image {
-                let stickerView = StickersLayerView.addSticker(image: image, size: size, toView: view)
+                let info = StickerInfo(image: image, type: .sticker, size: size)
+                let stickerView = StickersLayerView.addSticker(stickerInfo: info, toView: view)
                 completion?(stickerView)
             }
         })

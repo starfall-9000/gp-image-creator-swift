@@ -14,11 +14,12 @@ public class StickersLayerView: UIView {
     var viewTransform: CGAffineTransform!
     var viewSize: CGSize!
     var isDragging = false
+    var isOverlap = false
     
     var deleteButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "ic_delete", in: GPImageEditorBundle.getBundle(), compatibleWith: nil), for: .normal)
-        button.tintColor = .white
+        let button = UIButton(type: .custom)
+        button.setImage(GPImageEditorBundle.imageFromBundle(imageName: "ic_delete"), for: .normal)
+        button.setImage(GPImageEditorBundle.imageFromBundle(imageName: "ie_ic_delete_active"), for: .selected)
         return button
     }()
     
@@ -30,8 +31,9 @@ public class StickersLayerView: UIView {
         }
     }
     
-    public static func addSticker(image: UIImage, size: CGSize, toView: UIView) -> StickerView {
-        let stickerView = StickerView(image: image, size: size)
+    @discardableResult
+    public static func addSticker(stickerInfo: StickerInfo, toView: UIView) -> StickerView {
+        let stickerView = StickerView(stickerInfo: stickerInfo)
         var stickersLayer = toView.subviews.first{ $0 is StickersLayerView } as? StickersLayerView
         if stickersLayer == nil {
             stickersLayer = StickersLayerView(frame: .zero)
@@ -58,6 +60,7 @@ public class StickersLayerView: UIView {
         deleteButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 26)
         deleteButton.autoSetDimensions(to: CGSize(width: 48, height: 48))
         deleteButton.isUserInteractionEnabled = false
+        deleteButton.isHidden = true
         
         addGestures()
     }
@@ -165,7 +168,8 @@ public class StickersLayerView: UIView {
             if isDragging {
                 stickerView.horizontalConstraint.constant = offSet.x + translation.x
                 stickerView.verticalConstraint.constant = offSet.y + translation.y
-                deleteButton.tintColor = stickerView.frame.intersects(deleteButton.frame) ? .black : .white
+                
+                deleteButton.isSelected = stickerView.frame.intersects(deleteButton.frame)
                 
                 layoutIfNeeded()
             }
@@ -254,8 +258,37 @@ extension StickersLayerView {
     }
 }
 
+public enum StickerType {
+    case sticker
+    case emoji
+    case text
+    case unknown
+}
+
+public class StickerInfo {
+    public var image: UIImage
+    public var text: String? = nil
+    public var type: StickerType = .sticker
+    public var fontIndex: Int = 0
+    public var colorIndex: Int = 0
+    public var alignmentIndex: Int = 0
+    public var size: CGSize = .zero
+    
+    public init(image: UIImage, text: String? = nil, type: StickerType = .sticker, fontIndex: Int = 0, colorIndex: Int = 0, alignmentIndex: Int = 0, size: CGSize) {
+        self.image = image
+        self.text = text
+        self.fontIndex = fontIndex
+        self.type = type
+        self.colorIndex = colorIndex
+        self.alignmentIndex = alignmentIndex
+        self.size = size
+    }
+}
+
 public class StickerView: UIView {
+    
     var imageView: UIImageView!
+    var info: StickerInfo!
     
     var verticalConstraint: NSLayoutConstraint!
     var horizontalConstraint: NSLayoutConstraint!
@@ -273,7 +306,12 @@ public class StickerView: UIView {
         horizontalConstraint = autoAlignAxis(.vertical, toSameAxisOf: view)
     }
     
-    public init(image: UIImage, size: CGSize) {
+    public convenience init(stickerInfo: StickerInfo) {
+        self.init(image: stickerInfo.image, size: stickerInfo.size)
+        self.info = stickerInfo
+    }
+    
+    init(image: UIImage, size: CGSize) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         
