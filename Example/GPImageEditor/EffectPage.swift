@@ -18,6 +18,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var showEffectButton: UIButton!
     @IBOutlet var gradientTopConstaint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet var topButtons: [UIButton]!
     private var isShowingEffectsView: Bool = true
     var viewModel: EffectPageViewModel?
     
@@ -31,7 +32,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     public override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = viewModel?.sourceImage
-        doneButton.cornerRadius = 19
+        doneButton.cornerRadius = 18
         setupCollectionView()
     }
     
@@ -83,7 +84,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 70, height: 135)
+        return CGSize(width: 70, height: 130)
     }
  
     // MARK: - Open picker

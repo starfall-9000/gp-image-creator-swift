@@ -21,7 +21,7 @@ public class EffectCell: UICollectionViewCell {
     
     override public func awakeFromNib() {
         super.awakeFromNib()
-        imageView.cornerRadius = 10
+        imageView.cornerRadius = 4
     }
     
     func bind(model: GPImageFilter?, viewModel: EffectPageViewModel?) {
