@@ -17,6 +17,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     let cellName = "EffectCell"
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var bottomMenuView: UIView!
+    @IBOutlet weak var bottomGradient: UIImageView!
     @IBOutlet weak var showEffectButton: UIButton!
     @IBOutlet var gradientTopConstaint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -44,12 +46,31 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     @IBAction func hideShowEffectsTapped() {
         isShowingEffectsView = !isShowingEffectsView
-        self.gradientTopConstaint.constant = self.isShowingEffectsView ? 0 : 125
-        let imageName = self.isShowingEffectsView ? "arrow-down-icon.png" : "arrow-top-icon.png"
-        let bundle = Bundle(for: EffectPage.self)
-        self.showEffectButton.setImage(UIImage(named: imageName, in: bundle, compatibleWith: nil),
-                                  for: .normal)
-        self.collectionView.isHidden = !self.isShowingEffectsView
+        if isShowingEffectsView {
+            showEffectTool()
+        } else {
+            hideEffectTool()
+        }
+    }
+    
+    private func showEffectTool() {
+        UIView.animate(withDuration: 0.25) {
+            self.bottomGradient.top = 0
+            self.collectionView.top = 0
+            let imageName = "arrow-down-icon.png"
+            let bundle = Bundle(for: EffectPage.self)
+            self.showEffectButton.setImage(UIImage(named: imageName, in: bundle, compatibleWith: nil), for: .normal)
+        }
+    }
+    
+    private func hideEffectTool() {
+        UIView.animate(withDuration: 0.25) {
+            self.bottomGradient.top = self.collectionView.height
+            self.collectionView.top = self.bottomMenuView.height
+            let imageName = "arrow-top-icon.png"
+            let bundle = Bundle(for: EffectPage.self)
+            self.showEffectButton.setImage(UIImage(named: imageName, in: bundle, compatibleWith: nil), for: .normal)
+        }
     }
     
     private func setupCollectionView() {

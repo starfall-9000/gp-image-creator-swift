@@ -111,6 +111,8 @@
 		BC9B994E2330B337007B3175 /* gradient-top-effect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC9B994A2330B337007B3175 /* gradient-top-effect@2x.png */; };
 		BC9B99502330C230007B3175 /* GPImageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9B994F2330C230007B3175 /* GPImageEditor.swift */; };
 		BC9B99512330C230007B3175 /* GPImageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9B994F2330C230007B3175 /* GPImageEditor.swift */; };
+		BC9B99532331CEA4007B3175 /* UIView+GPIEExtenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9B99522331CEA4007B3175 /* UIView+GPIEExtenstion.swift */; };
+		BC9B99542331CEA4007B3175 /* UIView+GPIEExtenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9B99522331CEA4007B3175 /* UIView+GPIEExtenstion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +202,7 @@
 		BC9B99492330B337007B3175 /* gradient-top-effect@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient-top-effect@3x.png"; sourceTree = "<group>"; };
 		BC9B994A2330B337007B3175 /* gradient-top-effect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient-top-effect@2x.png"; sourceTree = "<group>"; };
 		BC9B994F2330C230007B3175 /* GPImageEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPImageEditor.swift; sourceTree = "<group>"; };
+		BC9B99522331CEA4007B3175 /* UIView+GPIEExtenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+GPIEExtenstion.swift"; sourceTree = "<group>"; };
 		DED391095BBDCCAF15A7C05B /* Pods_GPImageEditor_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GPImageEditor_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5CDF5236424D9F13636685 /* Pods_GPImageEditor_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GPImageEditor_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -389,6 +392,7 @@
 				BC9B98E1232F49F5007B3175 /* GPImageFilter.swift */,
 				BC9B992A232F4CCB007B3175 /* UIImage+Extentions.swift */,
 				BC9B994F2330C230007B3175 /* GPImageEditor.swift */,
+				BC9B99522331CEA4007B3175 /* UIView+GPIEExtenstion.swift */,
 			);
 			name = EffectPage;
 			sourceTree = "<group>";
@@ -714,6 +718,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC9B99532331CEA4007B3175 /* UIView+GPIEExtenstion.swift in Sources */,
 				BC9B98D5232F42CF007B3175 /* EffectCell.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				703D1BBA23335B9F0042987C /* GPImageEditorBundle.swift in Sources */,
@@ -745,6 +750,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC9B99542331CEA4007B3175 /* UIView+GPIEExtenstion.swift in Sources */,
 				BC9B98D6232F42CF007B3175 /* EffectCell.swift in Sources */,
 				BC9B98E3232F49F5007B3175 /* GPImageFilter.swift in Sources */,
 				BC9B98D8232F42CF007B3175 /* EffectPage.swift in Sources */,
