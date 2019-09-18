@@ -163,6 +163,7 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let filter = viewModel?.items[indexPath.row] else { return }
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         viewModel?.rxSelectedFilter.accept(filter)
         guard let sourceImage = viewModel?.sourceImage else { return }
         imageView.image = filter.applyFilter(image: sourceImage)
