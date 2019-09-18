@@ -7,14 +7,15 @@
 
 import UIKit
 import FittedSheets
-import GPImageEditor
+//import GPImageEditor
 
 public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
 
     var doneBlock: ((UIImage) -> Void)?
-    
     let cellSize = CGSize(width: 70, height: 130)
     let cellName = "EffectCell"
+    
+    @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var bottomMenuView: UIView!
@@ -36,8 +37,16 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     public override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = viewModel?.sourceImage
+        sourceImageView.image = viewModel?.sourceImage
         doneButton.cornerRadius = 18
         setupCollectionView()
+        addLongPressGesture()
+    }
+    
+    private func addLongPressGesture() {
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longGesturePressed))
+        longPressRecognizer.minimumPressDuration = 0.75
+        stickerLayer.addGestureRecognizer(longPressRecognizer)
     }
     
     @IBAction func backAction() {
@@ -50,6 +59,16 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             showEffectTool()
         } else {
             hideEffectTool()
+        }
+    }
+    
+    @objc func longGesturePressed(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .ended {
+            imageView.isHidden = false
+            sourceImageView.isHidden = true
+        } else {
+            imageView.isHidden = true
+            sourceImageView.isHidden = false
         }
     }
     
@@ -143,13 +162,9 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let filter = viewModel?.items[indexPath.row] else {
-            return
-        }
+        guard let filter = viewModel?.items[indexPath.row] else { return }
         viewModel?.rxSelectedFilter.accept(filter)
-        guard let sourceImage = viewModel?.sourceImage else {
-            return
-        }
+        guard let sourceImage = viewModel?.sourceImage else { return }
         imageView.image = filter.applyFilter(image: sourceImage)
     }
 

@@ -19,6 +19,7 @@
                 <outlet property="gradientTopConstaint" destination="ChX-vK-b56" id="mAz-Zs-j0x"/>
                 <outlet property="imageView" destination="xTM-QD-XmF" id="BZ3-9r-GIf"/>
                 <outlet property="showEffectButton" destination="Ivt-dS-Gyr" id="TQ1-dq-Ec4"/>
+                <outlet property="sourceImageView" destination="Upc-Le-9xO" id="ZP4-9f-aMQ"/>
                 <outlet property="stickerLayer" destination="0kA-E7-pkG" id="6kw-8y-5Rk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -28,6 +29,9 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Upc-Le-9xO">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                </imageView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xTM-QD-XmF">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
@@ -99,13 +103,14 @@
                         <action selector="stickerTapped" destination="-1" eventType="touchUpInside" id="DcG-pf-CBz"/>
                     </connections>
                 </button>
-                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="49S-G2-szV">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="49S-G2-szV">
                     <rect key="frame" x="0.0" y="675" width="414" height="187"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradient-bottom-effect.png" translatesAutoresizingMaskIntoConstraints="NO" id="ffL-1w-yCH">
-                            <rect key="frame" x="0.0" y="0.0" width="450" height="187"/>
+                            <rect key="frame" x="0.0" y="0.0" width="450" height="221"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="450" id="gY5-a5-rHC"/>
+                                <constraint firstAttribute="height" constant="221" id="upw-Zl-Edy"/>
                             </constraints>
                         </imageView>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xeZ-ci-qQi">
@@ -158,10 +163,6 @@
                         <constraint firstAttribute="trailing" secondItem="xeZ-ci-qQi" secondAttribute="trailing" id="qtG-5b-5S6"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q8T-ib-RT2">
-                    <rect key="frame" x="0.0" y="862" width="414" height="34"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
             </subviews>
             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
@@ -172,7 +173,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="J5d-5z-pmU" secondAttribute="trailing" constant="5" id="6E6-Sc-jdb"/>
                 <constraint firstItem="0kA-E7-pkG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7o7-hv-WMO"/>
                 <constraint firstItem="3Gj-ku-NAy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="BQU-Os-hic"/>
-                <constraint firstItem="q8T-ib-RT2" firstAttribute="top" secondItem="49S-G2-szV" secondAttribute="bottom" id="EAp-2f-gdd"/>
+                <constraint firstAttribute="bottom" secondItem="Upc-Le-9xO" secondAttribute="bottom" id="Cy0-u3-lGs"/>
                 <constraint firstAttribute="trailing" secondItem="xTM-QD-XmF" secondAttribute="trailing" id="ECM-v5-xGK"/>
                 <constraint firstItem="0kA-E7-pkG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="EZS-NF-MWy"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="49S-G2-szV" secondAttribute="trailing" id="FVS-EG-cnF"/>
@@ -184,15 +185,15 @@
                 <constraint firstItem="Nrd-iK-qp2" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ROH-Vx-03y"/>
                 <constraint firstItem="xTM-QD-XmF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Tkj-AS-JLO"/>
                 <constraint firstItem="49S-G2-szV" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" id="Tm3-wK-T7c"/>
-                <constraint firstAttribute="bottom" secondItem="q8T-ib-RT2" secondAttribute="bottom" id="VGh-NB-0YP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="49S-G2-szV" secondAttribute="bottom" id="blt-Wl-OyR"/>
+                <constraint firstItem="Upc-Le-9xO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="d3P-YV-wnw"/>
                 <constraint firstItem="3HS-0W-T6Z" firstAttribute="leading" secondItem="uED-sa-dnT" secondAttribute="trailing" constant="5" id="dPA-no-ysH"/>
                 <constraint firstItem="NHN-ip-8BM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ddt-Rx-lZH"/>
                 <constraint firstItem="NHN-ip-8BM" firstAttribute="bottom" secondItem="Nrd-iK-qp2" secondAttribute="bottom" constant="10" id="eRj-gJ-4P0"/>
-                <constraint firstItem="q8T-ib-RT2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gQp-tw-DHC"/>
                 <constraint firstAttribute="bottom" secondItem="0kA-E7-pkG" secondAttribute="bottom" id="kun-cy-i3G"/>
                 <constraint firstItem="xTM-QD-XmF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uoQ-NE-urf"/>
-                <constraint firstAttribute="trailing" secondItem="q8T-ib-RT2" secondAttribute="trailing" id="vSR-yI-0db"/>
+                <constraint firstItem="Upc-Le-9xO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="vPq-FT-ua7"/>
+                <constraint firstItem="Upc-Le-9xO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xJe-ce-uOs"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
@@ -201,7 +202,7 @@
         <image name="arrow-down-icon.png" width="21.5" height="21.5"/>
         <image name="back-btn.png" width="19" height="16"/>
         <image name="draw-icon.png" width="21.5" height="21.5"/>
-        <image name="gradient-bottom-effect.png" width="450" height="187"/>
+        <image name="gradient-bottom-effect.png" width="450" height="221"/>
         <image name="gradient-top-effect.png" width="450" height="100"/>
         <image name="other-edit-icon.png" width="24" height="18"/>
         <image name="sticker-icon.png" width="23.5" height="23.5"/>
