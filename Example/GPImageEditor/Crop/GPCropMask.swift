@@ -11,11 +11,17 @@ import DTMvvm
 
 public class GPCropMask: UIView {
     public var type: GPCropType? = .free
+    var imageView: UIImageView? = nil
     let imageMask = UIView()
+    var widthConstraint: NSLayoutConstraint? = nil
+    var heightConstraint: NSLayoutConstraint? = nil
     
     convenience init() {
         self.init(frame: CGRect.zero)
         self.subviews.forEach({ $0.removeFromSuperview() })
+        widthConstraint = self.autoSetDimension(.width, toSize: 100)
+        heightConstraint = self.autoSetDimension(.height, toSize: 100)
+        
         // blur
 //        let blurView = UIView()
 //        self.addSubview(blurView)
@@ -60,4 +66,36 @@ public class GPCropMask: UIView {
         return children
     }
     
+    public func changeMaskType(_ type: GPCropType) {
+        self.type = type
+        updateImageMaskSize()
+    }
+    
+    private func updateImageMaskSize() {
+        guard
+            let contentView = superview,
+            let type = type,
+            let imageFrame = imageView?.calcImageFitSize(imageScale: 1)
+        else { return }
+        
+        let contentWidth = contentView.frame.width
+        let contentHeight = contentView.frame.height
+        if type == .flip { return }
+        if type == .free {
+            widthConstraint?.constant = imageFrame.width
+            heightConstraint?.constant = imageFrame.height
+            return
+        }
+        
+        let ratio = GPCropType.getRatio(type)
+        let widthRatio = ratio["width"] ?? 1
+        let heightRatio = ratio["height"] ?? 1
+        if contentHeight * widthRatio / heightRatio > contentWidth {
+            widthConstraint?.constant = contentWidth
+            heightConstraint?.constant = contentWidth * heightRatio / widthRatio
+        } else {
+            widthConstraint?.constant = contentHeight * widthRatio / heightRatio
+            heightConstraint?.constant = contentHeight
+        }
+    }
 }

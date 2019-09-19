@@ -20,10 +20,6 @@ class GPCropViewController: Page<GPCropViewModel> {
     let rightHiddenSlider = UIView()
     var leftSliderConstraint: NSLayoutConstraint? = nil
     var rightSliderConstraint: NSLayoutConstraint? = nil
-    var imageMaskRatioWidth: NSLayoutConstraint? = nil
-    var imageMaskRatioHeight: NSLayoutConstraint? = nil
-    var imageMaskWidthConstraint: NSLayoutConstraint? = nil
-    var imageMaskHeightConstraint: NSLayoutConstraint? = nil
     
     let GP_MIN_CROP_SCALE: CGFloat = 1
     let GP_MAX_CROP_SCALE: CGFloat = 5
@@ -49,6 +45,7 @@ class GPCropViewController: Page<GPCropViewModel> {
         super.viewDidAppear(animated)
         imageView.frame = CGRect(origin: .zero, size: contentView.frame.size)
         viewModel?.rxImageCenter.accept(imageView.center)
+        imageMask.changeMaskType(.free)
     }
     
     override func initialize() {
@@ -82,14 +79,9 @@ class GPCropViewController: Page<GPCropViewModel> {
         
         // image mask
         contentView.addSubview(imageMask)
+        imageMask.imageView = imageView
         imageMask.autoAlignAxis(toSuperviewAxis: .vertical)
         imageMask.autoAlignAxis(toSuperviewAxis: .horizontal)
-        imageMaskRatioWidth = imageMask.autoMatch(.width, to: .width, of: contentView)
-        imageMaskRatioHeight = imageMask.autoMatch(.height, to: .height, of: contentView)
-        imageMaskWidthConstraint = imageMask.autoSetDimension(.width, toSize: contentView.frame.width)
-        imageMaskHeightConstraint = imageMask.autoSetDimension(.height, toSize: contentView.frame.height)
-        imageMaskWidthConstraint?.isActive = false
-        imageMaskHeightConstraint?.isActive = false
         imageMask.isUserInteractionEnabled = false
         
         // crop tool view
@@ -250,20 +242,8 @@ class GPCropViewController: Page<GPCropViewModel> {
                 let isFlipped = viewModel?.rxIsFlippedImage.value ?? false
                 viewModel?.rxIsFlippedImage.accept(!isFlipped)
                 break
-            case .free:
-                updateImageMaskConstraint(usingRatio: false)
-                break
-            case .ratioOneOne:
-                updateImageMaskSize(widthRatio: 1, heightRatio: 1)
-                updateImageMaskConstraint(usingRatio: true)
-                break
-            case .ratioFourThree:
-                updateImageMaskSize(widthRatio: 4, heightRatio: 3)
-                updateImageMaskConstraint(usingRatio: true)
-                break
-            case .ratioThreeFour:
-                updateImageMaskSize(widthRatio: 3, heightRatio: 4)
-                updateImageMaskConstraint(usingRatio: true)
+            case .free, .ratioOneOne, .ratioFourThree, .ratioThreeFour:
+                imageMask.changeMaskType(cropType)
                 break
             }
         }
@@ -287,28 +267,5 @@ class GPCropViewController: Page<GPCropViewModel> {
         let constraint: CGFloat = (value < safeValue && value > -safeValue) ? safeConstraint : 0
         leftSliderConstraint?.constant = -constraint
         rightSliderConstraint?.constant = constraint
-    }
-    
-    private func updateImageMaskSize(widthRatio: CGFloat, heightRatio: CGFloat) {
-        let contentWidth = contentView.frame.width
-        let contentHeight = contentView.frame.height
-        if contentHeight * widthRatio / heightRatio > contentWidth {
-            imageMaskWidthConstraint?.constant = contentWidth
-            imageMaskHeightConstraint?.constant = contentWidth * heightRatio / widthRatio
-        } else {
-            imageMaskWidthConstraint?.constant = contentHeight * widthRatio / heightRatio
-            imageMaskHeightConstraint?.constant = contentHeight
-        }
-    }
-    
-    private func updateImageMaskConstraint(usingRatio: Bool) {
-        imageMaskRatioWidth?.isActive = false
-        imageMaskRatioHeight?.isActive = false
-        imageMaskWidthConstraint?.isActive = false
-        imageMaskHeightConstraint?.isActive = false
-        imageMaskWidthConstraint?.isActive = usingRatio
-        imageMaskHeightConstraint?.isActive = usingRatio
-        imageMaskRatioWidth?.isActive = !usingRatio
-        imageMaskRatioHeight?.isActive = !usingRatio
     }
 }

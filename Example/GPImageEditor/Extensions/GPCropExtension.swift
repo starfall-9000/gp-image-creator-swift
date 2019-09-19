@@ -28,8 +28,26 @@ public extension Reactive where Base: UIView {
 public extension UIImageView {
     func calcMaskInImage(imageMask: UIView, imageScale: CGFloat) -> CGRect {
         guard let image = image else { return .zero }
+        // calculate unused frame (frame of UIImage auto-scale-fit)
+        let imageSize = calcImageFitSize(imageScale: imageScale)
+        let imgViewX = imageSize.minX
+        let imgViewY = imageSize.minY
+        // calculate mask in new frame
+        let scaleWidth = image.size.width / bounds.width / imageScale
+        let scaleHeight = image.size.height / bounds.height / imageScale
+        let scale = scaleWidth > scaleHeight ? scaleWidth : scaleHeight
+        let maskInNewFrame = CGRect(x: imageMask.frame.minX - imgViewX, y: imageMask.frame.minY - imgViewY, width: imageMask.frame.width, height: imageMask.frame.height)
+        let maskScaleFrame = CGRect(x: maskInNewFrame.minX * scale, y: maskInNewFrame.minY * scale, width: maskInNewFrame.width * scale, height: maskInNewFrame.height * scale)
+        
+        return maskScaleFrame
+    }
+    
+    func calcImageFitSize(imageScale: CGFloat) -> CGRect {
+        guard let image = image else { return .zero }
         var imgViewX: CGFloat = frame.minX
         var imgViewY: CGFloat = frame.minY
+        var width: CGFloat = frame.width
+        var height: CGFloat = frame.height
         
         // calculate unused frame (frame of UIImage auto-scale-fit)
         let scaleWidth = image.size.width / bounds.width / imageScale
@@ -37,16 +55,13 @@ public extension UIImageView {
         if (scaleWidth > scaleHeight) {
             let unusedHeight = bounds.height * imageScale - image.size.height / scaleWidth
             imgViewY = imgViewY + 0.5 * unusedHeight * fabs(transform.a / imageScale)
+            height = height - unusedHeight
         } else {
             let unusedWidth = bounds.width * imageScale - image.size.width / scaleHeight
             imgViewX = imgViewX + 0.5 * unusedWidth * fabs(transform.a / imageScale)
+            width = width - unusedWidth
         }
-        // calculate mask in new frame
-        let scale = scaleWidth > scaleHeight ? scaleWidth : scaleHeight
-        let maskInNewFrame = CGRect(x: imageMask.frame.minX - imgViewX, y: imageMask.frame.minY - imgViewY, width: imageMask.frame.width, height: imageMask.frame.height)
-        let maskScaleFrame = CGRect(x: maskInNewFrame.minX * scale, y: maskInNewFrame.minY * scale, width: maskInNewFrame.width * scale, height: maskInNewFrame.height * scale)
-        
-        return maskScaleFrame
+        return CGRect(x: imgViewX, y: imgViewY, width: width, height: height)
     }
 }
 
