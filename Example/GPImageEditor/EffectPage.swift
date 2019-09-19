@@ -119,7 +119,10 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func otherEditTapped() {
-    
+        guard let image = imageView.image else { return }
+        let vm = GPCropViewModel(model: image)
+        let vc = GPCropViewController(viewModel: vm)
+        present(vc, animated: false, completion: nil)
     }
     
     @IBAction func doneTapped() {
