@@ -26,16 +26,6 @@ class ViewController: UIViewController {
         })
     }
     
-    @IBAction func showStickerPicker() {
-        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer, completion: nil)
-        let sheetController = SheetViewController(controller: stickerVC, sizes: [SheetSize.fullScreen])
-        sheetController.topCornersRadius = 16
-        sheetController.adjustForBottomSafeArea = false
-        sheetController.blurBottomSafeArea = false
-
-        self.present(sheetController, animated: false, completion: nil)
-    }
-    
     @IBAction func pickPhoto(sender: UIButton!) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -47,10 +37,6 @@ class ViewController: UIViewController {
         if let image = imageView.image {
             moveToEditor(with: image)
         }
-    }
-    
-    @IBAction func addTextAction() {
-        GPTextEditorTool.show(inView: stickerLayer)
     }
 
     func moveToEditor(with image: UIImage?) {

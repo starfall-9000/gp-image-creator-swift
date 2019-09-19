@@ -7,7 +7,6 @@
 
 import UIKit
 import FittedSheets
-//import GPImageEditor
 
 public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
 
@@ -112,7 +111,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func textTapped() {
-    
+        GPTextEditorTool.show(inView: stickerLayer)
     }
     
     @IBAction func drawTapped() {
