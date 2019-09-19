@@ -14,6 +14,19 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		703D1BAD233359E80042987C /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BA0233359E70042987C /* StickerView.swift */; };
+		703D1BAE233359E80042987C /* StickerPickerPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BA1233359E70042987C /* StickerPickerPage.swift */; };
+		703D1BAF233359E80042987C /* EmojiListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BA2233359E70042987C /* EmojiListView.swift */; };
+		703D1BB0233359E80042987C /* StickerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BA3233359E70042987C /* StickerListView.swift */; };
+		703D1BB1233359E80042987C /* StickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BA4233359E70042987C /* StickerCell.swift */; };
+		703D1BB2233359E80042987C /* StickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BA5233359E70042987C /* StickerModel.swift */; };
+		703D1BB3233359E80042987C /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BA6233359E70042987C /* EmojiCell.swift */; };
+		703D1BB4233359E80042987C /* StickerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BA8233359E70042987C /* StickerAPI.swift */; };
+		703D1BB5233359E80042987C /* StickerAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BA9233359E70042987C /* StickerAPIService.swift */; };
+		703D1BB6233359E80042987C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BAB233359E70042987C /* Extensions.swift */; };
+		703D1BB7233359E80042987C /* EmojiCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BAC233359E70042987C /* EmojiCategories.swift */; };
+		703D1BBA23335B9F0042987C /* GPImageEditorBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BB823335B9F0042987C /* GPImageEditorBundle.swift */; };
+		703D1BBB23335B9F0042987C /* GPImageEditorConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D1BB923335B9F0042987C /* GPImageEditorConfigs.swift */; };
 		7041AE262330C08900A0C2D8 /* BalooPaaji-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7041AE212330C08900A0C2D8 /* BalooPaaji-Regular.ttf */; };
 		7041AE272330C08900A0C2D8 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7041AE222330C08900A0C2D8 /* Nunito-Regular.ttf */; };
 		7041AE282330C08900A0C2D8 /* Oswald-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7041AE232330C08900A0C2D8 /* Oswald-Regular.ttf */; };
@@ -51,6 +64,19 @@
 		607FACE51AFB9204008FA782 /* GPImageEditor_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GPImageEditor_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		703D1BA0233359E70042987C /* StickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
+		703D1BA1233359E70042987C /* StickerPickerPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerPickerPage.swift; sourceTree = "<group>"; };
+		703D1BA2233359E70042987C /* EmojiListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiListView.swift; sourceTree = "<group>"; };
+		703D1BA3233359E70042987C /* StickerListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerListView.swift; sourceTree = "<group>"; };
+		703D1BA4233359E70042987C /* StickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerCell.swift; sourceTree = "<group>"; };
+		703D1BA5233359E70042987C /* StickerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerModel.swift; sourceTree = "<group>"; };
+		703D1BA6233359E70042987C /* EmojiCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCell.swift; sourceTree = "<group>"; };
+		703D1BA8233359E70042987C /* StickerAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerAPI.swift; sourceTree = "<group>"; };
+		703D1BA9233359E70042987C /* StickerAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerAPIService.swift; sourceTree = "<group>"; };
+		703D1BAB233359E70042987C /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		703D1BAC233359E70042987C /* EmojiCategories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCategories.swift; sourceTree = "<group>"; };
+		703D1BB823335B9F0042987C /* GPImageEditorBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPImageEditorBundle.swift; sourceTree = "<group>"; };
+		703D1BB923335B9F0042987C /* GPImageEditorConfigs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPImageEditorConfigs.swift; sourceTree = "<group>"; };
 		7041AE212330C08900A0C2D8 /* BalooPaaji-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BalooPaaji-Regular.ttf"; sourceTree = "<group>"; };
 		7041AE222330C08900A0C2D8 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
 		7041AE232330C08900A0C2D8 /* Oswald-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Regular.ttf"; sourceTree = "<group>"; };
@@ -124,6 +150,11 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				703D1BB823335B9F0042987C /* GPImageEditorBundle.swift */,
+				703D1BB923335B9F0042987C /* GPImageEditorConfigs.swift */,
+				703D1BA7233359E70042987C /* API */,
+				703D1BAA233359E70042987C /* Extensions */,
+				703D1B9F233359E70042987C /* StickerPage */,
 				7041AE202330C08900A0C2D8 /* Fonts */,
 				70A80984232B72FF0055CF5A /* TextTool */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -170,6 +201,38 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		703D1B9F233359E70042987C /* StickerPage */ = {
+			isa = PBXGroup;
+			children = (
+				703D1BA0233359E70042987C /* StickerView.swift */,
+				703D1BA1233359E70042987C /* StickerPickerPage.swift */,
+				703D1BA2233359E70042987C /* EmojiListView.swift */,
+				703D1BA3233359E70042987C /* StickerListView.swift */,
+				703D1BA4233359E70042987C /* StickerCell.swift */,
+				703D1BA5233359E70042987C /* StickerModel.swift */,
+				703D1BA6233359E70042987C /* EmojiCell.swift */,
+			);
+			path = StickerPage;
+			sourceTree = "<group>";
+		};
+		703D1BA7233359E70042987C /* API */ = {
+			isa = PBXGroup;
+			children = (
+				703D1BA8233359E70042987C /* StickerAPI.swift */,
+				703D1BA9233359E70042987C /* StickerAPIService.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		703D1BAA233359E70042987C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				703D1BAB233359E70042987C /* Extensions.swift */,
+				703D1BAC233359E70042987C /* EmojiCategories.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		7041AE202330C08900A0C2D8 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +277,7 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				0CFB6214C66D632987AA2BE7 /* [CP] Embed Pods Frameworks */,
+				09C7BE01D45166FC22B69711 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -313,6 +377,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		09C7BE01D45166FC22B69711 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GPImageEditor_Example/Pods-GPImageEditor_Example-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/GPImageEditor/GPImageEditor.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GPImageEditor.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GPImageEditor_Example/Pods-GPImageEditor_Example-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		0CFB6214C66D632987AA2BE7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -325,7 +407,6 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/DTMvvm/DTMvvm.framework",
 				"${BUILT_PRODUCTS_DIR}/FittedSheets/FittedSheets.framework",
-				"${BUILT_PRODUCTS_DIR}/GPImageEditor/GPImageEditor.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
@@ -341,7 +422,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTMvvm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FittedSheets.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPImageEditor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
@@ -407,7 +487,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				703D1BBA23335B9F0042987C /* GPImageEditorBundle.swift in Sources */,
+				703D1BAF233359E80042987C /* EmojiListView.swift in Sources */,
+				703D1BB0233359E80042987C /* StickerListView.swift in Sources */,
+				703D1BB4233359E80042987C /* StickerAPI.swift in Sources */,
+				703D1BBB23335B9F0042987C /* GPImageEditorConfigs.swift in Sources */,
+				703D1BB2233359E80042987C /* StickerModel.swift in Sources */,
+				703D1BB1233359E80042987C /* StickerCell.swift in Sources */,
 				708BB0B423309AC600309539 /* GPTextEditorView.swift in Sources */,
+				703D1BB3233359E80042987C /* EmojiCell.swift in Sources */,
+				703D1BAE233359E80042987C /* StickerPickerPage.swift in Sources */,
+				703D1BAD233359E80042987C /* StickerView.swift in Sources */,
+				703D1BB7233359E80042987C /* EmojiCategories.swift in Sources */,
+				703D1BB6233359E80042987C /* Extensions.swift in Sources */,
+				703D1BB5233359E80042987C /* StickerAPIService.swift in Sources */,
 				70E224E5232F7301001ECE7D /* GPTextEditorViewModel.swift in Sources */,
 				70A80986232B78950055CF5A /* GPTextEditorTool.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,

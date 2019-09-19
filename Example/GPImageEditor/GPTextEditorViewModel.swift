@@ -10,7 +10,6 @@ import Foundation
 import RxCocoa
 import RxSwift
 import DTMvvm
-import GPImageEditor
 import Action
 
 private let kFontSize: CGFloat = 30
@@ -18,7 +17,7 @@ private let kFontSize: CGFloat = 30
 public class GPTextEditorViewModel: ViewModel<StickerInfo> {
     
     static let colorSet: [(UIColor, UIColor)] = [(.clear, .white), (.white, .black), (.black, .white), (.fromHex("#FF4C82"), .white), (.fromHex("#1A99F4"), .white), (.fromHex("#F7D925"), .white), (.fromHex("#6FBE49"), .white), (.fromHex("#F87376"), .white), (.fromHex("#D48E15"), .white), (.fromHex("#5168D7"), .white), (.fromHex("#0B3688"), .white)]
-    static let fontSet: [(String, String)] = [("Nunito", "Nunito-Regular"), ("Oswald", "Oswald-Regular"), ("Hepta", "HeptaSlab-Regular"), ("DancingScript", "DancingScript-Regular"), ("BalooPaaji", "BalooPaaji-Regular")]
+    static let fontSet: [(String, String)] = [("BalooPaaji", "BalooPaaji-Regular"), ("Nunito", "Nunito-Regular"), ("Oswald", "Oswald-Regular"), ("Hepta", "HeptaSlab-Regular"), ("DancingScript", "DancingScript-Regular")]
     
     let rxText = BehaviorRelay<String?>(value: nil)
     let rxFontIndex = BehaviorRelay<Int>(value: 0)

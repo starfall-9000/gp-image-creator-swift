@@ -1,5 +1,4 @@
 import XCTest
-import GPImageEditor
 
 class Tests: XCTestCase {
     

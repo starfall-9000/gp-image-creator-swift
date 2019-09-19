@@ -8,7 +8,7 @@
 
 import UIKit
 import DTMvvm
-import GPImageEditor
+//import GPImageEditor
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

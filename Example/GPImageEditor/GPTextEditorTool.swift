@@ -10,7 +10,6 @@ import Foundation
 import RxCocoa
 import RxSwift
 import DTMvvm
-import GPImageEditor
 
 public class GPTextEditorTool: View<GPTextEditorViewModel> {
     let contentView: GPTextEditorView = GPTextEditorView.loadFrom(nibNamed: "GPTextEditorView")!
@@ -83,9 +82,11 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
 }
 
 extension GPTextEditorTool {
-    public static func show(inView view: UIView) {
+    @discardableResult
+    public static func show(inView view: UIView) -> GPTextEditorTool? {
         var editor: GPTextEditorTool!
-        for subview in view.subviews {
+        guard let superview = view.superview else { return nil }
+        for subview in superview.subviews {
             if subview is GPTextEditorTool {
                 editor = (subview as! GPTextEditorTool)
                 break
@@ -94,7 +95,7 @@ extension GPTextEditorTool {
         if editor == nil {
             editor = GPTextEditorTool(viewModel: GPTextEditorViewModel())
             editor.containerView = view
-            view.superview?.addSubview(editor)
+            superview.addSubview(editor)
             editor.autoPinEdgesToSuperviewEdges()
         }
         editor.isHidden = false
@@ -103,5 +104,6 @@ extension GPTextEditorTool {
         UIView.animate(withDuration: 0.3) {
             editor.alpha = 1
         }
+        return editor
     }
 }

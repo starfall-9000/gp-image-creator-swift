@@ -10,7 +10,6 @@ import Foundation
 import RxCocoa
 import RxSwift
 import DTMvvm
-import GPImageEditor
 
 private let kAnimationTime = 0.3
 private let kColorButtonWidth: CGFloat = 40
@@ -149,7 +148,7 @@ extension GPTextEditorView: UITextViewDelegate, NSLayoutManagerDelegate {
     }
     
     func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
-        return 5
+        return 4
     }
 }
 

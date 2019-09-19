@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public class GPImageEditorBundle {
     public class func getBundle() -> Bundle {

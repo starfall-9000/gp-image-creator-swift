@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreGraphics
+import UIKit
 
 public class StickersLayerView: UIView {
     
@@ -217,6 +218,11 @@ public class StickersLayerView: UIView {
         let location = sender.location(in: self)
         if let view = findActiveStickerView(location: location) {
             activeView = view
+            if view.info.type == .text {
+                let editor = GPTextEditorTool.show(inView: self.superview!)
+                editor?.viewModel?.model = view.info
+                deleteSticker(stickerView: view)
+            }
         }
     }
     
