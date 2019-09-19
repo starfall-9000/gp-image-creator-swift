@@ -5,10 +5,4 @@ platform :ios, '9.0'
 target 'GPImageEditor_Example' do
   pod 'GPImageEditor', :path => '../'
   pod 'DTMvvm'
-
-  target 'GPImageEditor_Tests' do
-    inherit! :search_paths
-
-    
-  end
 end
