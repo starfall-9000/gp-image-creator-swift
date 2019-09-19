@@ -33,7 +33,7 @@ an awesome library written by swift for editting image.
   s.source_files = 'GPImageEditor/Classes/**/*'
   
    s.resource_bundles = {
-     'GPImageEditor' => ['GPImageEditor/Assets/*']
+       'GPImageEditor' => ['GPImageEditor/Assets/*.{png,xib,json}']
    }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

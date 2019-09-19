@@ -14,9 +14,8 @@ import DTMvvm
 import RxSwift
 
 class ViewController: UIViewController {
-    @IBOutlet weak var originalImageView: UIImageView!
-    @IBOutlet weak var resultImageView: UIImageView!
-    @IBOutlet weak var stickerLayer: UIView!
+    
+    @IBOutlet weak var imageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,30 +25,43 @@ class ViewController: UIViewController {
             print(familyName, fontNames)
         })
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func pickPhoto(sender: UIButton!) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
     }
     
-    @IBAction func showStickerPicker() {
-        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer, completion: nil)
-        let sheetController = SheetViewController(controller: stickerVC, sizes: [SheetSize.fullScreen])
-        sheetController.topCornersRadius = 16
-        sheetController.adjustForBottomSafeArea = false
-        sheetController.blurBottomSafeArea = false
-
-        self.present(sheetController, animated: false, completion: nil)
-    }
-
-    @IBAction func doneAction() {
-        StickerPickerPage.mixedImage(originalImage: originalImageView.image!, view: stickerLayer) { [weak self] (image) in
-            self?.resultImageView.image = image
+    @IBAction func editPhoto(sender: UIButton!) {
+        if let image = imageView.image {
+            moveToEditor(with: image)
         }
     }
+
+    func moveToEditor(with image: UIImage?) {
+        guard let image = image else {
+            return
+        }
+        GPImageEditor.present(from: self, image: image, animated: true, finished: { [weak self] (image) in
+            self?.imageView.image = image
+            }, completion: nil)
+    }
     
-    @IBAction func addTextAction() {
-        GPTextEditorTool.show(inView: stickerLayer)
+}
+
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        imageView.image = image
+        dismiss(animated: true) {
+            self.moveToEditor(with: image)
+        }
     }
 }
 
