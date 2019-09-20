@@ -13,14 +13,11 @@ public class GPCropMask: UIView {
     public var type: GPCropType? = .free
     var imageView: UIImageView? = nil
     let imageMask = UIView()
-    var widthConstraint: NSLayoutConstraint? = nil
-    var heightConstraint: NSLayoutConstraint? = nil
     
     convenience init() {
         self.init(frame: CGRect.zero)
         self.subviews.forEach({ $0.removeFromSuperview() })
-        widthConstraint = self.autoSetDimension(.width, toSize: 100)
-        heightConstraint = self.autoSetDimension(.height, toSize: 100)
+        self.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         
         // blur
 //        let blurView = UIView()
@@ -75,27 +72,39 @@ public class GPCropMask: UIView {
         guard
             let contentView = superview,
             let type = type,
-            let imageFrame = imageView?.calcImageFitSize(imageScale: 1)
+            let image = imageView?.image
         else { return }
         
         let contentWidth = contentView.frame.width
         let contentHeight = contentView.frame.height
-        if type == .flip { return }
-        if type == .free {
-            widthConstraint?.constant = imageFrame.width
-            heightConstraint?.constant = imageFrame.height
-            return
-        }
+        var width = contentWidth
+        var height = contentHeight
         
-        let ratio = GPCropType.getRatio(type)
-        let widthRatio = ratio["width"] ?? 1
-        let heightRatio = ratio["height"] ?? 1
-        if contentHeight * widthRatio / heightRatio > contentWidth {
-            widthConstraint?.constant = contentWidth
-            heightConstraint?.constant = contentWidth * heightRatio / widthRatio
-        } else {
-            widthConstraint?.constant = contentHeight * widthRatio / heightRatio
-            heightConstraint?.constant = contentHeight
+        switch type {
+        case .flip:
+            return
+        case .free:
+            let tempImgView = UIImageView(frame: contentView.frame)
+            tempImgView.image = image
+            let imageFrame = tempImgView.calcRectFitSize(imageScale: 1)
+            width = imageFrame.width
+            height = imageFrame.height
+            break
+        case .ratioOneOne, .ratioFourThree, .ratioThreeFour:
+            let ratio = GPCropType.getRatio(type)
+            let widthRatio = ratio["width"] ?? 1
+            let heightRatio = ratio["height"] ?? 1
+            if contentHeight * widthRatio > contentWidth * heightRatio {
+                width = contentWidth
+                height = contentWidth * heightRatio / widthRatio
+            } else {
+                width = contentHeight * widthRatio / heightRatio
+                height = contentHeight
+            }
+            break
         }
+        self.frame = CGRect(origin: .zero, size: CGSize(width: width, height: height))
+        let center = CGPoint(x: 0.5 * contentWidth, y: 0.5 * contentHeight)
+        self.center = center
     }
 }

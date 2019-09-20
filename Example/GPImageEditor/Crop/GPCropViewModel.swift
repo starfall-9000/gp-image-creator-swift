@@ -85,10 +85,7 @@ public class GPCropViewModel: ViewModel<UIImage> {
             let result = UIImage(cgImage: imageRef).cropImage(in: maskFrame)
             else { return }
         model = result
-        rxImageScale.accept(1)
-        rxImageRotateAngle.accept(0)
-        rxIsFlippedImage.accept(false)
-        rxSliderValue.accept(0)
+        resetImageTransform()
     }
     
     public func handleChangeSlider(_ value: Float) {
@@ -104,6 +101,13 @@ public class GPCropViewModel: ViewModel<UIImage> {
         var transform = CGAffineTransform(scaleX: imageScale, y: imageScale).rotated(by: imageRotateAngle)
         transform = isFlipped ? transform.scaledBy(x: -1, y: 1) : transform
         rxImageTransform.accept(transform)
+    }
+    
+    public func resetImageTransform() {
+        rxImageScale.accept(1)
+        rxImageRotateAngle.accept(0)
+        rxIsFlippedImage.accept(false)
+        rxSliderValue.accept(0)
     }
 }
 

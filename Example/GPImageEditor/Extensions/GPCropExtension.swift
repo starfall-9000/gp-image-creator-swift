@@ -29,7 +29,7 @@ public extension UIImageView {
     func calcMaskInImage(imageMask: UIView, imageScale: CGFloat) -> CGRect {
         guard let image = image else { return .zero }
         // calculate unused frame (frame of UIImage auto-scale-fit)
-        let imageSize = calcImageFitSize(imageScale: imageScale)
+        let imageSize = calcRectFitSize(imageScale: imageScale)
         let imgViewX = imageSize.minX
         let imgViewY = imageSize.minY
         // calculate mask in new frame
@@ -42,7 +42,7 @@ public extension UIImageView {
         return maskScaleFrame
     }
     
-    func calcImageFitSize(imageScale: CGFloat) -> CGRect {
+    func calcRectFitSize(imageScale: CGFloat) -> CGRect {
         guard let image = image else { return .zero }
         var imgViewX: CGFloat = frame.minX
         var imgViewY: CGFloat = frame.minY
@@ -60,6 +60,26 @@ public extension UIImageView {
             let unusedWidth = bounds.width * imageScale - image.size.width / scaleHeight
             imgViewX = imgViewX + 0.5 * unusedWidth * fabs(transform.a / imageScale)
             width = width - unusedWidth
+        }
+        return CGRect(x: imgViewX, y: imgViewY, width: width, height: height)
+    }
+    
+    func calcRectCoverMask(imageMask: UIView) -> CGRect {
+        guard let image = image else { return .zero }
+        var imgViewX = frame.minX
+        var imgViewY = frame.minY
+        var width = imageMask.frame.width
+        var height = imageMask.frame.height
+        let scaleWidth = image.size.width / imageMask.frame.width
+        let scaleHeight = image.size.height / imageMask.frame.height
+        if (scaleWidth < scaleHeight) {
+            let unusedHeight = image.size.height / scaleWidth - imageMask.frame.height
+            imgViewY = imgViewY - 0.5 * unusedHeight
+            height = height + unusedHeight
+        } else {
+            let unusedWidth = image.size.width / scaleHeight - imageMask.frame.width
+            imgViewX = imgViewX - 0.5 * unusedWidth
+            width = width + unusedWidth
         }
         return CGRect(x: imgViewX, y: imgViewY, width: width, height: height)
     }

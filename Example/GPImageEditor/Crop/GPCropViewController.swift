@@ -43,10 +43,8 @@ class GPCropViewController: Page<GPCropViewModel> {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        imageView.frame = CGRect(origin: .zero, size: contentView.frame.size)
-        imageView.frame = imageView.calcImageFitSize(imageScale: 1)
-        viewModel?.rxImageCenter.accept(imageView.center)
         imageMask.changeMaskType(.free)
+        updateImageView(with: .free)
     }
     
     override func initialize() {
@@ -81,8 +79,6 @@ class GPCropViewController: Page<GPCropViewModel> {
         // image mask
         contentView.addSubview(imageMask)
         imageMask.imageView = imageView
-        imageMask.autoAlignAxis(toSuperviewAxis: .vertical)
-        imageMask.autoAlignAxis(toSuperviewAxis: .horizontal)
         imageMask.isUserInteractionEnabled = false
         
         // crop tool view
@@ -243,7 +239,9 @@ class GPCropViewController: Page<GPCropViewModel> {
                 viewModel?.rxIsFlippedImage.accept(!isFlipped)
                 break
             case .free, .ratioOneOne, .ratioFourThree, .ratioThreeFour:
+                viewModel?.resetImageTransform()
                 imageMask.changeMaskType(cropType)
+                updateImageView(with: cropType)
                 break
             }
         }
@@ -267,5 +265,11 @@ class GPCropViewController: Page<GPCropViewModel> {
         let constraint: CGFloat = (value < safeValue && value > -safeValue) ? safeConstraint : 0
         leftSliderConstraint?.constant = -constraint
         rightSliderConstraint?.constant = constraint
+    }
+    
+    private func updateImageView(with type: GPCropType) {
+        imageView.frame =  imageView.calcRectCoverMask(imageMask: imageMask)
+        let center = CGPoint(x: 0.5 * contentView.width, y: 0.5 * contentView.height)
+        viewModel?.rxImageCenter.accept(center)
     }
 }
