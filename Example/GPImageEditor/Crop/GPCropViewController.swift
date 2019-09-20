@@ -44,6 +44,7 @@ class GPCropViewController: Page<GPCropViewModel> {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         imageView.frame = CGRect(origin: .zero, size: contentView.frame.size)
+        imageView.frame = imageView.calcImageFitSize(imageScale: 1)
         viewModel?.rxImageCenter.accept(imageView.center)
         imageMask.changeMaskType(.free)
     }
@@ -208,7 +209,6 @@ class GPCropViewController: Page<GPCropViewModel> {
         viewModel.rxSliderValue.subscribe(onNext: { [weak self] (value) in
             guard let self = self else { return }
             self.updateSliderUI(value)
-            self.imageView.image = viewModel.model
         }) => disposeBag
     }
     
