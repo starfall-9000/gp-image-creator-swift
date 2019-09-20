@@ -30,62 +30,94 @@ extension UIImage {
     
     public func fixedOrientation() -> UIImage {
         
-        if imageOrientation == UIImageOrientation.up {
+        // Image has no orientation, so keep the same
+        if imageOrientation == .up {
             return self
         }
         
-        var transform: CGAffineTransform = CGAffineTransform.identity
-        
+        // Process the transform corresponding to the current orientation
+        var transform = CGAffineTransform.identity
         switch imageOrientation {
-        case UIImageOrientation.down, UIImageOrientation.downMirrored:
+        case .down, .downMirrored:           // EXIF = 3, 4
             transform = transform.translatedBy(x: size.width, y: size.height)
-            transform = transform.rotated(by: CGFloat(Double.pi / 2))
-            break
-        case UIImageOrientation.left, UIImageOrientation.leftMirrored:
+            transform = transform.rotated(by: CGFloat(Double.pi))
+            
+        case .left, .leftMirrored:           // EXIF = 6, 5
             transform = transform.translatedBy(x: size.width, y: 0)
             transform = transform.rotated(by: CGFloat(Double.pi / 2))
-            break
-        case UIImageOrientation.right, UIImageOrientation.rightMirrored:
+            
+        case .right, .rightMirrored:          // EXIF = 8, 7
             transform = transform.translatedBy(x: 0, y: size.height)
-            transform = transform.rotated(by: CGFloat(-Double.pi / 2))
-            break
-        case UIImageOrientation.up, UIImageOrientation.upMirrored:
-            break
-        }
-        
-        switch imageOrientation {
-        case UIImageOrientation.upMirrored, UIImageOrientation.downMirrored:
-            transform.translatedBy(x: size.width, y: 0)
-            transform.scaledBy(x: -1, y: 1)
-            break
-        case UIImageOrientation.leftMirrored, UIImageOrientation.rightMirrored:
-            transform.translatedBy(x: size.height, y: 0)
-            transform.scaledBy(x: -1, y: 1)
-        case UIImageOrientation.up, UIImageOrientation.down, UIImageOrientation.left, UIImageOrientation.right:
-            break
-        }
-        
-        let ctx: CGContext = CGContext(data: nil,
-                                       width: Int(size.width),
-                                       height: Int(size.height),
-                                       bitsPerComponent: self.cgImage!.bitsPerComponent,
-                                       bytesPerRow: 0,
-                                       space: self.cgImage!.colorSpace!,
-                                       bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
-        
-        ctx.concatenate(transform)
-        
-        switch imageOrientation {
-        case UIImageOrientation.left, UIImageOrientation.leftMirrored, UIImageOrientation.right, UIImageOrientation.rightMirrored:
-            ctx.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
+            transform = transform.rotated(by: -CGFloat((Double.pi / 2)))
         default:
-            ctx.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-            break
+            ()
         }
         
-        let cgImage: CGImage = ctx.makeImage()!
+        switch imageOrientation {
+        case .upMirrored, .downMirrored:     // EXIF = 2, 4
+            transform = transform.translatedBy(x: size.width, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+            
+        case .leftMirrored, .rightMirrored:   //EXIF = 5, 7
+            transform = transform.translatedBy(x: size.height, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+        default:
+            ()
+        }
         
-        return UIImage(cgImage: cgImage)
+        // Draw a new image with the calculated transform
+        let context = CGContext(data: nil,
+                                width: Int(size.width),
+                                height: Int(size.height),
+                                bitsPerComponent: cgImage!.bitsPerComponent,
+                                bytesPerRow: 0,
+                                space: cgImage!.colorSpace!,
+                                bitmapInfo: cgImage!.bitmapInfo.rawValue)
+        context?.concatenate(transform)
+        switch imageOrientation {
+        case .left, .leftMirrored, .right, .rightMirrored:
+            context?.draw(cgImage!, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
+        default:
+            context?.draw(cgImage!, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        }
+        
+        if let newImageRef =  context?.makeImage() {
+            let newImage = UIImage(cgImage: newImageRef)
+            return newImage
+        }
+        
+        // In case things go wrong, still return self.
+        return self
+    }
+    
+    func cropImage(_ bounds: CGRect) -> UIImage? {
+        let imageRef = cgImage?.cropping(to: bounds)
+        var croppedImage: UIImage? = nil
+        if let imageRef = imageRef {
+            croppedImage = UIImage(cgImage: imageRef)
+        }
+        return croppedImage
+    }
+    
+    func sizeForEditing(with bounds: CGSize) -> CGSize {
+        let scale = bounds.width / size.width
+        let height = size.height * scale
+        if height <= bounds.height {
+            return CGSize(width: bounds.width / scale, height: height / scale)
+        }
+        return CGSize(width: bounds.width / scale, height: bounds.height / scale)
+    }
+    
+    func croppedImageForEditing(with bounds: CGSize) -> UIImage? {
+        let cropSize = sizeForEditing(with: bounds)
+        if size.height <= cropSize.height {
+            return self
+        }
+        let cropRect = CGRect(x: 0,
+                              y: (size.height - cropSize.height) / 2,
+                              width: cropSize.width,
+                              height: cropSize.height)
+        return cropImage(cropRect)
     }
     
 }

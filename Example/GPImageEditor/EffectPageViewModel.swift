@@ -20,6 +20,9 @@ public class EffectPageViewModel: NSObject {
     
     init(image: UIImage) {
         sourceImage = image.fixedOrientation()
+        if let image = sourceImage.croppedImageForEditing(with: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)) {
+            sourceImage = image
+        }
         thumbImage = sourceImage.thumbImage()
         super.init()
         rxSelectedFilter.accept(items.first)

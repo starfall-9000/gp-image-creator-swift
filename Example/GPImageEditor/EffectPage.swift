@@ -9,7 +9,6 @@ import UIKit
 import FittedSheets
 
 public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
-
     var doneBlock: ((UIImage) -> Void)?
     let cellSize = CGSize(width: 70, height: 130)
     let cellName = "EffectCell"
@@ -23,6 +22,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet var gradientTopConstaint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var stickerLayer: UIView!
+    @IBOutlet var topViews: [UIView]!
     private var isShowingEffectsView: Bool = true
     var viewModel: EffectPageViewModel?
     
@@ -100,7 +100,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func stickerTapped() {
-        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer, completion: { (sticker) in
+        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer, completion: { [weak self] (sticker) in
+            sticker?.layerView?.delegate = self
         })
         let sheetController = SheetViewController(controller: stickerVC, sizes: [SheetSize.fullScreen])
         sheetController.topCornersRadius = 16
@@ -147,11 +148,37 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return cellSize
     }
+}
+
+extension EffectPage: GPStickerPageDelegate {
+    func hideBarViews() {
+        UIView.animate(withDuration: 0.2) {
+            for view in self.topViews {
+                view.alpha = 0
+            }
+            self.bottomMenuView.alpha = 0
+        }
+    }
     
+    func showBarViews() {
+        UIView.animate(withDuration: 0.2) {
+            for view in self.topViews {
+                view.alpha = 1
+            }
+            self.bottomMenuView.alpha = 1
+        }
+    }
+    
+    public func stickerDidStartEditing(stickerView: UIView?) {
+        hideBarViews()
+    }
+    
+    public func stickerDidEndEditing(stickerView: UIView?) {
+        showBarViews()
+    }
 }
 
 extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
-    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let viewModel = viewModel else { return 0 }
         return viewModel.items.count
@@ -170,5 +197,4 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
         guard let sourceImage = viewModel?.sourceImage else { return }
         imageView.image = filter.applyFilter(image: sourceImage)
     }
-
 }

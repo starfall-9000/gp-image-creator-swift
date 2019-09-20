@@ -9,7 +9,13 @@ import Foundation
 import CoreGraphics
 import UIKit
 
+public protocol GPStickerPageDelegate: AnyObject {
+    func stickerDidStartEditing(stickerView: UIView?)
+    func stickerDidEndEditing(stickerView: UIView?)
+}
+
 public class StickersLayerView: UIView {
+    public weak var delegate: GPStickerPageDelegate?
     
     var offSet: CGPoint!
     var viewTransform: CGAffineTransform!
@@ -42,7 +48,7 @@ public class StickersLayerView: UIView {
             stickersLayer?.autoPinEdgesToSuperviewEdges()
         }
         stickerView.add(toView: stickersLayer!)
-        
+        stickerView.layerView = stickersLayer
         stickersLayer?.activeView = stickerView
         
         stickerView.alpha = 0
@@ -96,6 +102,18 @@ public class StickersLayerView: UIView {
         }
     }
     
+    func startEditing() {
+        if let delegate = self.delegate {
+            delegate.stickerDidStartEditing(stickerView: activeView)
+        }
+    }
+    
+    func endEditing() {
+        if let delegate = self.delegate {
+            delegate.stickerDidEndEditing(stickerView: activeView)
+        }
+    }
+    
     func deleteSticker(stickerView: StickerView) {
         var nextTarget: StickerView? = nil
         guard
@@ -133,6 +151,7 @@ public class StickersLayerView: UIView {
         if let viewToTransform = activeView {
             switch (gest.state) {
             case .began:
+                startEditing()
                 viewTransform = viewToTransform.transform
                 break;
                 
@@ -141,6 +160,7 @@ public class StickersLayerView: UIView {
                 break;
                 
             case .ended:
+                endEditing()
                 break;
                 
             default:
@@ -158,6 +178,7 @@ public class StickersLayerView: UIView {
         switch (gest.state) {
         case .began:
             if let stickerView = findActiveStickerView(location: gest.location(in: self)) {
+                startEditing()
                 activeView = stickerView
                 showDeleteButton()
                 isDragging = true
@@ -182,6 +203,7 @@ public class StickersLayerView: UIView {
             if stickerView.frame.intersects(deleteButton.frame) {
                 deleteSticker(stickerView: stickerView)
             }
+            endEditing()
             break
             
         default:
@@ -195,6 +217,7 @@ public class StickersLayerView: UIView {
         let scale = gest.scale
         switch (gest.state) {
         case .began:
+            startEditing()
             viewSize = CGSize(width: stickerView.widthConstraint.constant, height: stickerView.heightConstraint.constant)
             break
             
@@ -206,6 +229,7 @@ public class StickersLayerView: UIView {
             break
             
         case .ended:
+            endEditing()
             break
             
         default:
@@ -292,7 +316,7 @@ public class StickerInfo {
 }
 
 public class StickerView: UIView {
-    
+    public weak var layerView: StickersLayerView?
     var imageView: UIImageView!
     var info: StickerInfo!
     
@@ -307,7 +331,7 @@ public class StickerView: UIView {
     
     public func add(toView view: UIView) {
         view.addSubview(self)
-        
+
         verticalConstraint = autoAlignAxis(.horizontal, toSameAxisOf: view)
         horizontalConstraint = autoAlignAxis(.vertical, toSameAxisOf: view)
     }
