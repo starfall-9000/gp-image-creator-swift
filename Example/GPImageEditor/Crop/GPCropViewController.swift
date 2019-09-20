@@ -53,9 +53,16 @@ class GPCropViewController: Page<GPCropViewModel> {
         
         // content view
         view.addSubview(contentView)
-        contentView.autoPinEdge(toSuperviewEdge: .top, withInset: 44)
-        contentView.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
-        contentView.autoPinEdge(toSuperviewEdge: .right, withInset: 16)
+        contentView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 44)
+        contentView.autoPinEdge(toSuperviewSafeArea: .left, withInset: 16)
+        contentView.autoPinEdge(toSuperviewSafeArea: .right, withInset: 16)
+        
+        // safe view bottom
+        let safeView = UIView()
+        view.addSubview(safeView)
+        safeView.backgroundColor = .init(r: 0, g: 0, b: 0, a: 0.8)
+        safeView.autoPinEdgesToSuperviewEdges(with: .all(0), excludingEdge: .top)
+        safeView.autoSetDimension(.height, toSize: 48)
         
         // image
         imageView.image = viewModel?.model
@@ -84,7 +91,7 @@ class GPCropViewController: Page<GPCropViewModel> {
         // crop tool view
         let cropToolView = UIView()
         view.addSubview(cropToolView)
-        cropToolView.autoPinEdgesToSuperviewEdges(with: .all(0), excludingEdge: .top)
+        cropToolView.autoPinEdgesToSuperviewSafeArea(with: .all(0), excludingEdge: .top)
         cropToolView.autoPinEdge(.top, to: .bottom, of: contentView, withOffset: 16)
         cropToolView.backgroundColor = .init(r: 0, g: 0, b: 0, a: 0.8)
         
