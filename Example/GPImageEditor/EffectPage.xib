@@ -22,6 +22,12 @@
                 <outlet property="sourceImageView" destination="Upc-Le-9xO" id="ZP4-9f-aMQ"/>
                 <outlet property="stickerLayer" destination="0kA-E7-pkG" id="6kw-8y-5Rk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outletCollection property="topViews" destination="NHN-ip-8BM" collectionClass="NSMutableArray" id="5C1-pt-r3m"/>
+                <outletCollection property="topViews" destination="Nrd-iK-qp2" collectionClass="NSMutableArray" id="qHa-8M-8q1"/>
+                <outletCollection property="topViews" destination="uED-sa-dnT" collectionClass="NSMutableArray" id="09N-Td-LxG"/>
+                <outletCollection property="topViews" destination="3HS-0W-T6Z" collectionClass="NSMutableArray" id="uZg-ve-wgo"/>
+                <outletCollection property="topViews" destination="3Gj-ku-NAy" collectionClass="NSMutableArray" id="9LM-Ty-fVE"/>
+                <outletCollection property="topViews" destination="J5d-5z-pmU" collectionClass="NSMutableArray" id="yh4-1r-ALr"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
