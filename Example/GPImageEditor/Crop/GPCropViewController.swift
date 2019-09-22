@@ -10,6 +10,7 @@ import UIKit
 import DTMvvm
 import RxSwift
 import RxCocoa
+import PureLayout
 
 class GPCropViewController: Page<GPCropViewModel> {
     let contentView = UIView()
@@ -87,6 +88,9 @@ class GPCropViewController: Page<GPCropViewModel> {
         contentView.addSubview(imageMask)
         imageMask.imageView = imageView
         imageMask.isUserInteractionEnabled = false
+        
+        // image mask corner
+        createCorner()
         
         // crop tool view
         let cropToolView = UIView()
@@ -278,5 +282,36 @@ class GPCropViewController: Page<GPCropViewModel> {
         imageView.frame =  imageView.calcRectCoverMask(imageMask: imageMask)
         let center = CGPoint(x: 0.5 * contentView.width, y: 0.5 * contentView.height)
         viewModel?.rxImageCenter.accept(center)
+    }
+    
+    private func createCorner() {
+        addCornerWithLayout(tag: GPCropCorner.topLeft.rawValue, edge1: .top, edge2: .left)
+        addCornerWithLayout(tag: GPCropCorner.topRight.rawValue, edge1: .top, edge2: .right)
+        addCornerWithLayout(tag: GPCropCorner.bottomLeft.rawValue, edge1: .bottom, edge2: .left)
+        addCornerWithLayout(tag: GPCropCorner.bottomRight.rawValue, edge1: .bottom, edge2: .right)
+    }
+    
+    private func addCornerWithLayout(tag: Int, edge1: ALEdge, edge2: ALEdge) {
+        let corner = UIImageView()
+        corner.backgroundColor = .clear
+        contentView.addSubview(corner)
+        corner.tag = tag
+        corner.autoSetDimensions(to: .init(width: 32, height: 32))
+        corner.autoPinEdge(edge1, to: edge1, of: imageMask)
+        corner.autoPinEdge(edge2, to: edge2, of: imageMask)
+        corner.isUserInteractionEnabled = true
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanCorner(_:)))
+        corner.addGestureRecognizer(panGesture)
+    }
+    
+    @objc func handlePanCorner(_ sender: UIPanGestureRecognizer) {
+        guard
+            let corner = sender.view,
+            let cornerType = GPCropCorner(rawValue: corner.tag)
+        else { return }
+        if (sender.state == .began || sender.state == .changed) {
+            imageMask.dragMaskCorner(cornerType, translation: sender.translation(in: contentView))
+            sender.setTranslation(.zero, in: corner.superview)
+        }
     }
 }

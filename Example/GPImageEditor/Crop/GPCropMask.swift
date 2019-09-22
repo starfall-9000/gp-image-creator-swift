@@ -9,6 +9,13 @@
 import UIKit
 import DTMvvm
 
+public enum GPCropCorner: Int {
+    case topLeft = 0
+    case topRight = 1
+    case bottomLeft = 2
+    case bottomRight = 3
+}
+
 public class GPCropMask: UIView {
     public var type: GPCropType? = .free
     var imageView: UIImageView? = nil
@@ -106,5 +113,101 @@ public class GPCropMask: UIView {
         self.frame = CGRect(origin: .zero, size: CGSize(width: width, height: height))
         let center = CGPoint(x: 0.5 * contentWidth, y: 0.5 * contentHeight)
         self.center = center
+    }
+    
+    public func dragMaskCorner(_ type: GPCropCorner, translation point: CGPoint) {
+        var nextX, nextY, nextWidth, nextHeight: CGFloat
+        
+        switch type {
+        case .topLeft:
+            let translation = remakeTranslationWithCropType(translation: point, fixedRatio: 1)
+            nextX = frame.minX + translation.x
+            nextY = frame.minY + translation.y
+            nextWidth = frame.width - translation.x
+            nextHeight = frame.height - translation.y
+            break
+        case .topRight:
+            let translation = remakeTranslationWithCropType(translation: point, fixedRatio: -1)
+            nextX = frame.minX
+            nextY = frame.minY + translation.y
+            nextWidth = frame.width + translation.x
+            nextHeight = frame.height - translation.y
+            break
+        case .bottomLeft:
+            let translation = remakeTranslationWithCropType(translation: point, fixedRatio: -1)
+            nextX = frame.minX + translation.x
+            nextY = frame.minY
+            nextWidth = frame.width - translation.x
+            nextHeight = frame.height + translation.y
+            break
+        case .bottomRight:
+            let translation = remakeTranslationWithCropType(translation: point, fixedRatio: 1)
+            nextX = frame.minX
+            nextY = frame.minY
+            nextWidth = frame.width + translation.x
+            nextHeight = frame.height + translation.y
+            break
+        }
+        
+        var newFrame = CGRect(x: nextX, y: nextY, width: nextWidth, height: nextHeight)
+        newFrame = makeMaskInBounds(newFrame)
+        frame = newFrame
+    }
+    
+    private func remakeTranslationWithCropType(translation point: CGPoint, fixedRatio: CGFloat) -> CGPoint {
+        var translation = point
+        let negativeRatio: CGFloat = translation.y > 0 ? fixedRatio : -1 * fixedRatio
+        if let cropType = self.type {
+            switch cropType {
+            case .flip, .free:
+                break
+            case .ratioOneOne:
+                translation.x = negativeRatio * fabs(translation.y)
+            case .ratioFourThree:
+                translation.x = negativeRatio * 4 * fabs(translation.y) / 3
+            case .ratioThreeFour:
+                translation.x = negativeRatio * 3 * fabs(translation.y) / 4
+            }
+        }
+        return translation
+    }
+    
+    private func makeMaskInBounds(_ rect: CGRect) -> CGRect {
+        var nextX = rect.minX
+        var nextY = rect.minY
+        var nextWidth = rect.width
+        var nextHeight = rect.height
+        let imageFrame = imageView?.frame ?? CGRect.zero
+        let contentFrame = superview?.frame ?? CGRect.zero
+        
+        if (nextWidth < 100) {
+            nextX = frame.minX
+            nextWidth = frame.width
+        }
+        if (nextHeight < 100) {
+            nextY = frame.minY
+            nextHeight = frame.height
+        }
+        if (nextX < imageFrame.minX || nextX < 0) {
+            nextX = imageFrame.minX > 0 ? imageFrame.minX : 0
+            nextWidth = frame.maxX - nextX
+        }
+        if (nextY < imageFrame.minY || nextY < 0) {
+            nextY = imageFrame.minY > 0 ? imageFrame.minY : 0
+            nextHeight = frame.maxY - nextY
+        }
+        if (nextX + nextWidth > imageFrame.maxX ||
+            nextX + nextWidth > contentFrame.width) {
+            nextWidth = imageFrame.width < contentFrame.width
+                            ? imageFrame.maxX - nextX
+                            : contentFrame.width - nextX
+        }
+        if (nextY + nextHeight > imageFrame.maxY ||
+            nextY + nextHeight > contentFrame.height) {
+            nextHeight = imageFrame.height < contentFrame.height
+                            ? imageFrame.maxY - nextY
+                            : contentFrame.height - nextY
+        }
+        return CGRect(x: nextX, y: nextY, width: nextWidth, height: nextHeight)
     }
 }
