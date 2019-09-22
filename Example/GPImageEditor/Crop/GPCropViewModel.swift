@@ -20,6 +20,9 @@ public class GPCropViewModel: ViewModel<UIImage> {
     let rxImageScale = BehaviorRelay<CGFloat> (value: 1)
     let rxSliderValue = BehaviorRelay<Float> (value: 0)
     
+    let GP_MIN_CROP_SCALE: CGFloat = 1
+    let GP_MAX_CROP_SCALE: CGFloat = 5
+    
     lazy var doneAction: Action<CGRect, Void> = {
         return Action(workFactory: { [weak self] maskFrame in
             guard let self = self else { return .empty() }
@@ -115,8 +118,8 @@ public class GPCropViewModel: ViewModel<UIImage> {
 extension GPCropViewModel {
     private func handleZoom(_ scale: CGFloat) {
         var newScale = rxImageScale.value * scale
-        newScale = newScale < 1 ? 1 : newScale
-        newScale = newScale > 5 ? 5 : newScale
+        newScale = newScale < GP_MIN_CROP_SCALE ? GP_MIN_CROP_SCALE : newScale
+        newScale = newScale > GP_MAX_CROP_SCALE ? GP_MAX_CROP_SCALE : newScale
         rxImageScale.accept(newScale)
     }
     

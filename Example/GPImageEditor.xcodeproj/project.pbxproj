@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3212C6E52334E5C90031C2E5 /* GPCropMaskCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3212C6E42334E5C90031C2E5 /* GPCropMaskCorner.swift */; };
 		32823DD62333D83300F2D3C6 /* GPCropMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32823DD02333D83300F2D3C6 /* GPCropMask.swift */; };
 		32823DD72333D83300F2D3C6 /* GPCropExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32823DD12333D83300F2D3C6 /* GPCropExtension.swift */; };
 		32823DD92333D83300F2D3C6 /* GPCropItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32823DD32333D83300F2D3C6 /* GPCropItem.swift */; };
 		32823DDA2333D83300F2D3C6 /* GPCropViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32823DD42333D83300F2D3C6 /* GPCropViewModel.swift */; };
 		32823DDB2333D83300F2D3C6 /* GPCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32823DD52333D83300F2D3C6 /* GPCropViewController.swift */; };
+		32BF85D22337AB6000172361 /* GPCropSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BF85D12337AB6000172361 /* GPCropSlider.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
@@ -84,11 +86,13 @@
 		09226650FF64C6DB0D22A4D7 /* Pods-GPImageEditor_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPImageEditor_Example.release.xcconfig"; path = "Target Support Files/Pods-GPImageEditor_Example/Pods-GPImageEditor_Example.release.xcconfig"; sourceTree = "<group>"; };
 		1918C8DFBC2F9B89D8859A2D /* Pods-GPImageEditor_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPImageEditor_Tests.release.xcconfig"; path = "Target Support Files/Pods-GPImageEditor_Tests/Pods-GPImageEditor_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		318EAF7AAD58AED200562657 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		3212C6E42334E5C90031C2E5 /* GPCropMaskCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPCropMaskCorner.swift; sourceTree = "<group>"; };
 		32823DD02333D83300F2D3C6 /* GPCropMask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPCropMask.swift; sourceTree = "<group>"; };
 		32823DD12333D83300F2D3C6 /* GPCropExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPCropExtension.swift; sourceTree = "<group>"; };
 		32823DD32333D83300F2D3C6 /* GPCropItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPCropItem.swift; sourceTree = "<group>"; };
 		32823DD42333D83300F2D3C6 /* GPCropViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPCropViewModel.swift; sourceTree = "<group>"; };
 		32823DD52333D83300F2D3C6 /* GPCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPCropViewController.swift; sourceTree = "<group>"; };
+		32BF85D12337AB6000172361 /* GPCropSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPCropSlider.swift; sourceTree = "<group>"; };
 		358C0DBF5FADFF65F8A89D8D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* GPImageEditor_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPImageEditor_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -184,7 +188,9 @@
 				32823DD52333D83300F2D3C6 /* GPCropViewController.swift */,
 				32823DD42333D83300F2D3C6 /* GPCropViewModel.swift */,
 				32823DD02333D83300F2D3C6 /* GPCropMask.swift */,
+				3212C6E42334E5C90031C2E5 /* GPCropMaskCorner.swift */,
 				32823DD32333D83300F2D3C6 /* GPCropItem.swift */,
+				32BF85D12337AB6000172361 /* GPCropSlider.swift */,
 			);
 			path = Crop;
 			sourceTree = "<group>";
@@ -621,6 +627,8 @@
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				BC9B992B232F4CCB007B3175 /* UIImage+Extentions.swift in Sources */,
 				BC9B98E2232F49F5007B3175 /* GPImageFilter.swift in Sources */,
+				32BF85D22337AB6000172361 /* GPCropSlider.swift in Sources */,
+				3212C6E52334E5C90031C2E5 /* GPCropMaskCorner.swift in Sources */,
 				BC9B98D3232F42CF007B3175 /* EffectPageViewModel.swift in Sources */,
 				32823DD72333D83300F2D3C6 /* GPCropExtension.swift in Sources */,
 				BC9B99502330C230007B3175 /* GPImageEditor.swift in Sources */,
