@@ -165,15 +165,24 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
 
 extension EffectPage: GPStickerPageDelegate {
     func hideBarViews() {
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.2, animations: {
             for view in self.topViews {
                 view.alpha = 0
             }
             self.bottomMenuView.alpha = 0
+        }) { (finished) in
+            for view in self.topViews {
+                view.isHidden = true
+            }
+            self.bottomMenuView.isHidden = true
         }
     }
     
     func showBarViews() {
+        for view in self.topViews {
+            view.isHidden = false
+        }
+        self.bottomMenuView.isHidden = false
         UIView.animate(withDuration: 0.2) {
             for view in self.topViews {
                 view.alpha = 1
@@ -188,6 +197,10 @@ extension EffectPage: GPStickerPageDelegate {
     
     public func stickerDidEndEditing(stickerView: UIView?) {
         showBarViews()
+    }
+    
+    public func stickerEditingParentView() -> UIView? {
+        return view
     }
 }
 
