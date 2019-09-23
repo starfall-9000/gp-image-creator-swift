@@ -243,7 +243,7 @@ public class StickersLayerView: UIView {
         if let view = findActiveStickerView(location: location) {
             activeView = view
             if view.info.type == .text {
-                let editor = GPTextEditorTool.show(inView: self.superview!)
+                let editor = GPTextEditorTool.show(inView: self.superview!, completion: nil)
                 editor?.viewModel?.model = view.info
                 deleteSticker(stickerView: view)
             }

@@ -13,6 +13,7 @@ import DTMvvm
 
 public class GPTextEditorTool: View<GPTextEditorViewModel> {
     let contentView: GPTextEditorView = GPTextEditorView.loadFrom(nibNamed: "GPTextEditorView")!
+    var completion: ((StickerView?) -> Void)?
     
     var containerView: UIView? = nil
     
@@ -75,7 +76,8 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
         contentView.textView.resignFirstResponder()
         if let image = UIImage.imageWithView(view: textView, size: textView.frame.size) {
             let info = viewModel.getStickerInfo(image: image, size: textView.frame.size)
-            StickersLayerView.addSticker(stickerInfo: info, toView: containerView)
+            let stickerView = StickersLayerView.addSticker(stickerInfo: info, toView: containerView)
+            completion?(stickerView)
         }
         contentView.cancelAction()
     }
@@ -83,7 +85,7 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
 
 extension GPTextEditorTool {
     @discardableResult
-    public static func show(inView view: UIView) -> GPTextEditorTool? {
+    public static func show(inView view: UIView, completion: ((StickerView?) -> Void)?) -> GPTextEditorTool? {
         var editor: GPTextEditorTool!
         guard let superview = view.superview else { return nil }
         for subview in superview.subviews {
@@ -104,6 +106,7 @@ extension GPTextEditorTool {
         UIView.animate(withDuration: 0.3) {
             editor.alpha = 1
         }
+        editor.completion = completion
         return editor
     }
 }

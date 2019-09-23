@@ -123,7 +123,9 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func textTapped() {
-        GPTextEditorTool.show(inView: stickerLayer)
+        GPTextEditorTool.show(inView: stickerLayer) { [weak self] (text) in
+            text?.layerView?.delegate = self
+        }
     }
     
     @IBAction func drawTapped() {
