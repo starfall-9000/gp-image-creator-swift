@@ -15,6 +15,27 @@ public enum GPCropType: String {
     case ratioOneOne = "ratioOneOne"
     case ratioFourThree = "ratioFourThree"
     case ratioThreeFour = "ratioThreeFour"
+    
+    public static func getRatio(_ type: GPCropType) -> [String: CGFloat] {
+        var widthRatio: CGFloat = 1
+        var heightRatio: CGFloat = 1
+        switch type {
+        case .ratioOneOne:
+            widthRatio = 1
+            heightRatio = 1
+            break
+        case .ratioFourThree:
+            widthRatio = 4
+            heightRatio = 3
+            break
+        case .ratioThreeFour:
+            widthRatio = 3
+            heightRatio = 4
+        default:
+            break
+        }
+        return ["width": widthRatio, "height": heightRatio]
+    }
 }
 
 public class GPCropItem: UIView {
