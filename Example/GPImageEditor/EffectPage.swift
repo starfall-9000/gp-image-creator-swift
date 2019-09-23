@@ -23,6 +23,9 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var stickerLayer: UIView!
     @IBOutlet var topViews: [UIView]!
+    @IBOutlet weak var stickerLayerTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var stickerLayerBottomConstraint: NSLayoutConstraint!
+    
     private var isShowingEffectsView: Bool = true
     var viewModel: EffectPageViewModel?
     
@@ -40,6 +43,14 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         doneButton.cornerRadius = 18
         setupCollectionView()
         addLongPressGesture()
+    }
+    
+    override public func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let imgSize = imageView.image?.size ?? .zero
+        let height = min(view.frame.height, imgSize.height / imgSize.width * view.frame.width)
+        stickerLayerTopConstraint.constant = (view.frame.height - height)/2
+        stickerLayerBottomConstraint.constant = (view.frame.height - height)/2
     }
     
     private func addLongPressGesture() {

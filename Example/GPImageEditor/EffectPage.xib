@@ -21,6 +21,8 @@
                 <outlet property="showEffectButton" destination="Ivt-dS-Gyr" id="TQ1-dq-Ec4"/>
                 <outlet property="sourceImageView" destination="Upc-Le-9xO" id="ZP4-9f-aMQ"/>
                 <outlet property="stickerLayer" destination="0kA-E7-pkG" id="6kw-8y-5Rk"/>
+                <outlet property="stickerLayerBottomConstraint" destination="kun-cy-i3G" id="DNA-ek-X1S"/>
+                <outlet property="stickerLayerTopConstraint" destination="7o7-hv-WMO" id="fy6-Is-x4t"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outletCollection property="topViews" destination="NHN-ip-8BM" collectionClass="NSMutableArray" id="5C1-pt-r3m"/>
                 <outletCollection property="topViews" destination="Nrd-iK-qp2" collectionClass="NSMutableArray" id="qHa-8M-8q1"/>
@@ -35,10 +37,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Upc-Le-9xO">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Upc-Le-9xO">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xTM-QD-XmF">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xTM-QD-XmF">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0kA-E7-pkG">
@@ -177,29 +179,29 @@
                 <constraint firstItem="49S-G2-szV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4vA-bS-StQ"/>
                 <constraint firstItem="3HS-0W-T6Z" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="66X-zp-lVG"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="J5d-5z-pmU" secondAttribute="trailing" constant="5" id="6E6-Sc-jdb"/>
+                <constraint firstItem="Upc-Le-9xO" firstAttribute="width" secondItem="0kA-E7-pkG" secondAttribute="width" id="6kJ-52-KyN"/>
                 <constraint firstItem="0kA-E7-pkG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7o7-hv-WMO"/>
                 <constraint firstItem="3Gj-ku-NAy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="BQU-Os-hic"/>
-                <constraint firstAttribute="bottom" secondItem="Upc-Le-9xO" secondAttribute="bottom" id="Cy0-u3-lGs"/>
-                <constraint firstAttribute="trailing" secondItem="xTM-QD-XmF" secondAttribute="trailing" id="ECM-v5-xGK"/>
+                <constraint firstItem="xTM-QD-XmF" firstAttribute="centerY" secondItem="0kA-E7-pkG" secondAttribute="centerY" id="DyS-E7-77y"/>
                 <constraint firstItem="0kA-E7-pkG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="EZS-NF-MWy"/>
+                <constraint firstItem="xTM-QD-XmF" firstAttribute="width" secondItem="0kA-E7-pkG" secondAttribute="width" id="EpR-ZQ-U0m"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="49S-G2-szV" secondAttribute="trailing" id="FVS-EG-cnF"/>
                 <constraint firstItem="0kA-E7-pkG" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Gln-Ie-qHz"/>
                 <constraint firstItem="J5d-5z-pmU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="HGh-RY-hmj"/>
                 <constraint firstItem="J5d-5z-pmU" firstAttribute="leading" secondItem="3Gj-ku-NAy" secondAttribute="trailing" constant="5" id="IGy-34-Z0B"/>
                 <constraint firstItem="uED-sa-dnT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Lep-Yj-z92"/>
-                <constraint firstAttribute="bottom" secondItem="xTM-QD-XmF" secondAttribute="bottom" id="OPp-61-mJv"/>
                 <constraint firstItem="Nrd-iK-qp2" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ROH-Vx-03y"/>
-                <constraint firstItem="xTM-QD-XmF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Tkj-AS-JLO"/>
                 <constraint firstItem="49S-G2-szV" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" id="Tm3-wK-T7c"/>
+                <constraint firstItem="xTM-QD-XmF" firstAttribute="height" secondItem="0kA-E7-pkG" secondAttribute="height" id="UlO-Pc-MKL"/>
+                <constraint firstItem="xTM-QD-XmF" firstAttribute="centerX" secondItem="0kA-E7-pkG" secondAttribute="centerX" id="ZQl-p4-Be6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="49S-G2-szV" secondAttribute="bottom" id="blt-Wl-OyR"/>
-                <constraint firstItem="Upc-Le-9xO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="d3P-YV-wnw"/>
                 <constraint firstItem="3HS-0W-T6Z" firstAttribute="leading" secondItem="uED-sa-dnT" secondAttribute="trailing" constant="5" id="dPA-no-ysH"/>
+                <constraint firstItem="Upc-Le-9xO" firstAttribute="height" secondItem="0kA-E7-pkG" secondAttribute="height" id="dUi-gL-if6"/>
                 <constraint firstItem="NHN-ip-8BM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ddt-Rx-lZH"/>
                 <constraint firstItem="NHN-ip-8BM" firstAttribute="bottom" secondItem="Nrd-iK-qp2" secondAttribute="bottom" constant="10" id="eRj-gJ-4P0"/>
                 <constraint firstAttribute="bottom" secondItem="0kA-E7-pkG" secondAttribute="bottom" id="kun-cy-i3G"/>
-                <constraint firstItem="xTM-QD-XmF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uoQ-NE-urf"/>
-                <constraint firstItem="Upc-Le-9xO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="vPq-FT-ua7"/>
-                <constraint firstItem="Upc-Le-9xO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xJe-ce-uOs"/>
+                <constraint firstItem="Upc-Le-9xO" firstAttribute="centerY" secondItem="0kA-E7-pkG" secondAttribute="centerY" id="sM4-hz-ols"/>
+                <constraint firstItem="Upc-Le-9xO" firstAttribute="centerX" secondItem="0kA-E7-pkG" secondAttribute="centerX" id="z9u-LP-pVt"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>

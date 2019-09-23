@@ -267,16 +267,19 @@ public class StickersLayerView: UIView {
 }
 
 extension StickersLayerView {
-    func buildImage(image: UIImage) -> UIImage? {
+    func buildImage(image: UIImage, size: CGSize) -> UIImage? {
         var layer: CALayer? = nil
         var scale: CGFloat = 1
+        var imgSize: CGSize = .zero
         DispatchQueue.main.async {
             layer = self.layer
             scale = image.size.width / self.frame.width
+            imgSize = image.size
         }
     
         UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-        image.draw(at: .zero)
+        let scaleHeight = min(size.height, imgSize.height/imgSize.width * size.width)
+        image.draw(at: CGPoint(x: 0, y: (size.height - scaleHeight)/2))
         if let context = UIGraphicsGetCurrentContext() {
             context.scaleBy(x: scale, y: scale)
             layer?.render(in: context)
