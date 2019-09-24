@@ -12,6 +12,7 @@ import UIKit
 public protocol GPStickerPageDelegate: AnyObject {
     func stickerDidStartEditing(stickerView: UIView?)
     func stickerDidEndEditing(stickerView: UIView?)
+    func stickerEditingParentView() -> UIView?
 }
 
 public class StickersLayerView: UIView {
@@ -62,14 +63,22 @@ public class StickersLayerView: UIView {
         super.init(frame: frame)
         self.backgroundColor = .clear
         
-        addSubview(deleteButton)
+        addGestures()
+    }
+    
+    func addDeleteButton() {
+        if deleteButton.superview != nil {
+            return
+        }
+        guard let view = delegate?.stickerEditingParentView() else {
+            return
+        }
+        view.insertSubview(deleteButton, belowSubview: self.superview!)
         deleteButton.autoAlignAxis(.vertical, toSameAxisOf: self)
         deleteButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 26)
         deleteButton.autoSetDimensions(to: CGSize(width: 48, height: 48))
         deleteButton.isUserInteractionEnabled = false
         deleteButton.isHidden = true
-        
-        addGestures()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -89,6 +98,7 @@ public class StickersLayerView: UIView {
     }
     
     func showDeleteButton() {
+        addDeleteButton()
         deleteButton.alpha = 0
         deleteButton.isHidden = false
         UIView.animate(withDuration: 0.3) {
@@ -169,6 +179,10 @@ public class StickersLayerView: UIView {
             
         }
     }
+
+    func getDeleteButtonFrameInSelf() -> CGRect {
+        return deleteButton.convert(deleteButton.bounds, to: self)
+    }
     
     @objc func drag(gest: UIPanGestureRecognizer) {
         guard let stickerView = activeView else { return }
@@ -191,7 +205,7 @@ public class StickersLayerView: UIView {
                 stickerView.horizontalConstraint.constant = offSet.x + translation.x
                 stickerView.verticalConstraint.constant = offSet.y + translation.y
                 
-                deleteButton.isSelected = stickerView.frame.intersects(deleteButton.frame)
+                deleteButton.isSelected = stickerView.frame.contains(self.getDeleteButtonFrameInSelf())
                 
                 layoutIfNeeded()
             }
@@ -200,7 +214,7 @@ public class StickersLayerView: UIView {
         case .ended:
             isDragging = false
             hideDeleteButton()
-            if stickerView.frame.intersects(deleteButton.frame) {
+            if stickerView.frame.contains(self.getDeleteButtonFrameInSelf()) {
                 deleteSticker(stickerView: stickerView)
             }
             endEditing()
@@ -243,7 +257,7 @@ public class StickersLayerView: UIView {
         if let view = findActiveStickerView(location: location) {
             activeView = view
             if view.info.type == .text {
-                let editor = GPTextEditorTool.show(inView: self.superview!)
+                let editor = GPTextEditorTool.show(inView: self.superview!, completion: nil)
                 editor?.viewModel?.model = view.info
                 deleteSticker(stickerView: view)
             }
@@ -267,22 +281,26 @@ public class StickersLayerView: UIView {
 }
 
 extension StickersLayerView {
-    func buildImage(image: UIImage) -> UIImage? {
+    func buildImage(image: UIImage, size: CGSize) -> UIImage? {
         var layer: CALayer? = nil
         var scale: CGFloat = 1
+        var imgSize: CGSize = .zero
         DispatchQueue.main.async {
             layer = self.layer
             scale = image.size.width / self.frame.width
+            imgSize = image.size
         }
-    
-        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-        image.draw(at: .zero)
+
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: image.size.width, height: image.size.width / size.width * size.height), false, image.scale)
+        let imageDrawPoint = CGPoint(x: 0, y: (scale * size.height - imgSize.height)/2)
+        image.draw(at: imageDrawPoint)
         if let context = UIGraphicsGetCurrentContext() {
             context.scaleBy(x: scale, y: scale)
             layer?.render(in: context)
             let tmpImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            return tmpImage
+            let cropImage = tmpImage?.cropImage(CGRect(x: imageDrawPoint.x, y: imageDrawPoint.y, width: imgSize.width, height: imgSize.height))
+            return cropImage
         }
         return nil
     }

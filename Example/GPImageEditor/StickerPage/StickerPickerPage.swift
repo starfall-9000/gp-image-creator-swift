@@ -151,7 +151,7 @@ extension StickerPickerPage {
                 return
         }
         DispatchQueue.global(qos: .background).async {
-            let image = stickersLayer.buildImage(image: originalImage)
+            let image = stickersLayer.buildImage(image: originalImage, size: view.frame.size)
             DispatchQueue.main.async {
                 completion(image)
             }
