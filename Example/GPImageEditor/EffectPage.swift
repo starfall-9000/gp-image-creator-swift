@@ -23,11 +23,13 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var stickerLayer: UIView!
     @IBOutlet var topViews: [UIView]!
+    @IBOutlet var bottomViews: [UIView]!
     @IBOutlet weak var stickerLayerTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var stickerLayerBottomConstraint: NSLayoutConstraint!
     
     private var isShowingEffectsView: Bool = true
     var viewModel: EffectPageViewModel?
+    var isDidAppear: Bool = false
     
     public static func create(with viewModel: EffectPageViewModel?) -> EffectPage {
         let bundle = Bundle(for: EffectPage.self)
@@ -43,15 +45,19 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         doneButton.cornerRadius = 18
         setupCollectionView()
         addLongPressGesture()
+        collectionView.isHidden = true
+        bottomGradient.isHidden = true
     }
     
-//    override public func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        let imgSize = imageView.image?.size ?? .zero
-//        let height = min(view.frame.height, imgSize.height / imgSize.width * view.frame.width)
-//        stickerLayerTopConstraint.constant = (view.frame.height - height)/2
-//        stickerLayerBottomConstraint.constant = (view.frame.height - height)/2
-//    }
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !isDidAppear {
+            self.bottomGradient.top = self.bottomMenuView.top
+            self.collectionView.top = self.view.height
+            showEffectTool()
+            isDidAppear = true
+        }
+    }
     
     private func addLongPressGesture() {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longGesturePressed))
@@ -83,9 +89,11 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     private func showEffectTool() {
+        collectionView.isHidden = false
+        bottomGradient.isHidden = false
         UIView.animate(withDuration: 0.25) {
-            self.bottomGradient.top = 0
-            self.collectionView.top = 0
+            self.collectionView.bottom = self.bottomMenuView.top
+            self.bottomGradient.top = self.collectionView.top
             let imageName = "arrow-down-icon.png"
             let bundle = Bundle(for: EffectPage.self)
             self.showEffectButton.setImage(UIImage(named: imageName, in: bundle, compatibleWith: nil), for: .normal)
@@ -94,8 +102,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     private func hideEffectTool() {
         UIView.animate(withDuration: 0.25) {
-            self.bottomGradient.top = self.collectionView.height
-            self.collectionView.top = self.bottomMenuView.height
+            self.bottomGradient.top = self.bottomMenuView.top
+            self.collectionView.top = self.view.height
             let imageName = "arrow-top-icon.png"
             let bundle = Bundle(for: EffectPage.self)
             self.showEffectButton.setImage(UIImage(named: imageName, in: bundle, compatibleWith: nil), for: .normal)
@@ -169,12 +177,16 @@ extension EffectPage: GPStickerPageDelegate {
             for view in self.topViews {
                 view.alpha = 0
             }
-            self.bottomMenuView.alpha = 0
+            for view in self.bottomViews {
+                view.alpha = 0
+            }
         }) { (finished) in
             for view in self.topViews {
                 view.isHidden = true
             }
-            self.bottomMenuView.isHidden = true
+            for view in self.bottomViews {
+                view.isHidden = true
+            }
         }
     }
     
@@ -182,12 +194,17 @@ extension EffectPage: GPStickerPageDelegate {
         for view in self.topViews {
             view.isHidden = false
         }
+        for view in self.bottomViews {
+            view.isHidden = false
+        }
         self.bottomMenuView.isHidden = false
         UIView.animate(withDuration: 0.2) {
             for view in self.topViews {
                 view.alpha = 1
             }
-            self.bottomMenuView.alpha = 1
+            for view in self.bottomViews {
+                view.alpha = 1
+            }
         }
     }
     

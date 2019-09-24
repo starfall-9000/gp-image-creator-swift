@@ -23,7 +23,14 @@ extension UIView {
     }
     
     var bottom: CGFloat {
-        return frame.origin.y + frame.size.height
+        get {
+            return frame.origin.y + frame.size.height
+        }
+        set {
+            var rect = frame
+            rect.origin.y = newValue - rect.size.height
+            frame = rect
+        }
     }
     
     var left: CGFloat {
