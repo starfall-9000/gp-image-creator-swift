@@ -45,13 +45,13 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         addLongPressGesture()
     }
     
-    override public func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let imgSize = imageView.image?.size ?? .zero
-        let height = min(view.frame.height, imgSize.height / imgSize.width * view.frame.width)
-        stickerLayerTopConstraint.constant = (view.frame.height - height)/2
-        stickerLayerBottomConstraint.constant = (view.frame.height - height)/2
-    }
+//    override public func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        let imgSize = imageView.image?.size ?? .zero
+//        let height = min(view.frame.height, imgSize.height / imgSize.width * view.frame.width)
+//        stickerLayerTopConstraint.constant = (view.frame.height - height)/2
+//        stickerLayerBottomConstraint.constant = (view.frame.height - height)/2
+//    }
     
     private func addLongPressGesture() {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longGesturePressed))

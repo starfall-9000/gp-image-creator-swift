@@ -290,16 +290,17 @@ extension StickersLayerView {
             scale = image.size.width / self.frame.width
             imgSize = image.size
         }
-    
-        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-        let scaleHeight = min(size.height, imgSize.height/imgSize.width * size.width)
-        image.draw(at: CGPoint(x: 0, y: (size.height - scaleHeight)/2))
+
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: image.size.width, height: image.size.width / size.width * size.height), false, image.scale)
+        let imageDrawPoint = CGPoint(x: 0, y: (scale * size.height - imgSize.height)/2)
+        image.draw(at: imageDrawPoint)
         if let context = UIGraphicsGetCurrentContext() {
             context.scaleBy(x: scale, y: scale)
             layer?.render(in: context)
             let tmpImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            return tmpImage
+            let cropImage = tmpImage?.cropImage(CGRect(x: imageDrawPoint.x, y: imageDrawPoint.y, width: imgSize.width, height: imgSize.height))
+            return cropImage
         }
         return nil
     }
