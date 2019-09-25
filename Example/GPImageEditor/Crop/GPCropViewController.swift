@@ -50,13 +50,6 @@ class GPCropViewController: Page<GPCropViewModel> {
         contentView.autoPinEdge(toSuperviewSafeArea: .left, withInset: 16)
         contentView.autoPinEdge(toSuperviewSafeArea: .right, withInset: 16)
         
-        // safe view bottom
-        let safeView = UIView()
-        view.addSubview(safeView)
-        safeView.backgroundColor = .init(r: 0, g: 0, b: 0, a: 0.8)
-        safeView.autoPinEdgesToSuperviewEdges(with: .all(0), excludingEdge: .top)
-        safeView.autoSetDimension(.height, toSize: 48)
-        
         // image
         imageView.image = viewModel?.model
         contentView.addSubview(imageView)
@@ -76,9 +69,24 @@ class GPCropViewController: Page<GPCropViewModel> {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanImage(_:)))
         imageView.addGestureRecognizer(panGesture)
         
+        // blur bottom
+        let blurView = UIView()
+        contentView.addSubview(blurView)
+        blurView.backgroundColor = .init(r: 0, g: 0, b: 0, a: 0.5)
+        blurView.autoPinEdge(.top, to: .top, of: view)
+        blurView.autoPinEdge(.left, to: .left, of: view)
+        blurView.autoPinEdge(.right, to: .right, of: view)
+        blurView.autoPinEdge(.bottom, to: .bottom, of: view)
+        blurView.isUserInteractionEnabled = false
+        
         // image mask
         contentView.addSubview(imageMask)
         imageMask.imageView = imageView
+        imageMask.displayImageView.image = viewModel?.model
+        imageMask.displayContent.autoPinEdge(.top, to: .top, of: contentView)
+        imageMask.displayContent.autoPinEdge(.left, to: .left, of: contentView)
+        imageMask.displayContent.autoPinEdge(.right, to: .right, of: contentView)
+        imageMask.displayContent.autoPinEdge(.bottom, to: .bottom, of: contentView)
         imageMask.isUserInteractionEnabled = false
         
         // image mask corner
@@ -154,6 +162,8 @@ class GPCropViewController: Page<GPCropViewModel> {
         guard let viewModel = viewModel else { return }
         viewModel.rxImageTransform ~> imageView.rx.transform => disposeBag
         viewModel.rxImageCenter ~> imageView.rx.center => disposeBag
+        viewModel.rxImageTransform ~> imageMask.displayImageView.rx.transform => disposeBag
+        viewModel.rxImageCenter ~> imageMask.displayImageView.rx.center => disposeBag
         viewModel.rxSliderValue <~> sliderView.slider.rx.value => disposeBag
         viewModel.rxSliderValue.subscribe(onNext: { [weak self] (value) in
             guard let self = self else { return }
@@ -231,6 +241,7 @@ class GPCropViewController: Page<GPCropViewModel> {
     
     private func updateImageView(with type: GPCropType) {
         imageView.frame =  imageView.calcRectCoverMask(imageMask: imageMask)
+        imageMask.displayImageView.frame = imageView.frame
         let center = CGPoint(x: 0.5 * contentView.width, y: 0.5 * contentView.height)
         viewModel?.rxImageCenter.accept(center)
     }
