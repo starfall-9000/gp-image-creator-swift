@@ -20,17 +20,18 @@ public class GPCropMask: UIView {
     public var type: GPCropType? = .free
     var imageView: UIImageView? = nil
     let imageMask = UIView()
+    let displayContent = UIView()
+    let displayImageView = UIImageView()
     
     convenience init() {
         self.init(frame: CGRect.zero)
         self.subviews.forEach({ $0.removeFromSuperview() })
         self.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        
-        // blur
-//        let blurView = UIView()
-//        self.addSubview(blurView)
-//        blurView.backgroundColor = .init(r: 0, g: 0, b: 0, a: 0.5)
-//        blurView.autoPinEdgesToSuperviewEdges()
+        self.clipsToBounds = true
+        // display image
+        self.addSubview(displayContent)
+        displayContent.addSubview(displayImageView)
+        displayImageView.contentMode = .scaleAspectFit
         // mask
         self.addSubview(imageMask)
         imageMask.autoPinEdgesToSuperviewEdges()
