@@ -77,6 +77,7 @@ public class GPCropMask: UIView {
     }
     
     private func updateImageMaskSize() {
+        // using to update mask size after user change other kind of mask
         guard
             let contentView = superview,
             let type = type,
@@ -117,6 +118,7 @@ public class GPCropMask: UIView {
     }
     
     public func dragMaskCorner(_ type: GPCropCorner, translation point: CGPoint) {
+        // using to calc and set new frame for mask after drag mask corner
         var nextX, nextY, nextWidth, nextHeight: CGFloat
         
         switch type {
@@ -156,6 +158,8 @@ public class GPCropMask: UIView {
     }
     
     private func remakeTranslationWithCropType(translation point: CGPoint, fixedRatio: CGFloat) -> CGPoint {
+        // remake translation to using in resize mask with ratio-mask
+        // keeping the y translation, remake x translation to fit ratio
         var translation = point
         let negativeRatio: CGFloat = translation.y > 0 ? fixedRatio : -1 * fixedRatio
         if let cropType = self.type {
@@ -174,6 +178,7 @@ public class GPCropMask: UIView {
     }
     
     private func makeMaskInBounds(_ rect: CGRect) -> CGRect {
+        // remake rect to ensure that mask always in bounds
         var nextX = rect.minX
         var nextY = rect.minY
         var nextWidth = rect.width
