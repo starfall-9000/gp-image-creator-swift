@@ -57,6 +57,13 @@ class GPTutorialView: AbstractView {
         }
     }
     
+    var textColor: UIColor = .white {
+        didSet {
+            guard let titleLabel = titleLabel else { return }
+            titleLabel.textColor = textColor
+        }
+    }
+    
     var icon: UIImage? = nil {
         didSet {
             guard let alertIcon = alertIcon else { return }
@@ -158,6 +165,8 @@ class GPTutorialView: AbstractView {
 
 public enum GPTutorialType: String {
     case GPStickerTutorial = "GPStickerTutorial"
+    case GPTextEditTutorial = "GPTextEditTutorial"
+    case GPFontEditTutorial = "GPFontEditTutorial"
 }
 
 extension GPTutorialView {
@@ -174,6 +183,14 @@ extension GPTutorialView {
         return tutorialWithType(.GPStickerTutorial)
     }
     
+    public static var textEditTutorial: GPTutorialView {
+        return tutorialWithType(.GPTextEditTutorial)
+    }
+    
+    public static var fontEditTutorial: GPTutorialView {
+        return tutorialWithType(.GPFontEditTutorial)
+    }
+    
     public static func tutorialWithType(_ type: GPTutorialType) -> GPTutorialView {
         let tutorialView = GPTutorialView()
         let bundle = Bundle(for: GPTutorialView.self)
@@ -181,6 +198,8 @@ extension GPTutorialView {
         var title: String = ""
         var size: CGSize = .zero
         var icon: UIImage? = nil
+        var textColor: UIColor = .white
+        var reversed: Bool = false
         switch type {
         case .GPStickerTutorial:
             activeColor = .init(r: 0, g: 0, b: 0, a: 0.8)
@@ -188,11 +207,27 @@ extension GPTutorialView {
             size = CGSize(width: 260, height: 41)
             icon = UIImage(named: "ic_tutorial_alert", in: bundle, compatibleWith: nil)
             break
+        case .GPTextEditTutorial:
+            activeColor = .init(r: 0, g: 0, b: 0, a: 0.8)
+            title = "Ấn hoặc giữ Text để tuỳ chỉnh"
+            size = CGSize(width: 230, height: 41)
+            icon = UIImage(named: "ic_tutorial_alert", in: bundle, compatibleWith: nil)
+            break
+        case .GPFontEditTutorial:
+            activeColor = .init(r: 255, g: 255, b: 255, a: 0.9)
+            title = "Tuỳ chỉnh font chữ"
+            size = CGSize(width: 162, height: 41)
+            icon = UIImage(named: "ic_tutorial_alert_gray", in: bundle, compatibleWith: nil)
+            textColor = .fromHex("#1A1A1A")
+            reversed = true
+            break
         }
         tutorialView.activeColor = activeColor
         tutorialView.title = title
         tutorialView.autoSetDimensions(to: size)
         tutorialView.icon = icon
+        tutorialView.textColor = textColor
+        tutorialView.reversed = reversed
         return tutorialView
     }
 }
