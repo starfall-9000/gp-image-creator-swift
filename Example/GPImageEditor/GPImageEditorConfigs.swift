@@ -10,8 +10,8 @@ import DTMvvm
 
 public class GPImageEditorConfigs {
     
-    static public var apiDomain: String = "https://staging-api.gapo.vn/main/v1.1"
-    static public var stickersAPIPath: String = "/stickers"
+    static public var apiDomain: String = "https://staging-api.gapo.vn/sticker/v1.2"
+    static public var stickersAPIPath: String = "/sticker"
     static public var userToken = ""
     static public var debugAPI = false
     static public var dependencyManager: DependencyManager? = nil {

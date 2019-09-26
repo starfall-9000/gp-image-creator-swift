@@ -51,10 +51,11 @@ extension StickerAPI: TargetType {
     var task: Task {
         switch self {
         case .getStickerList(let page):
-            let params = [
+            let params: [String: Any] = [
+                "package_id": "1",
                 "page" : page
             ]
-            return .requestParameters(parameters: params, encoding: URLEncoding.httpBody)
+            return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
         }
     }
 }

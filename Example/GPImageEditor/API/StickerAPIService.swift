@@ -35,7 +35,7 @@ class StickerResponse: Model {
 class StickerAPIService {
     private let stickerProvider = GPImageEditorConfigs.debugAPI
         ? MoyaProvider<StickerAPI>(stubClosure: MoyaProvider.immediatelyStub, plugins: [NetworkLoggerPlugin(verbose: true)])
-        : MoyaProvider<StickerAPI>()
+        : MoyaProvider<StickerAPI>(plugins: [NetworkLoggerPlugin(verbose: true)])
     
     func getStickerList(page: Int) -> Single<StickerResponse> {
         return stickerProvider.rx
