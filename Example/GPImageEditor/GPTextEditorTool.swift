@@ -35,13 +35,25 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
     override public func bindViewAndViewModel() {
         guard let viewModel = viewModel else { return }
         viewModel.rxText <~> contentView.textView.rx.text => disposeBag
-        viewModel.rxBgColor ~> contentView.textView.rx.backgroundColor => disposeBag
+//        viewModel.rxBgColor ~> contentView.textView.rx.backgroundColor => disposeBag
         viewModel.rxTextColor ~> contentView.textView.rx.textColor => disposeBag
         viewModel.rxAlignment ~> contentView.textView.rx.textAlignment => disposeBag
         viewModel.rxFont ~> contentView.textView.rx.font => disposeBag
+        viewModel.rxFont ~> contentView.placeholderLabel.rx.font => disposeBag
         viewModel.rxFontName ~> contentView.fontButton.rx.title(for: .normal) => disposeBag
         viewModel.rxFontButtonWidth ~> contentView.fontButtonWidth.rx.constant => disposeBag
         viewModel.rxAlignmentIcon ~> contentView.alignButton.rx.image(for: .normal) => disposeBag
+        
+        Observable.combineLatest(viewModel.rxBgColor, viewModel.rxText)
+            .subscribe(onNext: { [weak self] (color, text) in
+                guard let self = self else { return }
+                if text == nil || text!.isEmpty || color == nil || color == .clear {
+                    self.contentView.textView.backgroundColor = .clear
+                }
+                else {
+                    self.contentView.textView.backgroundColor = color
+                }
+            }) => disposeBag
         
         viewModel.rxFont.subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
@@ -52,9 +64,13 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
             .subscribe(onNext: { [weak self] _ in
                 self?.doneAction()
             }) => disposeBag
-        contentView.colorButtons.forEach { (button) in
+        contentView.showBgButton.rx.bind(to: viewModel.showHideBgAction, input: ())
+        viewModel.rxBgColorHidden.map{ !$0 } ~> contentView.showBgButton.rx.isSelected => disposeBag
+        for i in 0..<contentView.colorButtons.count {
+            let button = contentView.colorButtons[i]
             button.button.rx.bind(to: viewModel.changeColorAction, input: button.tag)
         }
+        
         viewModel.rxColorIndex.skip(2).subscribe(onNext: { [weak self] (index) in
             guard let buttons = self?.contentView.colorButtons else { return }
             for button in buttons {

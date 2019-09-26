@@ -45,3 +45,9 @@ public extension Reactive where Base: UITextView {
         return Binder(base) { $0.font = $1 }
     }
 }
+
+public extension Reactive where Base: UILabel {
+    var font: Binder<UIFont?> {
+        return Binder(base) { $0.font = $1 }
+    }
+}
