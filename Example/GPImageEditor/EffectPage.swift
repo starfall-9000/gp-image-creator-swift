@@ -7,11 +7,16 @@
 
 import UIKit
 import FittedSheets
+import DTMvvm
+import RxSwift
 
 public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     var doneBlock: ((UIImage) -> Void)?
     let cellSize = CGSize(width: 70, height: 130)
     let cellName = "EffectCell"
+    let hideButton = UIButton(type: .custom)
+    let tutorialView = GPTutorialView.stickerTutorial
+    var disposeBag: DisposeBag? = nil
     
     @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
@@ -26,6 +31,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet var bottomViews: [UIView]!
     @IBOutlet weak var stickerLayerTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var stickerLayerBottomConstraint: NSLayoutConstraint!
+    var tutorialTopConstraint: NSLayoutConstraint? = nil
     
     private var isShowingEffectsView: Bool = true
     var viewModel: EffectPageViewModel?
@@ -40,10 +46,12 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
         imageView.image = viewModel?.sourceImage
         sourceImageView.image = viewModel?.sourceImage
         doneButton.cornerRadius = 18
         setupCollectionView()
+        setupTutorial()
         addLongPressGesture()
         collectionView.isHidden = true
         bottomGradient.isHidden = true
@@ -118,9 +126,36 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         collectionView.delegate = self
     }
     
+    private func setupTutorial() {
+        stickerLayer.addSubview(hideButton)
+        hideButton.autoPinEdgesToSuperviewEdges()
+        hideButton.rx.tap
+            .subscribe(onNext: { self.viewModel?.rxHideTutorial.accept(true) })
+            => disposeBag
+        hideButton.addSubview(tutorialView)
+        tutorialView.autoAlignAxis(toSuperviewAxis: .vertical)
+        guard let viewModel = viewModel else { return }
+        viewModel.rxHideTutorial ~> hideButton.rx.isHidden => disposeBag
+        viewModel.rxHideTutorial.accept(true)
+    }
+    
+    private func handleAddNewSticker(_ sticker: StickerView) {
+        guard let viewModel = self.viewModel else { return }
+        sticker.layerView?.delegate = self
+        let shouldShowTutorial = GPTutorialView.shouldShowTutorial(.GPStickerTutorial)
+        if (shouldShowTutorial) {
+            stickerLayer.bringSubview(toFront: hideButton)
+            tutorialTopConstraint?.autoRemove()
+            tutorialTopConstraint = tutorialView.autoPinEdge(.top, to: .bottom, of: sticker.imageView, withOffset: 10)
+            viewModel.rxHideTutorial.accept(false)
+        }
+    }
+    
     @IBAction func stickerTapped() {
-        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer, completion: { [weak self] (sticker) in
-            sticker?.layerView?.delegate = self
+        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer,
+                                                     completion: { [weak self] (sticker) in
+            guard let self = self, let sticker = sticker else { return }
+            self.handleAddNewSticker(sticker)
         })
         let sheetController = SheetViewController(controller: stickerVC, sizes: [SheetSize.fullScreen])
         sheetController.topCornersRadius = 16
@@ -168,6 +203,10 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return cellSize
+    }
+    
+    deinit {
+        disposeBag = nil
     }
 }
 

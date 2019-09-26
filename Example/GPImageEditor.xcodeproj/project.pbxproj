@@ -13,6 +13,8 @@
 		32823DD92333D83300F2D3C6 /* GPCropItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32823DD32333D83300F2D3C6 /* GPCropItem.swift */; };
 		32823DDA2333D83300F2D3C6 /* GPCropViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32823DD42333D83300F2D3C6 /* GPCropViewModel.swift */; };
 		32823DDB2333D83300F2D3C6 /* GPCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32823DD52333D83300F2D3C6 /* GPCropViewController.swift */; };
+		328FB6DC233C1FF100186017 /* GPTriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328FB6DA233C1FF100186017 /* GPTriangleView.swift */; };
+		328FB6DD233C1FF100186017 /* GPTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328FB6DB233C1FF100186017 /* GPTutorialView.swift */; };
 		32BF85D22337AB6000172361 /* GPCropSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BF85D12337AB6000172361 /* GPCropSlider.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -92,6 +94,8 @@
 		32823DD32333D83300F2D3C6 /* GPCropItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPCropItem.swift; sourceTree = "<group>"; };
 		32823DD42333D83300F2D3C6 /* GPCropViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPCropViewModel.swift; sourceTree = "<group>"; };
 		32823DD52333D83300F2D3C6 /* GPCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPCropViewController.swift; sourceTree = "<group>"; };
+		328FB6DA233C1FF100186017 /* GPTriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPTriangleView.swift; sourceTree = "<group>"; };
+		328FB6DB233C1FF100186017 /* GPTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPTutorialView.swift; sourceTree = "<group>"; };
 		32BF85D12337AB6000172361 /* GPCropSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPCropSlider.swift; sourceTree = "<group>"; };
 		358C0DBF5FADFF65F8A89D8D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* GPImageEditor_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPImageEditor_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,6 +186,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32271C16233C1F6A0017C764 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				328FB6DA233C1FF100186017 /* GPTriangleView.swift */,
+				328FB6DB233C1FF100186017 /* GPTutorialView.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		32823DCF2333D83300F2D3C6 /* Crop */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +252,7 @@
 				703D1BAA233359E70042987C /* Extensions */,
 				32823DCF2333D83300F2D3C6 /* Crop */,
 				703D1B9F233359E70042987C /* StickerPage */,
+				32271C16233C1F6A0017C764 /* Tutorial */,
 				7041AE202330C08900A0C2D8 /* Fonts */,
 				70A80984232B72FF0055CF5A /* TextTool */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -603,10 +617,12 @@
 				BC9B99532331CEA4007B3175 /* UIView+GPIEExtenstion.swift in Sources */,
 				BC9B98D5232F42CF007B3175 /* EffectCell.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				328FB6DD233C1FF100186017 /* GPTutorialView.swift in Sources */,
 				703D1BBA23335B9F0042987C /* GPImageEditorBundle.swift in Sources */,
 				703D1BAF233359E80042987C /* EmojiListView.swift in Sources */,
 				32823DDA2333D83300F2D3C6 /* GPCropViewModel.swift in Sources */,
 				703D1BB0233359E80042987C /* StickerListView.swift in Sources */,
+				328FB6DC233C1FF100186017 /* GPTriangleView.swift in Sources */,
 				703D1BB4233359E80042987C /* StickerAPI.swift in Sources */,
 				703D1BBB23335B9F0042987C /* GPImageEditorConfigs.swift in Sources */,
 				32823DD92333D83300F2D3C6 /* GPCropItem.swift in Sources */,
