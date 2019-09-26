@@ -16,26 +16,27 @@ private let kFontSize: CGFloat = 30
 
 public class GPTextEditorViewModel: ViewModel<StickerInfo> {
     
-    static let colorSet: [(UIColor, UIColor)] = [(.clear, .white), (.white, .black), (.black, .white), (.fromHex("#FF4C82"), .white), (.fromHex("#1A99F4"), .white), (.fromHex("#F7D925"), .white), (.fromHex("#6FBE49"), .white), (.fromHex("#F87376"), .white), (.fromHex("#D48E15"), .white), (.fromHex("#5168D7"), .white), (.fromHex("#0B3688"), .white)]
-    static let fontSet: [(String, String)] = [("BalooPaaji", "BalooPaaji-Regular"), ("Nunito", "Nunito-Regular"), ("Oswald", "Oswald-Regular"), ("Hepta", "HeptaSlab-Regular"), ("DancingScript", "DancingScript-Regular")]
-    
     let rxText = BehaviorRelay<String?>(value: nil)
     let rxFontIndex = BehaviorRelay<Int>(value: 0)
     let rxColorIndex = BehaviorRelay<Int>(value: 0)
+    let rxBgColorHidden = BehaviorRelay<Bool>(value: true)
     let rxAlignmentIndex = BehaviorRelay<Int>(value: 0)
     var rxFontButtonWidth: Observable<CGFloat> {
         return rxFontIndex.map{
-            let font = UIFont(name: GPTextEditorViewModel.fontSet[$0].1, size: kFontSize) ?? UIFont.systemFont(ofSize: 30)
+            let font = UIFont(name: GPImageEditorConfigs.fontSet[$0].1, size: kFontSize) ?? UIFont.systemFont(ofSize: 30)
             let constraintRect = CGSize(width: CGFloat.greatestFiniteMagnitude, height: 20)
-            let boundingBox = GPTextEditorViewModel.fontSet[$0].0.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+            let boundingBox = GPImageEditorConfigs.fontSet[$0].0.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
             return boundingBox.size.width + 20
         }
     }
     var rxTextColor: Observable<UIColor?> {
-        return rxColorIndex.map{ GPTextEditorViewModel.colorSet[$0].1 }
+        return rxColorIndex.map{
+            let color = self.rxBgColorHidden.value ? GPImageEditorConfigs.colorSet[$0].0 : GPImageEditorConfigs.colorSet[$0].1
+            return color
+        }
     }
     var rxBgColor: Observable<UIColor?> {
-        return rxColorIndex.map{ GPTextEditorViewModel.colorSet[$0].0 }
+        return rxColorIndex.map{ self.rxBgColorHidden.value ? .clear : GPImageEditorConfigs.colorSet[$0].0 }
     }
     var rxAlignment: Observable<NSTextAlignment> {
         let alignments: [NSTextAlignment] = [.left, .center, .right]
@@ -46,11 +47,11 @@ public class GPTextEditorViewModel: ViewModel<StickerInfo> {
         return rxAlignmentIndex.map{ GPImageEditorBundle.imageFromBundle(imageName: names[$0]) }
     }
     var rxFont: Observable<UIFont?> {
-        return rxFontIndex.map{ UIFont(name: GPTextEditorViewModel.fontSet[$0].1, size: kFontSize) }
+        return rxFontIndex.map{ UIFont(name: GPImageEditorConfigs.fontSet[$0].1, size: kFontSize) }
     }
     
     var rxFontName: Observable<String?> {
-        return rxFontIndex.map{ GPTextEditorViewModel.fontSet[$0].0 }
+        return rxFontIndex.map{ GPImageEditorConfigs.fontSet[$0].0 }
     }
     
     lazy var changeColorAction: Action<Int, Void> = {
@@ -71,6 +72,13 @@ public class GPTextEditorViewModel: ViewModel<StickerInfo> {
         }
     }()
     
+    lazy var showHideBgAction: Action<Void, Void> = {
+        return Action { index in
+            .just(self.showHideBg())
+        }
+    }()
+    
+    
     override public func modelChanged() {
         super.modelChanged()
         guard let model = model else { return }
@@ -84,12 +92,17 @@ public class GPTextEditorViewModel: ViewModel<StickerInfo> {
         rxAlignmentIndex.accept((rxAlignmentIndex.value + 1) % 3)
     }
     
+    func showHideBg() {
+        rxBgColorHidden.accept(!rxBgColorHidden.value)
+        rxColorIndex.accept(rxColorIndex.value)
+    }
+    
     func changeColor(_ index: Int) {
         rxColorIndex.accept(index)
     }
     
     func changeFont() {
-        rxFontIndex.accept((rxFontIndex.value + 1) % GPTextEditorViewModel.fontSet.count)
+        rxFontIndex.accept((rxFontIndex.value + 1) % GPImageEditorConfigs.fontSet.count)
     }
     
     func getStickerInfo(image: UIImage, size: CGSize) -> StickerInfo {

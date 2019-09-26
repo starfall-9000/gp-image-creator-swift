@@ -22,25 +22,12 @@ class ColorButton: UIView {
     var isSelected: Bool = false {
         didSet {
             circleWidth.constant = isSelected ? frame.width * 0.7 : frame.width * 0.5
-            if tag == 0 {
-                let name = isSelected ? "ie_ic_text_border_active" : "ie_ic_text_border"
-                circle.image = GPImageEditorBundle.imageFromBundle(imageName: name)
-            }
         }
     }
     
     var bgColor: UIColor = .clear {
         didSet {
-            if tag != 0 {
-                circle.backgroundColor = bgColor
-            }
-        }
-    }
-    
-    func setTag(_ tag: Int) {
-        self.tag = tag
-        if tag == 0 {
-            circle.image = GPImageEditorBundle.imageFromBundle(imageName: "ie_ic_text_border")
+            circle.backgroundColor = bgColor
         }
     }
     
@@ -91,6 +78,9 @@ class GPTextEditorView: UIView {
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     @IBOutlet weak var menuBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var textViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var placeholderLabel: UILabel!
+    
+    var showBgButton: UIButton!
     
     var colorButtons: [ColorButton] = []
     private var disposeBag: DisposeBag? = DisposeBag()
@@ -127,11 +117,17 @@ class GPTextEditorView: UIView {
     }
     
     func addColorPicker() {
-        for i in 0..<GPTextEditorViewModel.colorSet.count {
-            let (bgColor, _) = GPTextEditorViewModel.colorSet[i]
+        showBgButton = UIButton(frame: .zero)
+        showBgButton.autoSetDimensions(to: CGSize(width: kColorButtonWidth, height: colorPickerView.frame.height))
+        showBgButton.setImage(GPImageEditorBundle.imageFromBundle(imageName: "ie_ic_text_border_active"), for: .selected)
+        showBgButton.setImage(GPImageEditorBundle.imageFromBundle(imageName: "ie_ic_text_border"), for: .normal)
+        colorScrollView.appendChild(showBgButton)
+        
+        for i in 0..<GPImageEditorConfigs.colorSet.count {
+            let (bgColor, _) = GPImageEditorConfigs.colorSet[i]
             let button = ColorButton(frame: .zero)
             button.autoSetDimensions(to: CGSize(width: kColorButtonWidth, height: colorPickerView.frame.height))
-            button.setTag(i)
+            button.tag = i
             button.bgColor = bgColor
             colorButtons.append(button)
             colorScrollView.appendChild(button)            
@@ -145,6 +141,7 @@ extension GPTextEditorView: UITextViewDelegate, NSLayoutManagerDelegate {
         let newSize = textView.sizeThatFits(CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
         textViewHeight.constant = newSize.height
         textViewWidthConstraint.constant = min(newSize.width, maxWidth)
+        placeholderLabel.isHidden = textView.text.count > 0
     }
     
     func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {

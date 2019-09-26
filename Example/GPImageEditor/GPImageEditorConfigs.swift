@@ -19,4 +19,7 @@ public class GPImageEditorConfigs {
             dependencyManager?.registerService(Factory<StickerAPIService> { StickerAPIService() })
         }
     }
+    static public var colorSet: [(UIColor, UIColor)] = [(.white, .black), (.black, .white), (.fromHex("#FF4C82"), .white), (.fromHex("#1A99F4"), .white), (.fromHex("#F7D925"), .white), (.fromHex("#6FBE49"), .white), (.fromHex("#F87376"), .white), (.fromHex("#D48E15"), .white), (.fromHex("#5168D7"), .white), (.fromHex("#0B3688"), .white)]
+    
+    static public var fontSet: [(String, String)] = [("BalooPaaji", "BalooPaaji-Regular"), ("Nunito", "Nunito-Regular"), ("Oswald", "Oswald-Regular"), ("Hepta", "HeptaSlab-Regular"), ("DancingScript", "DancingScript-Regular")]
 }
