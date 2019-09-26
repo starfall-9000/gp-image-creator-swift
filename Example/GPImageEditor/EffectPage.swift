@@ -15,7 +15,6 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     let cellSize = CGSize(width: 70, height: 130)
     let cellName = "EffectCell"
     let hideButton = UIButton(type: .custom)
-    let tutorialView = GPTutorialView.stickerTutorial
     var disposeBag: DisposeBag? = nil
     
     @IBOutlet weak var sourceImageView: UIImageView!
@@ -132,21 +131,26 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         hideButton.rx.tap
             .subscribe(onNext: { self.viewModel?.rxHideTutorial.accept(true) })
             => disposeBag
-        hideButton.addSubview(tutorialView)
-        tutorialView.autoAlignAxis(toSuperviewAxis: .vertical)
         guard let viewModel = viewModel else { return }
         viewModel.rxHideTutorial ~> hideButton.rx.isHidden => disposeBag
         viewModel.rxHideTutorial.accept(true)
     }
     
-    private func handleAddNewSticker(_ sticker: StickerView) {
+    private func handleAddNewSticker(_ stickerView: StickerView,
+                                     tutorial: GPTutorialType) {
         guard let viewModel = self.viewModel else { return }
-        sticker.layerView?.delegate = self
-        let shouldShowTutorial = GPTutorialView.shouldShowTutorial(.GPStickerTutorial)
+        // add delegate
+        stickerView.layerView?.delegate = self
+        let shouldShowTutorial = GPTutorialView.shouldShowTutorial(tutorial)
         if (shouldShowTutorial) {
+            let tutorialView = GPTutorialView.tutorialWithType(tutorial)
+            hideButton.subviews.forEach({ $0.removeFromSuperview() })
+            hideButton.addSubview(tutorialView)
+            tutorialView.autoAlignAxis(toSuperviewAxis: .vertical)
             stickerLayer.bringSubview(toFront: hideButton)
             tutorialTopConstraint?.autoRemove()
-            tutorialTopConstraint = tutorialView.autoPinEdge(.top, to: .bottom, of: sticker.imageView, withOffset: 10)
+            let offset: CGFloat = tutorial == .GPStickerTutorial ? 10 : -10
+            tutorialTopConstraint = tutorialView.autoPinEdge(.top, to: .bottom, of: stickerView.imageView, withOffset: offset)
             viewModel.rxHideTutorial.accept(false)
         }
     }
@@ -155,7 +159,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer,
                                                      completion: { [weak self] (sticker) in
             guard let self = self, let sticker = sticker else { return }
-            self.handleAddNewSticker(sticker)
+            self.handleAddNewSticker(sticker, tutorial: .GPStickerTutorial)
         })
         let sheetController = SheetViewController(controller: stickerVC, sizes: [SheetSize.fullScreen])
         sheetController.topCornersRadius = 16
@@ -167,7 +171,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     @IBAction func textTapped() {
         GPTextEditorTool.show(inView: stickerLayer) { [weak self] (text) in
-            text?.layerView?.delegate = self
+            guard let self = self, let text = text else { return }
+            self.handleAddNewSticker(text, tutorial: .GPTextEditTutorial)
         }
     }
     
