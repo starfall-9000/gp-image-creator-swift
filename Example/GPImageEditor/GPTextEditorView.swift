@@ -81,6 +81,8 @@ class GPTextEditorView: UIView {
     @IBOutlet weak var placeholderLabel: UILabel!
     
     var showBgButton: UIButton!
+    let hideButton = UIButton(type: .custom)
+    let tutorialView = GPTutorialView.fontEditTutorial
     
     var colorButtons: [ColorButton] = []
     private var disposeBag: DisposeBag? = DisposeBag()
@@ -97,6 +99,16 @@ class GPTextEditorView: UIView {
         
         fontButton.layer.masksToBounds = true
         fontButton.layer.cornerRadius = fontButton.frame.height/2
+        
+        let shouldShowTutorial = GPTutorialView.shouldShowTutorial(.GPFontEditTutorial)
+        if (shouldShowTutorial) {
+            addSubview(hideButton)
+            hideButton.autoPinEdgesToSuperviewEdges()
+            hideButton.addSubview(tutorialView)
+            tutorialView.autoAlignAxis(toSuperviewAxis: .vertical)
+            tutorialView.autoPinEdge(.bottom, to: .top, of: menuBottomView, withOffset: -10)
+            hideButton.rx.tap.subscribe(onNext: { self.hideButton.isHidden = true }) => disposeBag
+        }
         
         colorPickerView.isHidden = true
         addColorPicker()
