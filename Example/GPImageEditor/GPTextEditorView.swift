@@ -103,16 +103,21 @@ class GPTextEditorView: UIView {
         let shouldShowTutorial = GPTutorialView.shouldShowTutorial(.GPFontEditTutorial)
         if (shouldShowTutorial) {
             addSubview(hideButton)
+            bringSubview(toFront: hideButton)
             hideButton.autoPinEdgesToSuperviewEdges()
             hideButton.addSubview(tutorialView)
             tutorialView.autoAlignAxis(toSuperviewAxis: .vertical)
             tutorialView.autoPinEdge(.bottom, to: .top, of: menuBottomView, withOffset: -10)
-            hideButton.rx.tap.subscribe(onNext: { self.hideButton.isHidden = true }) => disposeBag
+            hideButton.addTarget(self, action: #selector(handleHide(_:)), for: .touchUpInside)
         }
         
         colorPickerView.isHidden = true
         addColorPicker()
         showKeyboard()
+    }
+    
+    @objc func handleHide(_ sender: UIButton) {
+        hideButton.isHidden = true
     }
     
     func showKeyboard() {
