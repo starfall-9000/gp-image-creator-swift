@@ -35,7 +35,11 @@ public class GPCropMask: UIView {
         // mask
         self.addSubview(imageMask)
         imageMask.autoPinEdgesToSuperviewEdges()
-        
+        drawMaskGrid()
+    }
+    
+    private func drawMaskGrid() {
+        imageMask.subviews.forEach({ $0.removeFromSuperview() })
         createVerticalStack()
         createHorizontalStack()
     }
@@ -57,8 +61,8 @@ public class GPCropMask: UIView {
     
     private func getStackDividers(_ isVertical: Bool) -> [UIView] {
         var children: [UIView] = []
-        let NUM_OF_DIVIDER = 4
-        for _ in 1...NUM_OF_DIVIDER {
+        let numberOfDivider = getNumberOfDivider(isVertical)
+        for _ in 1...numberOfDivider {
             let divider = UIView()
             divider.backgroundColor = .white
             children.append(divider)
@@ -71,12 +75,27 @@ public class GPCropMask: UIView {
         return children
     }
     
+    private func getNumberOfDivider(_ isVertical: Bool) -> Int {
+        // number of line in per axis of grid (vertical or horizontal)
+        guard let type = type else { return 4 }
+        switch type {
+        case .free, .flip, .ratioOneOne:
+            return 4
+        case .ratioFourThree:
+            return isVertical ? 4 : 5
+        case .ratioThreeFour:
+            return isVertical ? 5 : 4
+        }
+    }
+    
     public func changeMaskType(_ type: GPCropType) {
         self.type = type
         updateImageMaskSize()
+        drawMaskGrid()
     }
     
     private func updateImageMaskSize() {
+        // using to update mask size after user change other kind of mask
         guard
             let contentView = superview,
             let type = type,
@@ -117,6 +136,7 @@ public class GPCropMask: UIView {
     }
     
     public func dragMaskCorner(_ type: GPCropCorner, translation point: CGPoint) {
+        // using to calc and set new frame for mask after drag mask corner
         var nextX, nextY, nextWidth, nextHeight: CGFloat
         
         switch type {
@@ -156,6 +176,8 @@ public class GPCropMask: UIView {
     }
     
     private func remakeTranslationWithCropType(translation point: CGPoint, fixedRatio: CGFloat) -> CGPoint {
+        // remake translation to using in resize mask with ratio-mask
+        // keeping the y translation, remake x translation to fit ratio
         var translation = point
         let negativeRatio: CGFloat = translation.y > 0 ? fixedRatio : -1 * fixedRatio
         if let cropType = self.type {
@@ -174,6 +196,7 @@ public class GPCropMask: UIView {
     }
     
     private func makeMaskInBounds(_ rect: CGRect) -> CGRect {
+        // remake rect to ensure that mask always in bounds
         var nextX = rect.minX
         var nextY = rect.minY
         var nextWidth = rect.width
