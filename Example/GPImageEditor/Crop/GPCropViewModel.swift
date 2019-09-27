@@ -59,6 +59,7 @@ public class GPCropViewModel: ViewModel<UIImage> {
             guard let self = self else { return }
             self.handleChangeSlider(value)
         }) => disposeBag
+        
         Observable
             .combineLatest(rxIsFlippedImage,
                            rxImageRotateAngle,

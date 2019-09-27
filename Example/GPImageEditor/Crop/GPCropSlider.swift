@@ -16,7 +16,7 @@ class GPCropSlider: UIView {
     var leftSliderConstraint: NSLayoutConstraint? = nil
     var rightSliderConstraint: NSLayoutConstraint? = nil
     
-    let GP_SLIDER_CROP_VALUE: Float = 180
+    let GP_SLIDER_CROP_VALUE: Float = 90
     let GP_SLIDER_COLOR = UIColor(r: 115, g: 115, b: 115)
     let GP_SLIDER_HIGH_LIGHT_COLOR = UIColor(hexString: "#6FBE49")
     
