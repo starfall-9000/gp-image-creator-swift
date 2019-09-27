@@ -7,11 +7,15 @@
 
 import UIKit
 import FittedSheets
+import DTMvvm
+import RxSwift
 
 public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     var doneBlock: ((UIImage) -> Void)?
     let cellSize = CGSize(width: 70, height: 130)
     let cellName = "EffectCell"
+    let hideButton = UIButton(type: .custom)
+    var disposeBag: DisposeBag? = nil
     
     @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
@@ -26,6 +30,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet var bottomViews: [UIView]!
     @IBOutlet weak var stickerLayerTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var stickerLayerBottomConstraint: NSLayoutConstraint!
+    var tutorialTopConstraint: NSLayoutConstraint? = nil
     
     private var isShowingEffectsView: Bool = true
     var viewModel: EffectPageViewModel?
@@ -40,10 +45,12 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
         imageView.image = viewModel?.sourceImage
         sourceImageView.image = viewModel?.sourceImage
         doneButton.cornerRadius = 18
         setupCollectionView()
+        setupTutorial()
         addLongPressGesture()
         collectionView.isHidden = true
         bottomGradient.isHidden = true
@@ -118,9 +125,41 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         collectionView.delegate = self
     }
     
+    private func setupTutorial() {
+        stickerLayer.addSubview(hideButton)
+        hideButton.autoPinEdgesToSuperviewEdges()
+        hideButton.rx.tap
+            .subscribe(onNext: { self.viewModel?.rxHideTutorial.accept(true) })
+            => disposeBag
+        guard let viewModel = viewModel else { return }
+        viewModel.rxHideTutorial ~> hideButton.rx.isHidden => disposeBag
+        viewModel.rxHideTutorial.accept(true)
+    }
+    
+    private func handleAddNewSticker(_ stickerView: StickerView,
+                                     tutorial: GPTutorialType) {
+        guard let viewModel = self.viewModel else { return }
+        // add delegate
+        stickerView.layerView?.delegate = self
+        let shouldShowTutorial = GPTutorialView.shouldShowTutorial(tutorial)
+        if (shouldShowTutorial) {
+            let tutorialView = GPTutorialView.tutorialWithType(tutorial)
+            hideButton.subviews.forEach({ $0.removeFromSuperview() })
+            hideButton.addSubview(tutorialView)
+            tutorialView.autoAlignAxis(toSuperviewAxis: .vertical)
+            stickerLayer.bringSubview(toFront: hideButton)
+            tutorialTopConstraint?.autoRemove()
+            let offset: CGFloat = tutorial == .GPStickerTutorial ? 10 : -10
+            tutorialTopConstraint = tutorialView.autoPinEdge(.top, to: .bottom, of: stickerView.imageView, withOffset: offset)
+            viewModel.rxHideTutorial.accept(false)
+        }
+    }
+    
     @IBAction func stickerTapped() {
-        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer, completion: { [weak self] (sticker) in
-            sticker?.layerView?.delegate = self
+        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer,
+                                                     completion: { [weak self] (sticker) in
+            guard let self = self, let sticker = sticker else { return }
+            self.handleAddNewSticker(sticker, tutorial: .GPStickerTutorial)
         })
         let sheetController = SheetViewController(controller: stickerVC, sizes: [SheetSize.fullScreen])
         sheetController.topCornersRadius = 16
@@ -132,7 +171,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     @IBAction func textTapped() {
         GPTextEditorTool.show(inView: stickerLayer) { [weak self] (text) in
-            text?.layerView?.delegate = self
+            guard let self = self, let text = text else { return }
+            self.handleAddNewSticker(text, tutorial: .GPTextEditTutorial)
         }
     }
     
@@ -168,6 +208,10 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return cellSize
+    }
+    
+    deinit {
+        disposeBag = nil
     }
 }
 
