@@ -59,3 +59,12 @@ extension StickerAPI: TargetType {
         }
     }
 }
+
+extension StickerAPI: MoyaCacheable {
+    var cachePolicy: MoyaCacheablePolicy {
+        switch self {
+        case .getStickerList:
+            return .returnCacheDataElseLoad
+        }
+    }
+}

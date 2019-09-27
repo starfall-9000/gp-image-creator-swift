@@ -36,6 +36,7 @@
 		7041AE282330C08900A0C2D8 /* Oswald-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7041AE232330C08900A0C2D8 /* Oswald-Regular.ttf */; };
 		7041AE292330C08900A0C2D8 /* HeptaSlab-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7041AE242330C08900A0C2D8 /* HeptaSlab-Regular.ttf */; };
 		7041AE2A2330C08900A0C2D8 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7041AE252330C08900A0C2D8 /* DancingScript-Regular.ttf */; };
+		7058A0C0233DE90500C30A9D /* MoyaCacheablePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7058A0BF233DE90500C30A9D /* MoyaCacheablePlugin.swift */; };
 		708BB0B423309AC600309539 /* GPTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708BB0B323309AC600309539 /* GPTextEditorView.swift */; };
 		70A80986232B78950055CF5A /* GPTextEditorTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A80985232B78950055CF5A /* GPTextEditorTool.swift */; };
 		70A80988232B7CCD0055CF5A /* GPTextEditorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70A80987232B7CCD0055CF5A /* GPTextEditorView.xib */; };
@@ -120,6 +121,7 @@
 		7041AE232330C08900A0C2D8 /* Oswald-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Regular.ttf"; sourceTree = "<group>"; };
 		7041AE242330C08900A0C2D8 /* HeptaSlab-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HeptaSlab-Regular.ttf"; sourceTree = "<group>"; };
 		7041AE252330C08900A0C2D8 /* DancingScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DancingScript-Regular.ttf"; sourceTree = "<group>"; };
+		7058A0BF233DE90500C30A9D /* MoyaCacheablePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaCacheablePlugin.swift; sourceTree = "<group>"; };
 		708BB0B323309AC600309539 /* GPTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTextEditorView.swift; sourceTree = "<group>"; };
 		70A80985232B78950055CF5A /* GPTextEditorTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTextEditorTool.swift; sourceTree = "<group>"; };
 		70A80987232B7CCD0055CF5A /* GPTextEditorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GPTextEditorView.xib; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 			children = (
 				703D1BA8233359E70042987C /* StickerAPI.swift */,
 				703D1BA9233359E70042987C /* StickerAPIService.swift */,
+				7058A0BF233DE90500C30A9D /* MoyaCacheablePlugin.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				703D1BAD233359E80042987C /* StickerView.swift in Sources */,
 				703D1BB7233359E80042987C /* EmojiCategories.swift in Sources */,
 				703D1BB6233359E80042987C /* Extensions.swift in Sources */,
+				7058A0C0233DE90500C30A9D /* MoyaCacheablePlugin.swift in Sources */,
 				703D1BB5233359E80042987C /* StickerAPIService.swift in Sources */,
 				70E224E5232F7301001ECE7D /* GPTextEditorViewModel.swift in Sources */,
 				70A80986232B78950055CF5A /* GPTextEditorTool.swift in Sources */,

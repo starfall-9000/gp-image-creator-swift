@@ -33,14 +33,11 @@ class StickerResponse: Model {
 }
 
 class StickerAPIService {
-    private let stickerProvider = GPImageEditorConfigs.debugAPI
-        ? MoyaProvider<StickerAPI>(stubClosure: MoyaProvider.immediatelyStub, plugins: [NetworkLoggerPlugin(verbose: true)])
-        : MoyaProvider<StickerAPI>(plugins: [NetworkLoggerPlugin(verbose: true)])
+    private let stickerProvider = MoyaProvider<StickerAPI>(plugins: [MoyaCacheablePlugin()])
     
     func getStickerList(page: Int) -> Single<StickerResponse> {
         return stickerProvider.rx
             .request(.getStickerList(page: page))
-//            .handleUnauthorizedError()
             .mapObject(StickerResponse.self)        
     }
 }
