@@ -37,8 +37,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     var isDidAppear: Bool = false
     
     public static func create(with viewModel: EffectPageViewModel?) -> EffectPage {
-        let bundle = Bundle(for: EffectPage.self)
-        let vc = EffectPage(nibName: "EffectPage", bundle: bundle)
+        let vc = EffectPage(nibName: "EffectPage", bundle: GPImageEditorBundle.getBundle())
         vc.viewModel = viewModel
         return vc
     }
@@ -102,7 +101,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             self.collectionView.bottom = self.bottomMenuView.top
             self.bottomGradient.top = self.collectionView.top
             let imageName = "arrow-down-icon.png"
-            let bundle = Bundle(for: EffectPage.self)
+            let bundle = GPImageEditorBundle.getBundle()
             self.showEffectButton.setImage(UIImage(named: imageName, in: bundle, compatibleWith: nil), for: .normal)
         }
     }
@@ -112,13 +111,13 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             self.bottomGradient.top = self.bottomMenuView.top
             self.collectionView.top = self.view.height
             let imageName = "arrow-top-icon.png"
-            let bundle = Bundle(for: EffectPage.self)
+            let bundle = GPImageEditorBundle.getBundle()
             self.showEffectButton.setImage(UIImage(named: imageName, in: bundle, compatibleWith: nil), for: .normal)
         }
     }
     
     private func setupCollectionView() {
-        let bundle = Bundle(for: EffectPage.self)
+        let bundle = GPImageEditorBundle.getBundle()
         let nib = UINib(nibName: cellName, bundle: bundle)
         collectionView.register(nib, forCellWithReuseIdentifier: cellName)
         collectionView.dataSource = self

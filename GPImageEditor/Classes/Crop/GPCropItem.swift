@@ -71,7 +71,8 @@ extension GPCropItem {
             item.type = type
             item.autoSetDimensions(to: .init(width: 32, height: 52))
             
-            let imageView = UIImageView(image: UIImage(named: getImageName(type)))
+            let bundle = GPImageEditorBundle.getBundle()
+            let imageView = UIImageView(image: UIImage(named: getImageName(type), in: bundle, compatibleWith: nil))
             item.addSubview(imageView)
             imageView.autoSetDimensions(to: .init(width: 24, height: 24))
             imageView.autoAlignAxis(.vertical, toSameAxisOf: item)

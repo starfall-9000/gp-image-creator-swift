@@ -12,7 +12,7 @@ import RxSwift
 import DTMvvm
 
 public class GPTextEditorTool: View<GPTextEditorViewModel> {
-    let contentView: GPTextEditorView = GPTextEditorView.loadFrom(nibNamed: "GPTextEditorView")!
+    let contentView: GPTextEditorView = GPTextEditorView.loadFrom(nibNamed: "GPTextEditorView", bundle: GPImageEditorBundle.getBundle())!
     var completion: ((StickerView?) -> Void)?
     
     var containerView: UIView? = nil

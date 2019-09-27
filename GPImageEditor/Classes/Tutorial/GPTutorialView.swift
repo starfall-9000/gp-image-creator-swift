@@ -193,7 +193,7 @@ extension GPTutorialView {
     
     public static func tutorialWithType(_ type: GPTutorialType) -> GPTutorialView {
         let tutorialView = GPTutorialView()
-        let bundle = Bundle(for: GPTutorialView.self)
+        let bundle = GPImageEditorBundle.getBundle()
         var activeColor: UIColor = .clear
         var title: String = ""
         var size: CGSize = .zero

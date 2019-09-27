@@ -8,7 +8,7 @@
 
 import UIKit
 import FittedSheets
-//import GPImageEditor
+import GPImageEditor
 import RxCocoa
 import DTMvvm
 import RxSwift

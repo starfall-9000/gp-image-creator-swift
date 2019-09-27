@@ -34,7 +34,8 @@ public class EffectCell: UICollectionViewCell {
 
     func setup() {
         titleLabel.text = model?.name
-        var thumb = UIImage(named: "filter-example-image")
+        let bundle = GPImageEditorBundle.getBundle()
+        var thumb = UIImage(named: "filter-example-image", in: bundle, compatibleWith: nil)
         if model?.applier == nil {
             thumb = viewModel?.thumbImage
         }
