@@ -165,10 +165,32 @@ class GPCropViewController: Page<GPCropViewModel> {
         viewModel.rxImageTransform ~> imageMask.displayImageView.rx.transform => disposeBag
         viewModel.rxImageCenter ~> imageMask.displayImageView.rx.center => disposeBag
         viewModel.rxSliderValue <~> sliderView.slider.rx.value => disposeBag
+        
+        viewModel.rxImageRotateAngle.subscribe(onNext: { (rotateAngle) in
+            guard let viewModel = self.viewModel,
+                let image = viewModel.model,
+                rotateAngle != 0 else { return }
+
+            let a = self.imageMask.height * abs(sin(rotateAngle))
+            let b = self.imageMask.width * abs(cos(rotateAngle))
+            let c = self.imageMask.width * abs(sin(rotateAngle))
+            let d = self.imageMask.height * abs(cos(rotateAngle))
+            
+            let scaleX = (a + b) / self.imageMask.width
+            let scaleY = (c + d) / self.imageMask.height
+            var scale = max(scaleX, scaleY)
+            if image.size.isLandscape() != self.imageMask.frame.size.isLandscape() {
+                scale = min(scaleX, scaleY)
+            }
+            
+            viewModel.rxImageScale.accept(scale)
+        }) => disposeBag
+        
         viewModel.rxSliderValue.subscribe(onNext: { [weak self] (value) in
             guard let self = self else { return }
             self.sliderView.updateSliderUI(value)
         }) => disposeBag
+        
         closeButton.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.dismissScreen()
@@ -244,5 +266,22 @@ class GPCropViewController: Page<GPCropViewModel> {
         imageMask.displayImageView.frame = imageView.frame
         let center = CGPoint(x: 0.5 * contentView.width, y: 0.5 * contentView.height)
         viewModel?.rxImageCenter.accept(center)
+    }
+}
+
+extension GPCropViewController {
+    
+    public static func presentCropEditor(from viewController: UIViewController, image: UIImage, animated: Bool, finished: @escaping ((UIImage) -> Void), completion: (() -> Void)? = nil) {
+        let vm = GPCropViewModel(model: image)
+        vm.finishedBlock = finished
+        let vc = GPCropViewController(viewModel: vm)
+        viewController.present(vc, animated: animated, completion: completion)
+    }
+}
+
+extension CGSize {
+    
+    func isLandscape() -> Bool {
+        return width >= height
     }
 }

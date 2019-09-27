@@ -23,6 +23,8 @@ public class GPCropViewModel: ViewModel<UIImage> {
     let GP_MIN_CROP_SCALE: CGFloat = 1
     let GP_MAX_CROP_SCALE: CGFloat = 5
     
+    var finishedBlock: ((UIImage) -> Void)?
+    
     lazy var doneAction: Action<CGRect, Void> = {
         return Action(workFactory: { [weak self] maskFrame in
             guard let self = self else { return .empty() }
@@ -57,6 +59,7 @@ public class GPCropViewModel: ViewModel<UIImage> {
             guard let self = self else { return }
             self.handleChangeSlider(value)
         }) => disposeBag
+        
         Observable
             .combineLatest(rxIsFlippedImage,
                            rxImageRotateAngle,
@@ -88,7 +91,7 @@ public class GPCropViewModel: ViewModel<UIImage> {
             let result = UIImage(cgImage: imageRef).cropImage(in: maskFrame)
             else { return }
         model = result
-        resetImageTransform()
+        finishedBlock?(result)
     }
     
     public func handleChangeSlider(_ value: Float) {
