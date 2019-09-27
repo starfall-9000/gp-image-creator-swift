@@ -246,3 +246,14 @@ class GPCropViewController: Page<GPCropViewModel> {
         viewModel?.rxImageCenter.accept(center)
     }
 }
+
+extension GPCropViewController {
+    
+    public static func presentCropEditor(from viewController: UIViewController, image: UIImage, animated: Bool, finished: @escaping ((UIImage) -> Void), completion: (() -> Void)? = nil) {
+        
+        var vm = GPCropViewModel(model: image)
+        vm.finishedBlock = finished
+        let vc = GPCropViewController(viewModel: vm)
+        viewController.present(vc, animated: animated, completion: completion)
+    }
+}

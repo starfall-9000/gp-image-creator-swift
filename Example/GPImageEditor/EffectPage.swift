@@ -180,11 +180,13 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     }
     
-    @IBAction func otherEditTapped() {
+    @IBAction func cropTapped() {
         guard let image = imageView.image else { return }
-        let vm = GPCropViewModel(model: image)
-        let vc = GPCropViewController(viewModel: vm)
-        present(vc, animated: false, completion: nil)
+        
+        GPCropViewController.presentCropEditor(from: self, image: image, animated: false, finished: { [weak self] (image) in
+            self?.imageView.image = image
+            self?.sourceImageView.image = image
+        })
     }
     
     @IBAction func doneTapped() {
