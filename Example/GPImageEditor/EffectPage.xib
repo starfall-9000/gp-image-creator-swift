@@ -189,7 +189,7 @@
     <resources>
         <image name="arrow-down-icon.png" width="21.5" height="21.5"/>
         <image name="back-btn.png" width="19" height="16"/>
-        <image name="crop-icon.png" width="27.5" height="25"/>
+        <image name="crop-icon.png" width="28" height="28"/>
         <image name="gradient-bottom-effect.png" width="450" height="221"/>
         <image name="gradient-top-effect.png" width="450" height="100"/>
         <image name="sticker-icon.png" width="23.5" height="23.5"/>

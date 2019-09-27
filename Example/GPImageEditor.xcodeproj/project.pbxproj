@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3212C6E52334E5C90031C2E5 /* GPCropMaskCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3212C6E42334E5C90031C2E5 /* GPCropMaskCorner.swift */; };
+		322A97F2233E02D700C1640A /* crop-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 322A97EF233E02D500C1640A /* crop-icon.png */; };
+		322A97F3233E02D700C1640A /* crop-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 322A97F0233E02D500C1640A /* crop-icon@2x.png */; };
+		322A97F4233E02D700C1640A /* crop-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 322A97F1233E02D600C1640A /* crop-icon@3x.png */; };
 		32823DD62333D83300F2D3C6 /* GPCropMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32823DD02333D83300F2D3C6 /* GPCropMask.swift */; };
 		32823DD72333D83300F2D3C6 /* GPCropExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32823DD12333D83300F2D3C6 /* GPCropExtension.swift */; };
 		32823DD92333D83300F2D3C6 /* GPCropItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32823DD32333D83300F2D3C6 /* GPCropItem.swift */; };
@@ -80,9 +83,6 @@
 		BC9B995B2331D950007B3175 /* gradient-bottom-effect@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC9B99572331D950007B3175 /* gradient-bottom-effect@3x.png */; };
 		BC9B995D2331D950007B3175 /* gradient-bottom-effect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC9B99582331D950007B3175 /* gradient-bottom-effect@2x.png */; };
 		BC9B99622333705B007B3175 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC9B99612333705B007B3175 /* Main.storyboard */; };
-		BCDA7870233CD56700BC41D1 /* crop-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BCDA786D233CD56600BC41D1 /* crop-icon.png */; };
-		BCDA7871233CD56700BC41D1 /* crop-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCDA786E233CD56700BC41D1 /* crop-icon@3x.png */; };
-		BCDA7872233CD56700BC41D1 /* crop-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCDA786F233CD56700BC41D1 /* crop-icon@2x.png */; };
 		BCDA7876233CD56F00BC41D1 /* text-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BCDA7873233CD56E00BC41D1 /* text-icon.png */; };
 		BCDA7877233CD56F00BC41D1 /* text-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCDA7874233CD56E00BC41D1 /* text-icon@2x.png */; };
 		BCDA7878233CD56F00BC41D1 /* text-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCDA7875233CD56F00BC41D1 /* text-icon@3x.png */; };
@@ -93,6 +93,9 @@
 		1918C8DFBC2F9B89D8859A2D /* Pods-GPImageEditor_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPImageEditor_Tests.release.xcconfig"; path = "Target Support Files/Pods-GPImageEditor_Tests/Pods-GPImageEditor_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		318EAF7AAD58AED200562657 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		3212C6E42334E5C90031C2E5 /* GPCropMaskCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPCropMaskCorner.swift; sourceTree = "<group>"; };
+		322A97EF233E02D500C1640A /* crop-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crop-icon.png"; sourceTree = "<group>"; };
+		322A97F0233E02D500C1640A /* crop-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crop-icon@2x.png"; sourceTree = "<group>"; };
+		322A97F1233E02D600C1640A /* crop-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crop-icon@3x.png"; sourceTree = "<group>"; };
 		32823DD02333D83300F2D3C6 /* GPCropMask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPCropMask.swift; sourceTree = "<group>"; };
 		32823DD12333D83300F2D3C6 /* GPCropExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPCropExtension.swift; sourceTree = "<group>"; };
 		32823DD32333D83300F2D3C6 /* GPCropItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPCropItem.swift; sourceTree = "<group>"; };
@@ -172,9 +175,6 @@
 		BC9B99572331D950007B3175 /* gradient-bottom-effect@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient-bottom-effect@3x.png"; sourceTree = "<group>"; };
 		BC9B99582331D950007B3175 /* gradient-bottom-effect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient-bottom-effect@2x.png"; sourceTree = "<group>"; };
 		BC9B99612333705B007B3175 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		BCDA786D233CD56600BC41D1 /* crop-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crop-icon.png"; sourceTree = "<group>"; };
-		BCDA786E233CD56700BC41D1 /* crop-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crop-icon@3x.png"; sourceTree = "<group>"; };
-		BCDA786F233CD56700BC41D1 /* crop-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crop-icon@2x.png"; sourceTree = "<group>"; };
 		BCDA7873233CD56E00BC41D1 /* text-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text-icon.png"; sourceTree = "<group>"; };
 		BCDA7874233CD56E00BC41D1 /* text-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text-icon@2x.png"; sourceTree = "<group>"; };
 		BCDA7875233CD56F00BC41D1 /* text-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text-icon@3x.png"; sourceTree = "<group>"; };
@@ -418,9 +418,9 @@
 				BC9B98FA232F4C22007B3175 /* sticker-icon.png */,
 				BC9B98F2232F4C21007B3175 /* sticker-icon@2x.png */,
 				BC9B98ED232F4C21007B3175 /* sticker-icon@3x.png */,
-				BCDA786D233CD56600BC41D1 /* crop-icon.png */,
-				BCDA786F233CD56700BC41D1 /* crop-icon@2x.png */,
-				BCDA786E233CD56700BC41D1 /* crop-icon@3x.png */,
+				322A97EF233E02D500C1640A /* crop-icon.png */,
+				322A97F0233E02D500C1640A /* crop-icon@2x.png */,
+				322A97F1233E02D600C1640A /* crop-icon@3x.png */,
 				BCDA7873233CD56E00BC41D1 /* text-icon.png */,
 				BCDA7874233CD56E00BC41D1 /* text-icon@2x.png */,
 				BCDA7875233CD56F00BC41D1 /* text-icon@3x.png */,
@@ -503,6 +503,7 @@
 				BC9B994D2330B337007B3175 /* gradient-top-effect@2x.png in Resources */,
 				BC9B994B2330B337007B3175 /* gradient-top-effect@3x.png in Resources */,
 				BC9B9924232F4C22007B3175 /* back-btn@3x.png in Resources */,
+				322A97F4233E02D700C1640A /* crop-icon@3x.png in Resources */,
 				BC9B99622333705B007B3175 /* Main.storyboard in Resources */,
 				BCDA7877233CD56F00BC41D1 /* text-icon@2x.png in Resources */,
 				BC9B98FE232F4C22007B3175 /* arrow-top-icon@2x.png in Resources */,
@@ -515,11 +516,11 @@
 				BC9B9920232F4C22007B3175 /* arrow-top-icon@3x.png in Resources */,
 				BC9B9937233090D8007B3175 /* filter-example-image.png in Resources */,
 				BC9B99472330A1AF007B3175 /* gradient-top-effect.png in Resources */,
+				322A97F2233E02D700C1640A /* crop-icon.png in Resources */,
 				BC9B98DA232F42EC007B3175 /* EffectPage.xib in Resources */,
 				BC9B990C232F4C22007B3175 /* sticker-icon@3x.png in Resources */,
 				BC9B9916232F4C22007B3175 /* sticker-icon@2x.png in Resources */,
 				BCDA7876233CD56F00BC41D1 /* text-icon.png in Resources */,
-				BCDA7872233CD56700BC41D1 /* crop-icon@2x.png in Resources */,
 				BC9B9928232F4C22007B3175 /* back-btn@2x.png in Resources */,
 				BC9B99592331D950007B3175 /* gradient-bottom-effect.png in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
@@ -530,11 +531,10 @@
 				70A80988232B7CCD0055CF5A /* GPTextEditorView.xib in Resources */,
 				7041AE2A2330C08900A0C2D8 /* DancingScript-Regular.ttf in Resources */,
 				BC9B995B2331D950007B3175 /* gradient-bottom-effect@3x.png in Resources */,
-				BCDA7871233CD56700BC41D1 /* crop-icon@3x.png in Resources */,
 				BC9B995D2331D950007B3175 /* gradient-bottom-effect@2x.png in Resources */,
 				BC9B990E232F4C22007B3175 /* draw-icon@3x.png in Resources */,
+				322A97F3233E02D700C1640A /* crop-icon@2x.png in Resources */,
 				BC9B9904232F4C22007B3175 /* other-edit-icon@2x.png in Resources */,
-				BCDA7870233CD56700BC41D1 /* crop-icon.png in Resources */,
 				BC9B990A232F4C22007B3175 /* draw-icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
