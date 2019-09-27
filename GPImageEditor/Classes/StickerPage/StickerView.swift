@@ -34,7 +34,7 @@ public class StickersLayerView: UIView {
     var activeView: StickerView? = nil {
         didSet {
             if let activeView = activeView {
-                activeView.superview?.bringSubview(toFront: activeView)
+                activeView.superview?.bringSubviewToFront(activeView)
             }
         }
     }
@@ -285,13 +285,15 @@ extension StickersLayerView {
         var layer: CALayer? = nil
         var scale: CGFloat = 1
         var imgSize: CGSize = .zero
+        var imgScale: CGFloat = 1
         DispatchQueue.main.async {
             layer = self.layer
             scale = image.size.width / self.frame.width
             imgSize = image.size
+            imgScale = image.scale
         }
 
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: image.size.width, height: image.size.width / size.width * size.height), false, image.scale)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: imgSize.width, height: imgSize.width / size.width * size.height), false, imgScale)
         let imageDrawPoint = CGPoint(x: 0, y: (scale * size.height - imgSize.height)/2)
         image.draw(at: imageDrawPoint)
         if let context = UIGraphicsGetCurrentContext() {

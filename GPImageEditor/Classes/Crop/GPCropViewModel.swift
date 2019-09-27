@@ -76,7 +76,7 @@ public class GPCropViewModel: ViewModel<UIImage> {
             let image = model,
             let ciImage = CIImage(image: image),
             let ciFilter = CIFilter(name: "CIAffineTransform",
-                                    withInputParameters: [kCIInputImageKey: ciImage])
+                                    parameters: [kCIInputImageKey: ciImage])
             else { return }
         ciFilter.setDefaults()
         var transform = rxImageTransform.value.inverted2DMatrixTransform()
@@ -84,7 +84,7 @@ public class GPCropViewModel: ViewModel<UIImage> {
             transform = transform.flipped2DMatrixTransform()
         }
         ciFilter.setValue(transform, forKey: "inputTransform")
-        let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
+        let context = CIContext(options: [CIContextOption.useSoftwareRenderer: false])
         guard
             let outputImage = ciFilter.outputImage,
             let imageRef = context.createCGImage(outputImage, from: outputImage.extent),

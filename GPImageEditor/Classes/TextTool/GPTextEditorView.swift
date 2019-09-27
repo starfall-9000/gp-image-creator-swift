@@ -103,7 +103,7 @@ class GPTextEditorView: UIView {
         let shouldShowTutorial = GPTutorialView.shouldShowTutorial(.GPFontEditTutorial)
         if (shouldShowTutorial) {
             addSubview(hideButton)
-            bringSubview(toFront: hideButton)
+            bringSubviewToFront(hideButton)
             hideButton.autoPinEdgesToSuperviewEdges()
             hideButton.addSubview(tutorialView)
             tutorialView.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -121,9 +121,9 @@ class GPTextEditorView: UIView {
     }
     
     func showKeyboard() {
-        NotificationCenter.default.rx.notification(NSNotification.Name.UIKeyboardWillShow)
+        NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification)
             .subscribe(onNext: { [weak self] notification in
-                if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+                if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                     let keyboardRectangle = keyboardFrame.cgRectValue
                     let keyboardHeight = keyboardRectangle.height
                     self?.menuBottomConstraint.constant = keyboardHeight

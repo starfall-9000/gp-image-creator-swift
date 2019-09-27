@@ -152,7 +152,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             hideButton.subviews.forEach({ $0.removeFromSuperview() })
             hideButton.addSubview(tutorialView)
             tutorialView.autoAlignAxis(toSuperviewAxis: .vertical)
-            stickerLayer.bringSubview(toFront: hideButton)
+            stickerLayer.bringSubviewToFront(hideButton)
             tutorialTopConstraint?.autoRemove()
             let offset: CGFloat = tutorial == .GPStickerTutorial ? 10 : -10
             tutorialTopConstraint = tutorialView.autoPinEdge(.top, to: .bottom, of: stickerView.imageView, withOffset: offset)

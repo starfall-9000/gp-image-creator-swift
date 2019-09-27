@@ -15,7 +15,7 @@ private let padding: CGFloat = 20
 public class StickerListView: CollectionView<StickerListViewModel> {
     
     private var completion: ((UIImage?, CGSize) -> Void)? = nil
-    private var loadingView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+    private var loadingView = UIActivityIndicatorView(style: .white)
     
     init(viewModel: StickerListViewModel? = nil, completion: ((UIImage?, CGSize) -> Void)?) {
         super.init(viewModel: viewModel)
