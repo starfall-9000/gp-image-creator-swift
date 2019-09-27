@@ -45,7 +45,14 @@ extension UIView {
     }
     
     var right: CGFloat {
-        return frame.origin.x + frame.size.width
+        get {
+            return frame.origin.x + frame.size.width
+        }
+        set {
+            var rect = frame
+            rect.origin.x = newValue - rect.self.width
+            frame = rect
+        }
     }
     
     var width: CGFloat {

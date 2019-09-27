@@ -27,7 +27,6 @@
                 <outletCollection property="topViews" destination="Nrd-iK-qp2" collectionClass="NSMutableArray" id="qHa-8M-8q1"/>
                 <outletCollection property="topViews" destination="uED-sa-dnT" collectionClass="NSMutableArray" id="09N-Td-LxG"/>
                 <outletCollection property="topViews" destination="3HS-0W-T6Z" collectionClass="NSMutableArray" id="uZg-ve-wgo"/>
-                <outletCollection property="topViews" destination="3Gj-ku-NAy" collectionClass="NSMutableArray" id="9LM-Ty-fVE"/>
                 <outletCollection property="topViews" destination="J5d-5z-pmU" collectionClass="NSMutableArray" id="yh4-1r-ALr"/>
                 <outletCollection property="bottomViews" destination="xeZ-ci-qQi" collectionClass="NSMutableArray" id="XF2-aK-dcN"/>
                 <outletCollection property="bottomViews" destination="ffL-1w-yCH" collectionClass="NSMutableArray" id="3Vp-bA-X0b"/>
@@ -73,26 +72,13 @@
                         <constraint firstAttribute="width" constant="40" id="LmS-Hx-1ic"/>
                         <constraint firstAttribute="height" constant="44" id="uak-jZ-oju"/>
                     </constraints>
-                    <state key="normal" image="other-edit-icon.png"/>
+                    <state key="normal" image="crop-icon.png"/>
                     <connections>
-                        <action selector="otherEditTapped" destination="-1" eventType="touchUpInside" id="yWA-gM-vuU"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Gj-ku-NAy">
-                    <rect key="frame" x="324" y="44" width="40" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="4Mp-Qp-1C9"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="4kP-W1-AcU"/>
-                        <constraint firstAttribute="height" constant="44" id="Iug-Ls-XC0"/>
-                        <constraint firstAttribute="width" constant="40" id="NMw-Nr-IWv"/>
-                    </constraints>
-                    <state key="normal" image="draw-icon.png"/>
-                    <connections>
-                        <action selector="drawTapped" destination="-1" eventType="touchUpInside" id="LpW-so-8Gn"/>
+                        <action selector="cropTapped" destination="-1" eventType="touchUpInside" id="8Zl-Td-qS3"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3HS-0W-T6Z">
-                    <rect key="frame" x="279" y="44" width="40" height="44"/>
+                    <rect key="frame" x="324" y="44" width="40" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="3yI-h3-YJn"/>
                         <constraint firstAttribute="width" constant="40" id="wLs-X2-AV7"/>
@@ -103,7 +89,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uED-sa-dnT">
-                    <rect key="frame" x="234" y="44" width="40" height="44"/>
+                    <rect key="frame" x="279" y="44" width="40" height="44"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="DZI-HC-5nu"/>
                         <constraint firstAttribute="height" constant="44" id="PPG-Fy-saC"/>
@@ -169,13 +155,11 @@
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Nrd-iK-qp2" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="5" id="0QZ-QX-uB6"/>
-                <constraint firstItem="3Gj-ku-NAy" firstAttribute="leading" secondItem="3HS-0W-T6Z" secondAttribute="trailing" constant="5" id="210-tS-DEp"/>
                 <constraint firstItem="49S-G2-szV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4vA-bS-StQ"/>
                 <constraint firstItem="3HS-0W-T6Z" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="66X-zp-lVG"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="J5d-5z-pmU" secondAttribute="trailing" constant="5" id="6E6-Sc-jdb"/>
                 <constraint firstItem="Upc-Le-9xO" firstAttribute="width" secondItem="0kA-E7-pkG" secondAttribute="width" id="6kJ-52-KyN"/>
                 <constraint firstItem="0kA-E7-pkG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7o7-hv-WMO"/>
-                <constraint firstItem="3Gj-ku-NAy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="BQU-Os-hic"/>
                 <constraint firstItem="xTM-QD-XmF" firstAttribute="centerY" secondItem="0kA-E7-pkG" secondAttribute="centerY" id="DyS-E7-77y"/>
                 <constraint firstItem="0kA-E7-pkG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="EZS-NF-MWy"/>
                 <constraint firstItem="xTM-QD-XmF" firstAttribute="width" secondItem="0kA-E7-pkG" secondAttribute="width" id="EpR-ZQ-U0m"/>
@@ -183,11 +167,11 @@
                 <constraint firstItem="49S-G2-szV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="bottom" constant="-94" id="GYN-wa-3ib"/>
                 <constraint firstItem="0kA-E7-pkG" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Gln-Ie-qHz"/>
                 <constraint firstItem="J5d-5z-pmU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="HGh-RY-hmj"/>
-                <constraint firstItem="J5d-5z-pmU" firstAttribute="leading" secondItem="3Gj-ku-NAy" secondAttribute="trailing" constant="5" id="IGy-34-Z0B"/>
                 <constraint firstItem="uED-sa-dnT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Lep-Yj-z92"/>
                 <constraint firstItem="Nrd-iK-qp2" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ROH-Vx-03y"/>
                 <constraint firstItem="49S-G2-szV" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" id="Tm3-wK-T7c"/>
                 <constraint firstItem="xTM-QD-XmF" firstAttribute="height" secondItem="0kA-E7-pkG" secondAttribute="height" id="UlO-Pc-MKL"/>
+                <constraint firstItem="J5d-5z-pmU" firstAttribute="leading" secondItem="3HS-0W-T6Z" secondAttribute="trailing" constant="5" id="YcW-c2-is3"/>
                 <constraint firstItem="xTM-QD-XmF" firstAttribute="centerX" secondItem="0kA-E7-pkG" secondAttribute="centerX" id="ZQl-p4-Be6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="49S-G2-szV" secondAttribute="bottom" id="blt-Wl-OyR"/>
                 <constraint firstItem="3HS-0W-T6Z" firstAttribute="leading" secondItem="uED-sa-dnT" secondAttribute="trailing" constant="5" id="dPA-no-ysH"/>
@@ -199,16 +183,16 @@
                 <constraint firstItem="Upc-Le-9xO" firstAttribute="centerX" secondItem="0kA-E7-pkG" secondAttribute="centerX" id="z9u-LP-pVt"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="139" y="128"/>
         </view>
     </objects>
     <resources>
         <image name="arrow-down-icon.png" width="21.5" height="21.5"/>
         <image name="back-btn.png" width="19" height="16"/>
-        <image name="draw-icon.png" width="21.5" height="21.5"/>
+        <image name="crop-icon.png" width="28" height="28"/>
         <image name="gradient-bottom-effect.png" width="450" height="221"/>
         <image name="gradient-top-effect.png" width="450" height="100"/>
-        <image name="other-edit-icon.png" width="24" height="18"/>
         <image name="sticker-icon.png" width="23.5" height="23.5"/>
-        <image name="text-icon.png" width="26" height="24"/>
+        <image name="text-icon.png" width="28" height="28"/>
     </resources>
 </document>
