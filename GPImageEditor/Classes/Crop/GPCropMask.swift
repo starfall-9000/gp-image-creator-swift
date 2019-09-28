@@ -185,11 +185,11 @@ public class GPCropMask: UIView {
             case .flip, .free:
                 break
             case .ratioOneOne:
-                translation.x = negativeRatio * fabs(translation.y)
+                translation.x = negativeRatio * abs(translation.y)
             case .ratioFourThree:
-                translation.x = negativeRatio * 4 * fabs(translation.y) / 3
+                translation.x = negativeRatio * 4 * abs(translation.y) / 3
             case .ratioThreeFour:
-                translation.x = negativeRatio * 3 * fabs(translation.y) / 4
+                translation.x = negativeRatio * 3 * abs(translation.y) / 4
             }
         }
         return translation

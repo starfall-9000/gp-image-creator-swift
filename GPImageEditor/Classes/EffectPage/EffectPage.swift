@@ -189,8 +189,11 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         guard let image = imageView.image else { return }
         
         GPCropViewController.presentCropEditor(from: self, image: image, animated: false, finished: { [weak self] (image) in
+            self?.viewModel?.sourceImage = image
+            self?.viewModel?.thumbImage = image.thumbImage()
             self?.imageView.image = image
             self?.sourceImageView.image = image
+            self?.collectionView.reloadData()
         })
     }
     

@@ -37,6 +37,7 @@ class GPCropViewController: Page<GPCropViewModel> {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         imageMask.changeMaskType(.free)
+        imageMask.isHidden = false
         updateImageView(with: .free)
     }
     
@@ -88,6 +89,7 @@ class GPCropViewController: Page<GPCropViewModel> {
         imageMask.displayContent.autoPinEdge(.right, to: .right, of: contentView)
         imageMask.displayContent.autoPinEdge(.bottom, to: .bottom, of: contentView)
         imageMask.isUserInteractionEnabled = false
+        imageMask.isHidden = true
         
         // image mask corner
         let corners = GPCropMaskCorner.createAndAddCorner(to: imageMask)
@@ -204,7 +206,11 @@ class GPCropViewController: Page<GPCropViewModel> {
     }
     
     private func dismissScreen() {
-        dismiss(animated: false, completion: nil)
+        UIView.animate(withDuration: 0.25, animations: {
+            self.view.alpha = 0
+        }) { (finished) in
+            self.dismiss(animated: false, completion: nil)
+        }
     }
     
     private func handleClickDone() {
@@ -298,7 +304,16 @@ extension GPCropViewController {
         let vm = GPCropViewModel(model: image)
         vm.finishedBlock = finished
         let vc = GPCropViewController(viewModel: vm)
-        viewController.present(vc, animated: animated, completion: completion)
+        viewController.present(vc, animated: animated) {
+            vc.view.alpha = 0
+            UIView.animate(withDuration: 0.25, animations: {
+                vc.view.alpha = 1
+            }, completion: { (finished) in
+                if finished {
+                    completion?()
+                }
+            })
+        }
     }
 }
 
