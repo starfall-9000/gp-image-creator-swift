@@ -35,7 +35,6 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
     override public func bindViewAndViewModel() {
         guard let viewModel = viewModel else { return }
         viewModel.rxText <~> contentView.textView.rx.text => disposeBag
-//        viewModel.rxBgColor ~> contentView.textView.rx.backgroundColor => disposeBag
         viewModel.rxTextColor ~> contentView.textView.rx.textColor => disposeBag
         viewModel.rxAlignment ~> contentView.textView.rx.textAlignment => disposeBag
         viewModel.rxFont ~> contentView.textView.rx.font => disposeBag
@@ -90,10 +89,12 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
             let textView = contentView.textView
             else { return }
         contentView.textView.resignFirstResponder()
-        if let image = UIImage.imageWithView(view: textView, size: textView.frame.size) {
-            let info = viewModel.getStickerInfo(image: image, size: textView.frame.size)
-            let stickerView = StickersLayerView.addSticker(stickerInfo: info, toView: containerView)
-            completion?(stickerView)
+        if textView.text.count > 0 {
+            if let image = UIImage.imageWithView(view: textView, size: textView.frame.size) {
+                let info = viewModel.getStickerInfo(image: image, size: textView.frame.size)
+                let stickerView = StickersLayerView.addSticker(stickerInfo: info, toView: containerView)
+                completion?(stickerView)
+            }
         }
         contentView.cancelAction()
     }
