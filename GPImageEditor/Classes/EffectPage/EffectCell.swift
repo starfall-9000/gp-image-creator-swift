@@ -34,13 +34,18 @@ public class EffectCell: UICollectionViewCell {
 
     func setup() {
         titleLabel.text = model?.name
-        let bundle = GPImageEditorBundle.getBundle()
-        var thumb = UIImage(named: "filter-example-image", in: bundle, compatibleWith: nil)
+        
         if model?.applier == nil {
-            thumb = viewModel?.thumbImage
+            imageView.image = viewModel?.thumbImage
+            return
         }
-        let image = model?.applyFilter(image: thumb!)
-        imageView.image = image
+        model?.thumbImageObserver(from: viewModel?.filterThumbImage)
+            .observeOn(Scheduler.shared.backgroundScheduler)
+            .subscribe(onNext: { [weak self] (image) in
+                DispatchQueue.main.async {
+                    self?.imageView.image = image
+                }
+        }) => disposeBag
     }
     
     func bindViewModel() {
