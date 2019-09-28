@@ -232,33 +232,27 @@ class GPCropViewController: Page<GPCropViewModel> {
         }
     }
     
-    func fixIamgeFrame() {
-        var imageFrame = imageView.frame
-        if imageView.left > imageMask.left {
-            imageFrame.origin.x = imageMask.left
-        }
-        if imageView.top > imageMask.top {
-            imageFrame.origin.y = imageMask.top
-        }
-        if imageView.bottom < imageMask.bottom {
-            imageFrame.origin.y = imageMask.bottom - imageView.height
-        }
-        if imageView.right < imageMask.right {
-            imageFrame.origin.x = imageMask.right - imageView.width
-        }
-        let center = CGPoint(x: imageFrame.midX, y: imageFrame.midY)
-        UIView.animate(withDuration: 0.25) {
-            self.viewModel?.rxImageCenter.accept(center)
+    func remakeCenterAfterPan(_ translation: CGPoint) {
+        guard let viewModel = viewModel else { return }
+        let currentCenter = viewModel.rxImageCenter.value
+        let newCenter = CGPoint(x: currentCenter.x + translation.x,
+                                y: currentCenter.y + translation.y)
+        imageView.center = newCenter
+        imageMask.displayImageView.center = newCenter
+        if imageView.isMaskInBounds(imageMask: imageMask) {
+            viewModel.rxImageCenter.accept(imageView.center)
+        } else {
+            UIView.animate(withDuration: 0.25) {
+                self.viewModel?.rxImageCenter.accept(currentCenter)
+            }
         }
     }
     
     @objc func handlePanImage(_ sender: UIPanGestureRecognizer) {
         if sender.state == .began || sender.state == .changed {
             viewModel?.panAction.execute(sender.translation(in: contentView))
+            remakeCenterAfterPan(sender.translation(in: contentView))
             sender.setTranslation(.zero, in: imageView.superview)
-        }
-        if sender.state == .ended {
-            fixIamgeFrame()
         }
     }
     

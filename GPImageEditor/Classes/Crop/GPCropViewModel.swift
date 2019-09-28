@@ -127,10 +127,6 @@ extension GPCropViewModel {
     }
     
     private func handlePan(_ translation: CGPoint) {
-        var currentCenter = rxImageCenter.value
-        currentCenter = CGPoint(x: currentCenter.x + translation.x,
-                                y: currentCenter.y + translation.y)
-        rxImageCenter.accept(currentCenter)
     }
     
     private func handleDoubleTap(_ center: CGPoint) {
