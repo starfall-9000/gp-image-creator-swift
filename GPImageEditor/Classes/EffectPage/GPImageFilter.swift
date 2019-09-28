@@ -9,6 +9,8 @@
 import Foundation
 import CoreImage
 import UIKit
+import RxCocoa
+import RxSwift
 
 public typealias FilterApplierType = ((_ image: CIImage) -> CIImage?)
 
@@ -16,6 +18,7 @@ public class GPImageFilter: NSObject {
     
     var name = ""
     var applier: FilterApplierType?
+    var thumbImage: UIImage?
     
     public init(name: String, coreImageFilterName: String) {
         super.init()
@@ -27,6 +30,22 @@ public class GPImageFilter: NSObject {
         super.init()
         self.name = name
         self.applier = applier
+    }
+    
+    func thumbImageObserver(from image: UIImage?) -> Observable<UIImage?> {
+        guard let image = image else { return Observable.just(nil) }
+        if thumbImage != nil {
+            return Observable.just(thumbImage)
+        }
+        
+        return Observable.create({ [weak self] (observer) -> Disposable in
+            guard let self = self else { return Disposables.create() }
+            
+            self.thumbImage = self.applyFilter(image: image)
+            observer.onNext(self.thumbImage)
+            observer.onCompleted()
+            return Disposables.create()
+        })
     }
     
     func applyFilter(image: UIImage) -> UIImage? {

@@ -69,7 +69,7 @@ class GPCropSlider: UIView {
         // set constraint in case of thumb image in safe area,
         // unless hiddenSlider view will cover thumb image
         let safeValue = GP_SLIDER_CROP_VALUE * 5 / 100
-        let safeConstraint = CGFloat(6.5 - 6.5 * fabs(value) / safeValue)
+        let safeConstraint = CGFloat(6.5 - 6.5 * abs(value) / safeValue)
         let constraint: CGFloat = (value < safeValue && value > -safeValue) ? safeConstraint : 0
         leftSliderConstraint?.constant = -constraint
         rightSliderConstraint?.constant = constraint

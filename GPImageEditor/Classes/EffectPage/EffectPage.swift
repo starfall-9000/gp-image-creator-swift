@@ -50,7 +50,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         doneButton.cornerRadius = 18
         setupCollectionView()
         setupTutorial()
-        addLongPressGesture()
+        addGestures()
         collectionView.isHidden = true
         bottomGradient.isHidden = true
     }
@@ -65,7 +65,9 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         }
     }
     
-    private func addLongPressGesture() {
+    private func addGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGesture(gesture:)))
+        stickerLayer.addGestureRecognizer(tapGesture)
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longGesturePressed))
         longPressRecognizer.minimumPressDuration = 0.75
         stickerLayer.addGestureRecognizer(longPressRecognizer)
@@ -82,6 +84,10 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         } else {
             hideEffectTool()
         }
+    }
+    
+    @objc func viewTapGesture(gesture: UITapGestureRecognizer) {
+        textTapped()
     }
     
     @objc func longGesturePressed(gesture: UILongPressGestureRecognizer) {
@@ -183,8 +189,11 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         guard let image = imageView.image else { return }
         
         GPCropViewController.presentCropEditor(from: self, image: image, animated: false, finished: { [weak self] (image) in
+            self?.viewModel?.sourceImage = image
+            self?.viewModel?.thumbImage = image.thumbImage()
             self?.imageView.image = image
             self?.sourceImageView.image = image
+            self?.collectionView.reloadData()
         })
     }
     

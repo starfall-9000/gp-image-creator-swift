@@ -54,11 +54,11 @@ public extension UIImageView {
         let scaleHeight = image.size.height / bounds.height / imageScale
         if (scaleWidth > scaleHeight) {
             let unusedHeight = bounds.height * imageScale - image.size.height / scaleWidth
-            imgViewY = imgViewY + 0.5 * unusedHeight * fabs(transform.a / imageScale)
+            imgViewY = imgViewY + 0.5 * unusedHeight * abs(transform.a / imageScale)
             height = height - unusedHeight
         } else {
             let unusedWidth = bounds.width * imageScale - image.size.width / scaleHeight
-            imgViewX = imgViewX + 0.5 * unusedWidth * fabs(transform.a / imageScale)
+            imgViewX = imgViewX + 0.5 * unusedWidth * abs(transform.a / imageScale)
             width = width - unusedWidth
         }
         return CGRect(x: imgViewX, y: imgViewY, width: width, height: height)

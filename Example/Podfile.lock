@@ -15,7 +15,7 @@ PODS:
     - RxCocoa
     - RxSwift
   - FittedSheets (1.4.5)
-  - GPImageEditor (0.1.0):
+  - GPImageEditor (0.1.2):
     - DTMvvm
     - FittedSheets
   - Moya (13.0.1):
@@ -62,7 +62,7 @@ SPEC CHECKSUMS:
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
   DTMvvm: bd58255e6d8b0d5297b8c22366f7c42d30ee17cc
   FittedSheets: 7f754c9f6fb4ea330cbc57c652b594255f2a6819
-  GPImageEditor: 66ac19f07855e5a0299627bc927f35320b7d2078
+  GPImageEditor: 12c74c2b7c34b34ff6524b5e399db0676a5108c8
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e

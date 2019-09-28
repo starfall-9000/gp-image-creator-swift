@@ -16,6 +16,7 @@ public class EffectPageViewModel: NSObject {
     
     var sourceImage: UIImage
     var thumbImage: UIImage
+    var filterThumbImage: UIImage?
     let rxSelectedFilter = BehaviorRelay<GPImageFilter?>(value: nil)
     let rxHideTutorial = BehaviorRelay<Bool>(value: false)
     
@@ -25,6 +26,8 @@ public class EffectPageViewModel: NSObject {
             sourceImage = image
         }
         thumbImage = sourceImage.thumbImage()
+        let bundle = GPImageEditorBundle.getBundle()
+        filterThumbImage = UIImage(named: "filter-example-image", in: bundle, compatibleWith: nil)
         super.init()
         rxSelectedFilter.accept(items.first)
     }
@@ -32,15 +35,15 @@ public class EffectPageViewModel: NSObject {
     public var items: [GPImageFilter] = [
         GPImageFilter(name: "Ảnh gốc", applier: nil),
         GPImageFilter(name: "Giá lạnh", applier: GPImageFilter.clarendonFilter),
-        GPImageFilter(name: "Trầm lắng", applier: GPImageFilter.nashvilleFilter),
-        GPImageFilter(name: "Sôi động", applier: GPImageFilter.toasterFilter),
-        GPImageFilter(name: "Chrome", coreImageFilterName: "CIPhotoEffectChrome"),
-        GPImageFilter(name: "Instant", coreImageFilterName: "CIPhotoEffectInstant"),
-        GPImageFilter(name: "Mono", coreImageFilterName: "CIPhotoEffectMono"),
-        GPImageFilter(name: "Tone", coreImageFilterName: "CILinearToSRGBToneCurve"),
-        GPImageFilter(name: "Noir", coreImageFilterName: "CIPhotoEffectNoir"),
-        GPImageFilter(name: "Process", coreImageFilterName: "CIPhotoEffectProcess"),
-        GPImageFilter(name: "Transfer", coreImageFilterName: "CIPhotoEffectTransfer"),
+        GPImageFilter(name: "Trầm lắng", coreImageFilterName: "CIPhotoEffectProcess"),
+//        GPImageFilter(name: "Trầm lắng", applier: GPImageFilter.nashvilleFilter),
+//        GPImageFilter(name: "Sôi động", applier: GPImageFilter.toasterFilter),
+        GPImageFilter(name: "Sôi động", coreImageFilterName: "CIPhotoEffectTransfer"),
+        GPImageFilter(name: "Hà Nội", coreImageFilterName: "CIPhotoEffectChrome"),
+        GPImageFilter(name: "Huế", coreImageFilterName: "CIPhotoEffectInstant"),
+        GPImageFilter(name: "Hội An", coreImageFilterName: "CIPhotoEffectMono"),
+        GPImageFilter(name: "Sài Gòn", coreImageFilterName: "CILinearToSRGBToneCurve"),
+//        GPImageFilter(name: "Noir", coreImageFilterName: "CIPhotoEffectNoir"),
     ]
     
 }
