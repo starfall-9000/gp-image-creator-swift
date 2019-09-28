@@ -112,6 +112,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kz3-I2-d2F">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="848"/>
                     <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Hk-Tt-Ajc">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="848"/>
+                        </button>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8U-Bi-Qjf">
                             <rect key="frame" x="30" y="404" width="40" height="40"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -132,7 +135,11 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="2Hk-Tt-Ajc" secondAttribute="bottom" id="2M9-6H-GMZ"/>
                         <constraint firstItem="B8U-Bi-Qjf" firstAttribute="leading" secondItem="Kz3-I2-d2F" secondAttribute="leading" constant="30" id="JAS-dq-6lA"/>
+                        <constraint firstItem="2Hk-Tt-Ajc" firstAttribute="top" secondItem="Kz3-I2-d2F" secondAttribute="top" id="Jnv-qd-0Dm"/>
+                        <constraint firstItem="2Hk-Tt-Ajc" firstAttribute="leading" secondItem="Kz3-I2-d2F" secondAttribute="leading" id="PHV-TB-WZg"/>
+                        <constraint firstAttribute="trailing" secondItem="2Hk-Tt-Ajc" secondAttribute="trailing" id="Ped-35-URh"/>
                         <constraint firstItem="9e8-ND-I8U" firstAttribute="centerY" secondItem="B8U-Bi-Qjf" secondAttribute="centerY" constant="-2" id="R3x-Da-uOY"/>
                         <constraint firstItem="B8U-Bi-Qjf" firstAttribute="centerY" secondItem="Kz3-I2-d2F" secondAttribute="centerY" id="Xfv-zb-Xzo"/>
                         <constraint firstItem="9e8-ND-I8U" firstAttribute="leading" secondItem="B8U-Bi-Qjf" secondAttribute="leading" constant="15" id="mQp-ba-ufY"/>
@@ -164,6 +171,7 @@
                 <outlet property="colorPickerView" destination="l1y-qG-qfJ" id="Htq-NY-gQW"/>
                 <outlet property="colorScrollView" destination="sf7-uC-vth" id="Wd6-eE-ptW"/>
                 <outlet property="doneButton" destination="jPr-AP-vA6" id="sLc-Ng-eMW"/>
+                <outlet property="doneOverlayButton" destination="2Hk-Tt-Ajc" id="Fgb-Nu-Lvd"/>
                 <outlet property="fontButton" destination="bWf-Vc-GQ9" id="PCK-Qi-4DX"/>
                 <outlet property="fontButtonWidth" destination="nmJ-tY-Bhs" id="1QE-cI-SqU"/>
                 <outlet property="menuBottomConstraint" destination="5YN-qy-Ycf" id="Alp-x4-ip9"/>

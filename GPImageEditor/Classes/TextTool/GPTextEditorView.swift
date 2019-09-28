@@ -67,6 +67,7 @@ extension Reactive where Base: ColorButton {
 class GPTextEditorView: UIView {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var doneOverlayButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var alignButton: UIButton!
     @IBOutlet weak var fontButton: UIButton!
@@ -128,7 +129,11 @@ class GPTextEditorView: UIView {
                 if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                     let keyboardRectangle = keyboardFrame.cgRectValue
                     let keyboardHeight = keyboardRectangle.height
+                    let animationTime = (notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
                     self?.menuBottomConstraint.constant = keyboardHeight
+                    UIView.animate(withDuration: animationTime, animations: {
+                        self?.menuBottomView.superview?.layoutIfNeeded()
+                    })                    
                     self?.disposeBag = nil
                 }
             }) => disposeBag

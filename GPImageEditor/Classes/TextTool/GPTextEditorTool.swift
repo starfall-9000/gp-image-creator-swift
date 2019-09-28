@@ -63,6 +63,10 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
             .subscribe(onNext: { [weak self] _ in
                 self?.doneAction()
             }) => disposeBag
+        contentView.doneOverlayButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.doneAction()
+            }) => disposeBag
         contentView.showBgButton.rx.bind(to: viewModel.showHideBgAction, input: ())
         viewModel.rxBgColorHidden.map{ !$0 } ~> contentView.showBgButton.rx.isSelected => disposeBag
         for i in 0..<contentView.colorButtons.count {
