@@ -19,6 +19,7 @@ class GPCropViewController: Page<GPCropViewModel> {
     let sliderView = GPCropSlider()
     let closeButton = UIButton.init(type: .custom)
     let doneButton = UIButton.init(type: .custom)
+    let isIPhoneX = UIScreen.main.bounds.size.height >= 812
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -79,6 +80,12 @@ class GPCropViewController: Page<GPCropViewModel> {
         blurView.autoPinEdge(.right, to: .right, of: view)
         blurView.autoPinEdge(.bottom, to: .bottom, of: view)
         blurView.isUserInteractionEnabled = false
+        
+        let safeView = UIView()
+        view.addSubview(safeView)
+        safeView.backgroundColor = .init(r: 0, g: 0, b: 0, a: 0.8)
+        safeView.autoPinEdgesToSuperviewEdges(with: .all(0), excludingEdge: .top)
+        safeView.autoSetDimension(.height, toSize: isIPhoneX ? 34 : 0)
         
         // image mask
         contentView.addSubview(imageMask)
