@@ -16,6 +16,7 @@ public class EffectPageViewModel: NSObject {
     
     var sourceImage: UIImage
     var thumbImage: UIImage
+    var filterThumbImage: UIImage?
     let rxSelectedFilter = BehaviorRelay<GPImageFilter?>(value: nil)
     let rxHideTutorial = BehaviorRelay<Bool>(value: false)
     
@@ -25,6 +26,8 @@ public class EffectPageViewModel: NSObject {
             sourceImage = image
         }
         thumbImage = sourceImage.thumbImage()
+        let bundle = GPImageEditorBundle.getBundle()
+        filterThumbImage = UIImage(named: "filter-example-image", in: bundle, compatibleWith: nil)
         super.init()
         rxSelectedFilter.accept(items.first)
     }
