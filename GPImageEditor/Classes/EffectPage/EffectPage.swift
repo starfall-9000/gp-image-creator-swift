@@ -28,8 +28,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var stickerLayer: UIView!
     @IBOutlet var topViews: [UIView]!
     @IBOutlet var bottomViews: [UIView]!
-    @IBOutlet weak var stickerLayerTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var stickerLayerBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomMenuHeightConstraint: NSLayoutConstraint!
     var tutorialTopConstraint: NSLayoutConstraint? = nil
     
     private var isShowingEffectsView: Bool = true
@@ -45,6 +44,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     public override func viewDidLoad() {
         super.viewDidLoad()
         disposeBag = DisposeBag()
+        bottomMenuHeightConstraint.constant = viewModel?.kBottomMenuHeight ?? 60
         imageView.image = viewModel?.sourceImage
         sourceImageView.image = viewModel?.sourceImage
         doneButton.cornerRadius = 18

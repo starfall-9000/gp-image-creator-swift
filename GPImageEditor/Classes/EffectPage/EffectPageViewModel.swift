@@ -14,6 +14,7 @@ import CoreImage
 
 public class EffectPageViewModel: NSObject {
     
+    let kBottomMenuHeight = 60 as CGFloat
     var sourceImage: UIImage
     var thumbImage: UIImage
     var filterThumbImage: UIImage?
@@ -22,7 +23,7 @@ public class EffectPageViewModel: NSObject {
     
     init(image: UIImage) {
         sourceImage = image.fixedOrientation()
-        if let image = sourceImage.croppedImageForEditing(with: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)) {
+        if let image = sourceImage.croppedImageForEditing(with: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - kBottomMenuHeight)) {
             sourceImage = image
         }
         thumbImage = sourceImage.thumbImage()
@@ -36,14 +37,14 @@ public class EffectPageViewModel: NSObject {
         GPImageFilter(name: "Ảnh gốc", applier: nil),
         GPImageFilter(name: "Giá lạnh", applier: GPImageFilter.clarendonFilter),
         GPImageFilter(name: "Trầm lắng", coreImageFilterName: "CIPhotoEffectProcess"),
-//        GPImageFilter(name: "Trầm lắng", applier: GPImageFilter.nashvilleFilter),
-//        GPImageFilter(name: "Sôi động", applier: GPImageFilter.toasterFilter),
         GPImageFilter(name: "Sôi động", coreImageFilterName: "CIPhotoEffectTransfer"),
         GPImageFilter(name: "Hà Nội", coreImageFilterName: "CIPhotoEffectChrome"),
         GPImageFilter(name: "Huế", coreImageFilterName: "CIPhotoEffectInstant"),
         GPImageFilter(name: "Hội An", coreImageFilterName: "CIPhotoEffectMono"),
         GPImageFilter(name: "Sài Gòn", coreImageFilterName: "CILinearToSRGBToneCurve"),
-//        GPImageFilter(name: "Noir", coreImageFilterName: "CIPhotoEffectNoir"),
+        GPImageFilter(name: "Party", applier: GPImageFilter.partyFrame),
+        GPImageFilter(name: "Petro", applier: GPImageFilter.petroFrame),
+        GPImageFilter(name: "Comic", applier: GPImageFilter.comicFrame),
     ]
     
 }
