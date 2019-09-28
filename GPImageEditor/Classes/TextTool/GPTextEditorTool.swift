@@ -43,6 +43,10 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
         viewModel.rxFontButtonWidth ~> contentView.fontButtonWidth.rx.constant => disposeBag
         viewModel.rxAlignmentIcon ~> contentView.alignButton.rx.image(for: .normal) => disposeBag
         
+        viewModel.rxTextInset.subscribe(onNext: { [weak self] value in
+            self?.contentView.textView.textContainerInset = .only(top: value, bottom: value, left: 10, right: 10)
+        }) => disposeBag
+        
         Observable.combineLatest(viewModel.rxBgColor, viewModel.rxText)
             .subscribe(onNext: { [weak self] (color, text) in
                 guard let self = self else { return }

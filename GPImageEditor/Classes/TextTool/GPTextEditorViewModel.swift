@@ -23,20 +23,21 @@ public class GPTextEditorViewModel: ViewModel<StickerInfo> {
     let rxAlignmentIndex = BehaviorRelay<Int>(value: 0)
     var rxFontButtonWidth: Observable<CGFloat> {
         return rxFontIndex.map{
-            let font = UIFont(name: GPImageEditorConfigs.fontSet[$0].1, size: kFontSize) ?? UIFont.systemFont(ofSize: 30)
+            let config = GPImageEditorConfigs.fontSet[$0]
+            let font = UIFont.boldSystemFont(ofSize: 16)
             let constraintRect = CGSize(width: CGFloat.greatestFiniteMagnitude, height: 20)
-            let boundingBox = GPImageEditorConfigs.fontSet[$0].0.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
-            return boundingBox.size.width + 20
+            let boundingBox = config.name.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+            return boundingBox.size.width + 30
         }
     }
     var rxTextColor: Observable<UIColor?> {
         return rxColorIndex.map{
-            let color = self.rxBgColorHidden.value ? GPImageEditorConfigs.colorSet[$0].0 : GPImageEditorConfigs.colorSet[$0].1
-            return color
+            let color = self.rxBgColorHidden.value ? GPImageEditorConfigs.colorSet[$0].bgColor : GPImageEditorConfigs.colorSet[$0].textColor
+            return UIColor.fromHex(color)
         }
     }
     var rxBgColor: Observable<UIColor?> {
-        return rxColorIndex.map{ self.rxBgColorHidden.value ? .clear : GPImageEditorConfigs.colorSet[$0].0 }
+        return rxColorIndex.map{ self.rxBgColorHidden.value ? .clear : UIColor.fromHex(GPImageEditorConfigs.colorSet[$0].bgColor) }
     }
     var rxAlignment: Observable<NSTextAlignment> {
         let alignments: [NSTextAlignment] = [.left, .center, .right]
@@ -47,11 +48,15 @@ public class GPTextEditorViewModel: ViewModel<StickerInfo> {
         return rxAlignmentIndex.map{ GPImageEditorBundle.imageFromBundle(imageName: names[$0]) }
     }
     var rxFont: Observable<UIFont?> {
-        return rxFontIndex.map{ UIFont(name: GPImageEditorConfigs.fontSet[$0].1, size: kFontSize) }
+        return rxFontIndex.map{ UIFont(name: GPImageEditorConfigs.fontSet[$0].font, size: kFontSize) }
     }
     
     var rxFontName: Observable<String?> {
-        return rxFontIndex.map{ GPImageEditorConfigs.fontSet[$0].0 }
+        return rxFontIndex.map{ GPImageEditorConfigs.fontSet[$0].name }
+    }
+    
+    var rxTextInset: Observable<CGFloat> {
+        return rxFontIndex.map{ GPImageEditorConfigs.fontSet[$0].inset }
     }
     
     lazy var changeColorAction: Action<Int, Void> = {

@@ -7,6 +7,39 @@
 
 import Foundation
 import DTMvvm
+import ObjectMapper
+
+public class PEFontInfo: Model {
+    var name: String = ""
+    var font: String = ""
+    var size: CGFloat = 30
+    var inset: CGFloat = 10
+    
+    override public func mapping(map: Map) {
+        name <- map["name"]
+        font <- map["font"]
+        size <- map["size"]
+        inset <- map["inset"]
+    }
+    
+    convenience init() {
+        self.init(JSON: [String: Any]())!
+    }
+}
+
+public class PEColorInfo: Model {
+    var bgColor: String = ""
+    var textColor: String = ""
+    
+    override public func mapping(map: Map) {
+        bgColor <- map["bg"]
+        textColor <- map["text"]
+    }
+    
+    convenience init() {
+        self.init(JSON: [String: Any]())!
+    }
+}
 
 public class GPImageEditorConfigs {
     
@@ -18,7 +51,16 @@ public class GPImageEditorConfigs {
             dependencyManager?.registerService(Factory<StickerAPIService> { StickerAPIService() })
         }
     }
-    static public var colorSet: [(UIColor, UIColor)] = [(.white, .black), (.black, .white), (.fromHex("#FF4C82"), .white), (.fromHex("#1A99F4"), .white), (.fromHex("#F7D925"), .white), (.fromHex("#6FBE49"), .white), (.fromHex("#F87376"), .white), (.fromHex("#D48E15"), .white), (.fromHex("#5168D7"), .white), (.fromHex("#0B3688"), .white)]
+    static public var colorSet: [PEColorInfo] = [
+        PEColorInfo(JSON: ["bg": "#fff", "text": "#000"])!,
+        PEColorInfo(JSON: ["bg": "#000", "text": "#fff"])!,
+        PEColorInfo(JSON: ["bg": "#FF4C82", "text": "#fff"])!,
+        PEColorInfo(JSON: ["bg": "#1A99F4", "text": "#fff"])!,
+        PEColorInfo(JSON: ["bg": "#F7D925", "text": "#fff"])!
+    ]
     
-    static public var fontSet: [(String, String)] = [("Chữ đậm", "BalooPaaji-Regular"), ("Mềm mại", "JustLovely-Roman"), ("Tinh nghịch", "Pacifico-Regular"), ("Đơn giản", "Nunito-Regular"), ("Oswald", "Oswald-Regular"), ("Nghiêm túc", "HeptaSlab-Regular")]
+    static public var fontSet: [PEFontInfo] = [
+        PEFontInfo(JSON: ["name": "Chữ đậm", "font": "BalooPaaji-Regular", "size": 30, "inset": 8])!,
+        PEFontInfo(JSON: ["name": "Mềm mại", "font": "JustLovely-Roman", "size": 50, "inset": 5])!,
+        PEFontInfo(JSON: ["name": "Tinh nghịch", "font": "Pacifico-Regular", "size": 30, "inset": 10])!]
 }

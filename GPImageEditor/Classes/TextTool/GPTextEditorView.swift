@@ -148,11 +148,11 @@ class GPTextEditorView: UIView {
         colorScrollView.appendChild(showBgButton)
         
         for i in 0..<GPImageEditorConfigs.colorSet.count {
-            let (bgColor, _) = GPImageEditorConfigs.colorSet[i]
+            let colorInfo = GPImageEditorConfigs.colorSet[i]
             let button = ColorButton(frame: .zero)
             button.autoSetDimensions(to: CGSize(width: kColorButtonWidth, height: colorPickerView.frame.height))
             button.tag = i
-            button.bgColor = bgColor
+            button.bgColor = UIColor.fromHex(colorInfo.bgColor)
             colorButtons.append(button)
             colorScrollView.appendChild(button)            
         }
