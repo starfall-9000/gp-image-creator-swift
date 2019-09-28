@@ -99,6 +99,8 @@ class GPTextEditorView: UIView {
         
         fontButton.layer.masksToBounds = true
         fontButton.layer.cornerRadius = fontButton.frame.height/2
+        fontButton.layer.borderColor = UIColor.fromHex("#B2B2B2").cgColor
+        fontButton.layer.borderWidth = 0.5
         
         let shouldShowTutorial = GPTutorialView.shouldShowTutorial(.GPFontEditTutorial)
         if (shouldShowTutorial) {
