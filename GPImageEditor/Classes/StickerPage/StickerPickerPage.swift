@@ -151,8 +151,12 @@ extension StickerPickerPage {
                 return
         }
         let size = view.frame.size
+        let layer = stickersLayer.layer
+        let scale = originalImage.size.width / stickersLayer.frame.width
+        let imgSize = originalImage.size
+        let imgScale = originalImage.scale
         DispatchQueue.global(qos: .background).async {
-            let image = stickersLayer.buildImage(image: originalImage, size: size)
+            let image = stickersLayer.buildImage(image: originalImage, size: size, imgSize: imgSize, imgScale: imgScale, layer: layer, scale: scale)
             DispatchQueue.main.async {
                 completion(image)
             }

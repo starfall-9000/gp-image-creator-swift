@@ -200,7 +200,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBAction func doneTapped() {
         guard let image = imageView.image else {
             self.doneBlock?(viewModel!.sourceImage)
-            return;
+            return
         }
         StickerPickerPage.mixedImage(originalImage: image, view: stickerLayer) { [weak self] (mixedImage) in
             if let mixed = mixedImage {
