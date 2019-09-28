@@ -120,6 +120,22 @@ extension UIImage {
         return cropImage(cropRect)
     }
     
+    func imageWithBottomFrame(frame: UIImage?) -> UIImage? {
+        guard let frame = frame else {
+            return self
+        }
+        let frameDrawSize = CGSize(width: size.width, height: size.width * frame.size.height / frame.size.width)
+        let frameDrawRect = CGRect(x: 0, y: size.height - frameDrawSize.height, width: size.width, height: frameDrawSize.height)
+        let imageRect: CGRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        
+        UIGraphicsBeginImageContext(size)
+        draw(in: imageRect)
+        frame.draw(in: frameDrawRect)
+        let endImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return endImage
+    }
+    
 }
 
 internal extension CIImage {

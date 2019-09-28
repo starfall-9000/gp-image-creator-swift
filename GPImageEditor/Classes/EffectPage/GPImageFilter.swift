@@ -37,6 +37,18 @@ public class GPImageFilter: NSObject {
         if thumbImage != nil {
             return Observable.just(thumbImage)
         }
+        if name.lowercased() == "party" {
+            let image = GPImageFilter.partyFrameImage()
+            return Observable.just(image?.thumbImage())
+        }
+        if name.lowercased() == "petro" {
+            let image = GPImageFilter.petroFrameImage()
+            return Observable.just(image?.thumbImage())
+        }
+        if name.lowercased() == "comic" {
+            let image = GPImageFilter.comicFrameImage()
+            return Observable.just(image?.thumbImage())
+        }
         
         return Observable.create({ [weak self] (observer) -> Disposable in
             guard let self = self else { return Disposables.create() }
@@ -147,6 +159,42 @@ public class GPImageFilter: NSObject {
             .applyingFilter("CIScreenBlendMode", parameters: [
                 "inputBackgroundImage": circle!,
                 ])
+    }
+    
+    private static func partyFrameImage() -> UIImage? {
+        let bundle = GPImageEditorBundle.getBundle()
+        let image = UIImage(named: "Frame 1", in: bundle, compatibleWith: nil)
+        return image
+    }
+    
+    private static func petroFrameImage() -> UIImage? {
+        let bundle = GPImageEditorBundle.getBundle()
+        let image = UIImage(named: "Frame 2", in: bundle, compatibleWith: nil)
+        return image
+    }
+    
+    private static func comicFrameImage() -> UIImage? {
+        let bundle = GPImageEditorBundle.getBundle()
+        let image = UIImage(named: "Frame 3", in: bundle, compatibleWith: nil)
+        return image
+    }
+    
+    public static func partyFrame(foregroundImage: CIImage) -> CIImage? {
+        let frame = GPImageFilter.partyFrameImage()
+        let endImage = foregroundImage.toUIImage().imageWithBottomFrame(frame: frame)
+        return endImage?.toCIImage()
+    }
+    
+    public static func petroFrame(foregroundImage: CIImage) -> CIImage? {
+        let frame = GPImageFilter.petroFrameImage()
+        let endImage = foregroundImage.toUIImage().imageWithBottomFrame(frame: frame)
+        return endImage?.toCIImage()
+    }
+    
+    public static func comicFrame(foregroundImage: CIImage) -> CIImage? {
+        let frame = GPImageFilter.comicFrameImage()
+        let endImage = foregroundImage.toUIImage().imageWithBottomFrame(frame: frame)
+        return endImage?.toCIImage()
     }
     
     private static func getColor(red: Int, green: Int, blue: Int, alpha: Int = 255) -> CIColor {

@@ -14,6 +14,7 @@ public struct GPImageEditor {
     public static func present(from viewController: UIViewController, image: UIImage, animated: Bool, finished: @escaping ((UIImage) -> Void), completion: (() -> Void)? = nil) {
         let viewModel = EffectPageViewModel(image: image)
         let vc = EffectPage.create(with: viewModel)
+        vc.modalPresentationStyle = .fullScreen
         vc.doneBlock = finished
         viewController.present(vc, animated: animated, completion: completion)
     }
