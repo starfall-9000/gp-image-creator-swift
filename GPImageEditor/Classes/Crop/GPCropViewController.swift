@@ -304,6 +304,7 @@ extension GPCropViewController {
         let vm = GPCropViewModel(model: image)
         vm.finishedBlock = finished
         let vc = GPCropViewController(viewModel: vm)
+        vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: animated) {
             vc.view.alpha = 0
             UIView.animate(withDuration: 0.25, animations: {
