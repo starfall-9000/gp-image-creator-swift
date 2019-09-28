@@ -120,13 +120,13 @@ class GPCropViewController: Page<GPCropViewModel> {
         divider.autoSetDimension(.height, toSize: 0.5)
         
         bottomView.addSubview(closeButton)
-        closeButton.setImage(UIImage.init(named: "ic_crop_close.png"), for: .normal)
+        closeButton.setImage(GPImageEditorBundle.imageFromBundle(imageName: "ic_crop_close"), for: .normal)
         closeButton.autoPinEdge(toSuperviewEdge: .left, withInset: 12)
         closeButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         closeButton.autoSetDimensions(to: .init(width: 16, height: 16))
         
         bottomView.addSubview(doneButton)
-        doneButton.setImage(UIImage.init(named: "ic_crop_done.png"), for: .normal)
+        doneButton.setImage(GPImageEditorBundle.imageFromBundle(imageName: "ic_crop_done"), for: .normal)
         doneButton.autoPinEdge(toSuperviewEdge: .right, withInset: 16)
         doneButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         doneButton.autoSetDimensions(to: .init(width: 24, height: 24))

@@ -31,7 +31,7 @@ class GPCropSlider: UIView {
         slider.autoPinEdgesToSuperviewEdges()
         slider.maximumTrackTintColor = GP_SLIDER_COLOR
         slider.minimumTrackTintColor = GP_SLIDER_COLOR
-        slider.setThumbImage(UIImage.init(named: "ic_crop_slider_thumb.png"), for: .normal)
+        slider.setThumbImage(GPImageEditorBundle.imageFromBundle(imageName: "ic_crop_slider_thumb"), for: .normal)
         slider.minimumValue = -GP_SLIDER_CROP_VALUE
         slider.maximumValue = GP_SLIDER_CROP_VALUE
         slider.value = 0
