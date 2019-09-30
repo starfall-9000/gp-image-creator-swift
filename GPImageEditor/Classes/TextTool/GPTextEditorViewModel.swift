@@ -111,6 +111,6 @@ public class GPTextEditorViewModel: ViewModel<StickerInfo> {
     }
     
     func getStickerInfo(image: UIImage, size: CGSize) -> StickerInfo {
-        return StickerInfo(image: image, text: rxText.value ?? "", type: .text, fontIndex: rxFontIndex.value, colorIndex: rxColorIndex.value, alignmentIndex: rxAlignmentIndex.value, size: size)
+        return StickerInfo(image: image, text: rxText.value ?? "", type: .text, fontIndex: rxFontIndex.value, bgColorHidden: rxBgColorHidden.value, colorIndex: rxColorIndex.value, alignmentIndex: rxAlignmentIndex.value, size: size)
     }
 }
