@@ -144,7 +144,6 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     private func handleAddNewSticker(_ stickerView: StickerView,
                                      tutorial: GPTutorialType) {
         guard let viewModel = self.viewModel else { return }
-        // add delegate
         stickerView.layerView?.delegate = self
         let shouldShowTutorial = GPTutorialView.shouldShowTutorial(tutorial)
         if (shouldShowTutorial) {

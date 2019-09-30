@@ -15,6 +15,7 @@ import CoreImage
 public class EffectPageViewModel: NSObject {
     
     let kBottomMenuHeight = 60 as CGFloat
+    let iPhoneXBottomBarHeight = 34 as CGFloat
     var sourceImage: UIImage
     var thumbImage: UIImage
     var filterThumbImage: UIImage?
@@ -23,14 +24,26 @@ public class EffectPageViewModel: NSObject {
     
     init(image: UIImage) {
         sourceImage = image.fixedOrientation()
-        if let image = sourceImage.croppedImageForEditing(with: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - kBottomMenuHeight)) {
-            sourceImage = image
-        }
         thumbImage = sourceImage.thumbImage()
         let bundle = GPImageEditorBundle.getBundle()
         filterThumbImage = UIImage(named: "filter-example-image", in: bundle, compatibleWith: nil)
         super.init()
+        if let image = sourceImage.croppedImageForEditing(with: maxImageSizeForEditing()) {
+            sourceImage = image
+            thumbImage = sourceImage.thumbImage()
+        }
         rxSelectedFilter.accept(items.first)
+    }
+    
+    func maxImageSizeForEditing() -> CGSize {
+        var height = UIScreen.main.bounds.height - kBottomMenuHeight
+        if UI_USER_INTERFACE_IDIOM() == .phone {
+            let screenSize = UIScreen.main.bounds.size
+            if screenSize.height >= 812.0 {
+                height -= iPhoneXBottomBarHeight
+            }
+        }
+        return CGSize(width: UIScreen.main.bounds.width, height: height)
     }
     
     public var items: [GPImageFilter] = [
