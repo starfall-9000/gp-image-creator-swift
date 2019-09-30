@@ -99,8 +99,9 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
             else { return }
         contentView.textView.resignFirstResponder()
         if textView.text.count > 0 {
-            if let image = UIImage.imageWithView(view: textView, size: textView.frame.size) {
-                let info = viewModel.getStickerInfo(image: image, size: textView.frame.size)
+            let size = textView.frame.size
+            if let image = contentView.captureTextView(scale: GPImageEditorConfigs.textScaleFactor) {
+                let info = viewModel.getStickerInfo(image: image, size: size)
                 let stickerView = StickersLayerView.addSticker(stickerInfo: info, toView: containerView)
                 completion?(stickerView)
             }

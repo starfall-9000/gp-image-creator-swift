@@ -215,3 +215,27 @@ extension GPTextEditorView {
         }
     }
 }
+
+extension GPTextEditorView {
+    func captureTextView(scale: CGFloat) -> UIImage? {
+        let originalWidth = textViewWidthConstraint.constant
+        let originalHeight = textViewHeight.constant
+        let originalFontSize = textView.font?.pointSize ?? 0
+        textViewHeight.constant = originalHeight * scale
+        textViewWidthConstraint.constant = originalWidth * scale
+        textView.font = UIFont(name: textView.font?.fontName ?? "", size: originalFontSize * scale)
+        textView.layer.cornerRadius = 4 * scale
+        textView.textContainerInset = .only(top: 0, bottom: 0, left: 10 * scale, right: 10 * scale)
+        textView.layoutIfNeeded()
+        
+        let image = UIImage.imageWithView(view: textView, size: textView.frame.size)
+        
+        textViewHeight.constant = originalHeight
+        textViewWidthConstraint.constant = originalWidth
+        textView.font = UIFont(name: textView.font?.fontName ?? "", size: originalFontSize)
+        textView.layer.cornerRadius = 4
+        textView.textContainerInset = .only(top: 0, bottom: 0, left: 10, right: 10)
+        textView.layoutIfNeeded()
+        return image
+    }
+}
