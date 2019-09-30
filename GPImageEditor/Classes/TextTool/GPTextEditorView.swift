@@ -88,15 +88,27 @@ class GPTextEditorView: UIView {
     var colorButtons: [ColorButton] = []
     private var disposeBag: DisposeBag? = DisposeBag()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
+    static func buildTextView(_ textView: UITextView) {
         textView.layer.masksToBounds = true
         textView.layer.cornerRadius = 4
         textView.isScrollEnabled = false
+        textView.contentInset = .zero
+        textView.textContainerInset = .zero
+        textView.textContainer.lineFragmentPadding = 0
+        textView.textContainer.maximumNumberOfLines = 6
+        textView.layoutManager.usesFontLeading = false
+        textView.autocorrectionType = .no
+        textView.spellCheckingType = .no
+        if #available(iOS 11.0, *) {
+            textView.contentInsetAdjustmentBehavior = .never
+        }
+        textView.textContainerInset = .only(top: 0, bottom: 0, left: 10, right: 10)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        GPTextEditorView.buildTextView(textView)
         textView.delegate = self
-        textView.layoutManager.delegate = self
-        textView.textContainerInset = .only(top: 10, bottom: 10, left: 10, right: 10)
         
         fontButton.layer.masksToBounds = true
         fontButton.layer.cornerRadius = fontButton.frame.height/2
@@ -166,10 +178,6 @@ extension GPTextEditorView: UITextViewDelegate, NSLayoutManagerDelegate {
         textViewHeight.constant = newSize.height
         textViewWidthConstraint.constant = min(newSize.width, maxWidth)
         placeholderLabel.isHidden = textView.text.count > 0
-    }
-    
-    func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
-        return 4
     }
 }
 

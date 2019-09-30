@@ -11,7 +11,7 @@ import RxSwift
 import DTMvvm
 
 public class StickerPickerPage: Page<StickerPickerViewModel> {
-    private var completion: ((UIImage?, CGSize) -> Void)? = nil
+    private var completion: ((UIImage?, CGSize, String) -> Void)? = nil
     
     var indicatorLineOffset: NSLayoutConstraint!
     
@@ -56,7 +56,7 @@ public class StickerPickerPage: Page<StickerPickerViewModel> {
     var stickerListView: StickerListView!
     var emojiListView: EmojiListView!
     
-    init(viewModel: StickerPickerViewModel? = nil, completion: ((UIImage?, CGSize) -> Void)?) {
+    init(viewModel: StickerPickerViewModel? = nil, completion: ((UIImage?, CGSize, String) -> Void)?) {
         super.init(viewModel: viewModel)
         self.completion = completion
     }
@@ -95,12 +95,12 @@ public class StickerPickerPage: Page<StickerPickerViewModel> {
         view.addSubview(scrollView)
         scrollView.autoPinEdge(.top, to: .bottom, of: headerView)
         scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
-        stickerListView = StickerListView(viewModel: StickerListViewModel(), completion: { [weak self] (image, size) in
-            self?.finishedPickImage(image: image, size: size)
+        stickerListView = StickerListView(viewModel: StickerListViewModel(), completion: { [weak self] (image, size, stickerId) in
+            self?.finishedPickImage(image: image, size: size, stickerId: stickerId)
         })
         
-        emojiListView = EmojiListView(viewModel: EmojiListViewModel(), completion: { [weak self] (image, size) in
-            self?.finishedPickImage(image: image, size: size)
+        emojiListView = EmojiListView(viewModel: EmojiListViewModel(), completion: { [weak self] (image, size, emoji) in
+            self?.finishedPickImage(image: image, size: size, stickerId: emoji)
         })
         
         scrollView.appendChildren([stickerListView, emojiListView])
@@ -118,8 +118,8 @@ public class StickerPickerPage: Page<StickerPickerViewModel> {
             }) => disposeBag
     }
     
-    func finishedPickImage(image: UIImage?, size: CGSize) {
-        completion?(image, size)
+    func finishedPickImage(image: UIImage?, size: CGSize, stickerId: String) {
+        completion?(image, size, stickerId)
         dismiss(animated: true, completion: { [weak self] in
             self?.destroy()
         })
@@ -133,9 +133,9 @@ public class StickerPickerViewModel: ViewModel<Model> {
 extension StickerPickerPage {
     public static func addSticker(toView view: UIView, completion: ((StickerView?) -> Void)?) -> StickerPickerPage {
         let vm = StickerPickerViewModel()
-        return StickerPickerPage(viewModel: vm, completion: { (image, size) in
+        return StickerPickerPage(viewModel: vm, completion: { (image, size, stickerId) in
             if let image = image {
-                let info = StickerInfo(image: image, type: .sticker, size: size)
+                let info = StickerInfo(image: image, type: .sticker, size: size, stickerId: stickerId)
                 let stickerView = StickersLayerView.addSticker(stickerInfo: info, toView: view)
                 completion?(stickerView)
             }

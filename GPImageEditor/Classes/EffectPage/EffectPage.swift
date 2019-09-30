@@ -62,6 +62,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             self.collectionView.top = self.view.height
             showEffectTool()
             isDidAppear = true
+            viewModel?.recordEditorShown()
         }
     }
     
@@ -74,6 +75,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func backAction() {
+        viewModel?.recordEditorCancel()
         dismiss(animated: true, completion: nil)
     }
     
@@ -164,6 +166,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer,
                                                      completion: { [weak self] (sticker) in
             guard let self = self, let sticker = sticker else { return }
+            self.viewModel?.stickerInfos.append(sticker.info)
             self.handleAddNewSticker(sticker, tutorial: .GPStickerTutorial)
         })
         let sheetController = SheetViewController(controller: stickerVC, sizes: [SheetSize.fullScreen])
@@ -208,6 +211,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             } else {
                 self?.doneBlock?(image)
             }
+            self?.viewModel?.recordEditorFinished()
             self?.dismiss(animated: true, completion: nil)
         }
     }

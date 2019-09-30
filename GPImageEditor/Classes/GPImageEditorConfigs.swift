@@ -43,9 +43,12 @@ public class PEColorInfo: Model {
 
 public class GPImageEditorConfigs {
     
+    static public var analyticsTracker: GPTrackingType?
+    
     static public var apiDomain: String = "https://staging-api.gapo.vn/sticker/v1.2"
     static public var stickersAPIPath: String = "/sticker"
     static public var userToken = ""
+    static public var enableZoomText = false
     static public var dependencyManager: DependencyManager? = nil {
         didSet {
             dependencyManager?.registerService(Factory<StickerAPIService> { StickerAPIService() })
@@ -60,7 +63,7 @@ public class GPImageEditorConfigs {
     ]
     
     static public var fontSet: [PEFontInfo] = [
-        PEFontInfo(JSON: ["name": "Chữ đậm", "font": "BalooPaaji-Regular", "size": 30, "inset": 8])!,
-        PEFontInfo(JSON: ["name": "Mềm mại", "font": "JustLovely-Roman", "size": 50, "inset": 5])!,
-        PEFontInfo(JSON: ["name": "Tinh nghịch", "font": "Pacifico-Regular", "size": 30, "inset": 10])!]
+        PEFontInfo(JSON: ["name": "Chữ đậm", "font": "BalooPaaji-Regular", "size": 30, "inset": 2])!,
+        PEFontInfo(JSON: ["name": "Mềm mại", "font": "JustLovely-Roman", "size": 50, "inset": 2])!,
+        PEFontInfo(JSON: ["name": "Tinh nghịch", "font": "Pacifico-Regular", "size": 30, "inset": 2])!]
 }

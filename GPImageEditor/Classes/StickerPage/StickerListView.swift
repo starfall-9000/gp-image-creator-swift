@@ -14,10 +14,10 @@ private let padding: CGFloat = 20
 
 public class StickerListView: CollectionView<StickerListViewModel> {
     
-    private var completion: ((UIImage?, CGSize) -> Void)? = nil
+    private var completion: ((UIImage?, CGSize, String) -> Void)? = nil
     private var loadingView = UIActivityIndicatorView(style: .white)
     
-    init(viewModel: StickerListViewModel? = nil, completion: ((UIImage?, CGSize) -> Void)?) {
+    init(viewModel: StickerListViewModel? = nil, completion: ((UIImage?, CGSize, String) -> Void)?) {
         super.init(viewModel: viewModel)
         self.completion = completion
     }
@@ -78,13 +78,13 @@ public class StickerListView: CollectionView<StickerListViewModel> {
         guard let indexPath = cellViewModel.indexPath,
             let cell = collectionView(collectionView, cellForItemAt: indexPath) as? StickerCell
             else { return }
-        completion?(cell.photoImg.image, cell.bounds.size)
+        completion?(cell.photoImg.image, cell.bounds.size, cellViewModel.model?.id ?? "")
     }
 }
 
 extension StickerListView {
     
-    static func getInstance(completion: ((UIImage?, CGSize) -> Void)?) -> StickerListView {
+    static func getInstance(completion: ((UIImage?, CGSize, String) -> Void)?) -> StickerListView {
         let vm = StickerListViewModel(model: nil)
         return StickerListView(viewModel: vm, completion: completion)
     }

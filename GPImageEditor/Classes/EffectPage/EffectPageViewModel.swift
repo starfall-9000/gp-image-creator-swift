@@ -20,6 +20,7 @@ public class EffectPageViewModel: NSObject {
     var filterThumbImage: UIImage?
     let rxSelectedFilter = BehaviorRelay<GPImageFilter?>(value: nil)
     let rxHideTutorial = BehaviorRelay<Bool>(value: false)
+    var stickerInfos: [StickerInfo] = []
     
     init(image: UIImage) {
         sourceImage = image.fixedOrientation()
@@ -47,4 +48,32 @@ public class EffectPageViewModel: NSObject {
         GPImageFilter(name: "Comic", applier: GPImageFilter.comicFrame),
     ]
     
+    func recordEditorFinished() {
+        var params: [AnyHashable: Any] = [:]
+        if let filterId = rxSelectedFilter.value?.name {
+            params[PEAnalyticsEvent.FILTER_ID] = filterId
+        }
+        let stickers = stickerInfos.filter{ $0.type == .sticker }
+        if stickers.count > 0 {
+            let stickerIds = stickers.map{ $0.stickerId }.joined(separator: ",")
+            params[PEAnalyticsEvent.STICKER_IDS] = stickerIds
+        }
+        let emojis = stickerInfos.filter{ $0.type == .emoji }
+        if emojis.count > 0 {
+            let emojiIds = stickers.map{ $0.stickerId }.joined(separator: ",")
+            params[PEAnalyticsEvent.EMOJI_IDS] = emojiIds
+        }
+        let texts = stickerInfos.filter{ $0.type == .text }
+        params[PEAnalyticsEvent.HAVE_TEXT] = texts.count > 0 ? "true" : "false"
+        
+        GPImageEditorConfigs.analyticsTracker?.recordEvent(PEAnalyticsEvent.PHOTO_EDITOR_FINISHED, params: params)
+    }
+    
+    func recordEditorCancel() {
+        GPImageEditorConfigs.analyticsTracker?.recordEvent(PEAnalyticsEvent.PHOTO_EDITOR_CANCEL, params: nil)
+    }
+    
+    func recordEditorShown() {
+        GPImageEditorConfigs.analyticsTracker?.recordEvent(PEAnalyticsEvent.PHOTO_EDITOR_SHOWN, params: nil)
+    }
 }

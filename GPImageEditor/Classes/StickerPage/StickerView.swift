@@ -23,6 +23,7 @@ public class StickersLayerView: UIView {
     var viewSize: CGSize!
     var isDragging = false
     var isOverlap = false
+    var lastRotation: CGFloat = 0
     
     var deleteButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -157,26 +158,29 @@ public class StickersLayerView: UIView {
     }
     
     @objc func rotate(gest: UIRotationGestureRecognizer) {
-        let rotation = gest.rotation
+        var originalRotation = CGFloat()
         if let viewToTransform = activeView {
             switch (gest.state) {
             case .began:
+                gest.rotation = lastRotation
+                originalRotation = gest.rotation
                 startEditing()
                 viewTransform = viewToTransform.transform
-                break;
+                break
                 
             case .changed:
-                viewToTransform.transform = transform.concatenating(CGAffineTransform(rotationAngle: rotation))
+                let newRotation = gest.rotation + originalRotation
+                viewToTransform.transform = CGAffineTransform(rotationAngle: newRotation)
                 break;
                 
             case .ended:
+                lastRotation = gest.rotation
                 endEditing()
                 break;
                 
             default:
                 break;
             }
-            
         }
     }
 
@@ -189,6 +193,7 @@ public class StickersLayerView: UIView {
         layoutIfNeeded()
         
         let translation = gest.translation(in: self)
+        let touchPoint = gest.location(in: self)
         switch (gest.state) {
         case .began:
             if let stickerView = findActiveStickerView(location: gest.location(in: self)) {
@@ -205,7 +210,7 @@ public class StickersLayerView: UIView {
                 stickerView.horizontalConstraint.constant = offSet.x + translation.x
                 stickerView.verticalConstraint.constant = offSet.y + translation.y
                 
-                deleteButton.isSelected = stickerView.frame.contains(self.getDeleteButtonFrameInSelf())
+                deleteButton.isSelected = getDeleteButtonFrameInSelf().contains(touchPoint)
                 
                 layoutIfNeeded()
             }
@@ -214,7 +219,7 @@ public class StickersLayerView: UIView {
         case .ended:
             isDragging = false
             hideDeleteButton()
-            if stickerView.frame.contains(self.getDeleteButtonFrameInSelf()) {
+            if getDeleteButtonFrameInSelf().contains(touchPoint) {
                 deleteSticker(stickerView: stickerView)
             }
             endEditing()
@@ -233,6 +238,7 @@ public class StickersLayerView: UIView {
         case .began:
             startEditing()
             viewSize = CGSize(width: stickerView.widthConstraint.constant, height: stickerView.heightConstraint.constant)
+            stickerView.updateZoomBegan()
             break
             
         case .changed:
@@ -244,6 +250,7 @@ public class StickersLayerView: UIView {
             
         case .ended:
             endEditing()
+            stickerView.updateZoomEnded(scale: scale)
             break
             
         default:
@@ -306,28 +313,36 @@ public enum StickerType {
 }
 
 public class StickerInfo {
+    public var stickerId: String = ""
     public var image: UIImage
     public var text: String? = nil
     public var type: StickerType = .sticker
     public var fontIndex: Int = 0
+    public var bgColorHidden: Bool = true
     public var colorIndex: Int = 0
     public var alignmentIndex: Int = 0
     public var size: CGSize = .zero
+    public var scale: CGFloat = 1
+    public var position: CGPoint = .zero
     
-    public init(image: UIImage, text: String? = nil, type: StickerType = .sticker, fontIndex: Int = 0, colorIndex: Int = 0, alignmentIndex: Int = 0, size: CGSize) {
+    public init(image: UIImage, text: String? = nil, type: StickerType = .sticker, fontIndex: Int = 0, bgColorHidden: Bool = true, colorIndex: Int = 0, alignmentIndex: Int = 0, size: CGSize, stickerId: String = "", scale: CGFloat = 1, position: CGPoint = .zero) {
         self.image = image
         self.text = text
         self.fontIndex = fontIndex
+        self.bgColorHidden = bgColorHidden
         self.type = type
         self.colorIndex = colorIndex
         self.alignmentIndex = alignmentIndex
         self.size = size
+        self.scale = scale
+        self.position = position
     }
 }
 
 public class StickerView: UIView {
     public weak var layerView: StickersLayerView?
     var imageView: UIImageView!
+    var textView: UITextView!
     var info: StickerInfo!
     
     var verticalConstraint: NSLayoutConstraint!
@@ -335,9 +350,9 @@ public class StickerView: UIView {
     var widthConstraint: NSLayoutConstraint!
     var heightConstraint: NSLayoutConstraint!
     
-    var offSet: CGPoint!
-    var viewTransform: CGAffineTransform!
-    var viewSize: CGSize!
+    var currentSize: CGFloat = 0
+    var currentCornerRadius: CGFloat = 4
+    var currentInsets: UIEdgeInsets = .zero
     
     public func add(toView view: UIView) {
         view.addSubview(self)
@@ -347,15 +362,20 @@ public class StickerView: UIView {
     }
     
     public convenience init(stickerInfo: StickerInfo) {
-        self.init(image: stickerInfo.image, size: stickerInfo.size)
-        self.info = stickerInfo
+        self.init(stickerInfo: stickerInfo, image: stickerInfo.image, size: stickerInfo.size)
     }
     
-    init(image: UIImage, size: CGSize) {
+    init(stickerInfo: StickerInfo, image: UIImage, size: CGSize) {
         super.init(frame: .zero)
+        self.info = stickerInfo
         translatesAutoresizingMaskIntoConstraints = false
         
+        if info.type == .text {
+            setupTextView()
+        }
+        
         imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleToFill
         addSubview(imageView)
         imageView.autoPinEdgesToSuperviewEdges()
         
@@ -365,6 +385,57 @@ public class StickerView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupTextView() {
+        textView = UITextView()
+        textView.gpClone(textView)
+        addSubview(textView)
+        textView.autoPinEdgesToSuperviewEdges()
+        textView.isHidden = true
+        textView.isUserInteractionEnabled = false
+        
+        textView.textAlignment = [NSTextAlignment.left, NSTextAlignment.center, NSTextAlignment.right][info.alignmentIndex]
+        let colorSet = GPImageEditorConfigs.colorSet[info.colorIndex]
+        if info.bgColorHidden {
+            textView.backgroundColor = .clear
+            textView.textColor = UIColor.fromHex(colorSet.bgColor)
+        }
+        else {
+            textView.backgroundColor = UIColor.fromHex(colorSet.bgColor)
+            textView.textColor = UIColor.fromHex(colorSet.textColor)
+        }
+        textView.text = info.text
+        let fontConfig = GPImageEditorConfigs.fontSet[info.fontIndex]
+        textView.font = UIFont(name: fontConfig.font, size: fontConfig.size)
+        GPTextEditorView.buildTextView(textView)
+    }
+    
+    func updateZoomBegan() {
+        if let textView = self.textView, GPImageEditorConfigs.enableZoomText {
+            currentSize = textView.font?.pointSize ?? 0
+            currentCornerRadius = textView.layer.cornerRadius
+            currentInsets = textView.textContainerInset
+            textView.isHidden = true
+            imageView.isHidden = false
+        }
+    }
+    
+    func updateZoomEnded(scale: CGFloat) {
+        if let textView = self.textView, GPImageEditorConfigs.enableZoomText {
+            textView.isHidden = false
+            imageView.isHidden = true
+            currentSize = currentSize * scale
+            textView.font = UIFont(name: textView.font?.fontName ?? "", size: currentSize)
+            currentCornerRadius = currentCornerRadius * scale
+            textView.layer.cornerRadius = currentCornerRadius
+//            currentInsets = .only(top: currentInsets.top * scale, bottom: currentInsets.bottom * scale, left: currentInsets.left * scale, right: currentInsets.right * scale)
+//            textView.textContainerInset = currentInsets
+            layoutIfNeeded()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                self.imageView.image = UIImage.imageWithView(view: textView, size: textView.frame.size)
+            }
+        }
     }
 }
 

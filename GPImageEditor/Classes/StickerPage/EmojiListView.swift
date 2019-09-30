@@ -14,9 +14,9 @@ private let padding: CGFloat = 20
 
 public class EmojiListView: CollectionView<EmojiListViewModel> {
     
-    private var completion: ((UIImage?, CGSize) -> Void)? = nil
+    private var completion: ((UIImage?, CGSize, String) -> Void)? = nil
     
-    init(viewModel: EmojiListViewModel? = nil, completion: ((UIImage?, CGSize) -> Void)?) {
+    init(viewModel: EmojiListViewModel? = nil, completion: ((UIImage?, CGSize, String) -> Void)?) {
         super.init(viewModel: viewModel)
         self.completion = completion
     }
@@ -63,7 +63,7 @@ public class EmojiListView: CollectionView<EmojiListViewModel> {
         guard let indexPath = cellViewModel.indexPath,
             let cell = collectionView(collectionView, cellForItemAt: indexPath) as? EmojiCell
             else { return }
-        completion?(UIImage.imageWithView(view: cell.emojiLabel, size: cell.bounds.size), cell.bounds.size)
+        completion?(UIImage.imageWithView(view: cell.emojiLabel, size: cell.bounds.size), cell.bounds.size, cellViewModel.model ?? "")
     }
 }
 
