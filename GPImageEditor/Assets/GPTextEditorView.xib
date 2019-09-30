@@ -141,7 +141,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                         </textView>
                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.38" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bắt đầu nhập" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9e8-ND-I8U">
-                            <rect key="frame" x="45" y="404" width="170" height="36"/>
+                            <rect key="frame" x="40" y="406" width="170" height="36"/>
                             <fontDescription key="fontDescription" type="system" pointSize="30"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -154,9 +154,9 @@
                         <constraint firstItem="2Hk-Tt-Ajc" firstAttribute="top" secondItem="Kz3-I2-d2F" secondAttribute="top" id="Jnv-qd-0Dm"/>
                         <constraint firstItem="2Hk-Tt-Ajc" firstAttribute="leading" secondItem="Kz3-I2-d2F" secondAttribute="leading" id="PHV-TB-WZg"/>
                         <constraint firstAttribute="trailing" secondItem="2Hk-Tt-Ajc" secondAttribute="trailing" id="Ped-35-URh"/>
-                        <constraint firstItem="9e8-ND-I8U" firstAttribute="centerY" secondItem="B8U-Bi-Qjf" secondAttribute="centerY" constant="-2" id="R3x-Da-uOY"/>
+                        <constraint firstItem="9e8-ND-I8U" firstAttribute="centerY" secondItem="B8U-Bi-Qjf" secondAttribute="centerY" id="R3x-Da-uOY"/>
                         <constraint firstItem="B8U-Bi-Qjf" firstAttribute="centerY" secondItem="Kz3-I2-d2F" secondAttribute="centerY" id="Xfv-zb-Xzo"/>
-                        <constraint firstItem="9e8-ND-I8U" firstAttribute="leading" secondItem="B8U-Bi-Qjf" secondAttribute="leading" constant="15" id="mQp-ba-ufY"/>
+                        <constraint firstItem="9e8-ND-I8U" firstAttribute="leading" secondItem="B8U-Bi-Qjf" secondAttribute="leading" constant="10" id="mQp-ba-ufY"/>
                     </constraints>
                 </view>
             </subviews>

@@ -177,7 +177,6 @@ extension GPTextEditorView: UITextViewDelegate, NSLayoutManagerDelegate {
         let newSize = textView.sizeThatFits(CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
         textViewHeight.constant = newSize.height
         textViewWidthConstraint.constant = min(newSize.width, maxWidth)
-        placeholderLabel.isHidden = textView.text.count > 0
     }
 }
 

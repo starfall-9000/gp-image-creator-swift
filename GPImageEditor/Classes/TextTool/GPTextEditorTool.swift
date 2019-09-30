@@ -42,6 +42,7 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
         viewModel.rxFontName ~> contentView.fontButton.rx.title(for: .normal) => disposeBag
         viewModel.rxFontButtonWidth ~> contentView.fontButtonWidth.rx.constant => disposeBag
         viewModel.rxAlignmentIcon ~> contentView.alignButton.rx.image(for: .normal) => disposeBag
+        viewModel.rxText.map{ $0 != nil && $0!.count > 0 } ~> contentView.placeholderLabel.rx.isHidden => disposeBag
         
 //        viewModel.rxTextInset.subscribe(onNext: { [weak self] value in
 //            self?.contentView.textView.textContainerInset = .only(top: value, bottom: value, left: 10, right: 10)
