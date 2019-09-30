@@ -389,7 +389,6 @@ public class StickerView: UIView {
     
     func setupTextView() {
         textView = UITextView()
-        textView.gpClone(textView)
         addSubview(textView)
         textView.autoPinEdgesToSuperviewEdges()
         textView.isHidden = true
