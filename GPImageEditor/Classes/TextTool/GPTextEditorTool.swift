@@ -37,6 +37,7 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
         viewModel.rxText <~> contentView.textView.rx.text => disposeBag
         viewModel.rxTextColor ~> contentView.textView.rx.textColor => disposeBag
         viewModel.rxAlignment ~> contentView.textView.rx.textAlignment => disposeBag
+        viewModel.rxStackAlignment ~> contentView.stackView.rx.alignment => disposeBag
         viewModel.rxFont ~> contentView.textView.rx.font => disposeBag
         viewModel.rxFont ~> contentView.placeholderLabel.rx.font => disposeBag
         viewModel.rxFontName ~> contentView.fontButton.rx.title(for: .normal) => disposeBag
@@ -44,9 +45,9 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
         viewModel.rxAlignmentIcon ~> contentView.alignButton.rx.image(for: .normal) => disposeBag
         viewModel.rxText.map{ $0 != nil && $0!.count > 0 } ~> contentView.placeholderLabel.rx.isHidden => disposeBag
         
-//        viewModel.rxTextInset.subscribe(onNext: { [weak self] value in
-//            self?.contentView.textView.textContainerInset = .only(top: value, bottom: value, left: 10, right: 10)
-//        }) => disposeBag
+        Observable.combineLatest(viewModel.rxAlignmentIndex, viewModel.rxFont).subscribe(onNext: { [weak self] _ in
+            self?.setupPlaceholderOffset()
+        }) => disposeBag
         
         Observable.combineLatest(viewModel.rxBgColor, viewModel.rxText)
             .subscribe(onNext: { [weak self] (color, text) in
@@ -90,6 +91,21 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
         contentView.alignButton.rx.bind(to: viewModel.changeAlignmentAction, input: ())
         
         viewModel.changeColorAction.execute(0)
+    }
+    
+    func setupPlaceholderOffset() {
+        let index = viewModel?.rxAlignmentIndex.value ?? 0
+        contentView.layoutIfNeeded()
+        self.contentView.textViewDidChange(self.contentView.textView)
+        if index == 0 {
+            self.contentView.placeholderOffsetConstraint.constant = 10
+        }
+        else if index == 1 {
+            self.contentView.placeholderOffsetConstraint.constant = self.contentView.placeholderLabel.frame.width/2
+        }
+        else {
+            self.contentView.placeholderOffsetConstraint.constant = -10
+        }
     }
     
     func doneAction() {

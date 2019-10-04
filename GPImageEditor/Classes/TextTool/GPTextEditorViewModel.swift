@@ -39,6 +39,10 @@ public class GPTextEditorViewModel: ViewModel<StickerInfo> {
     var rxBgColor: Observable<UIColor?> {
         return rxColorIndex.map{ self.rxBgColorHidden.value ? .clear : UIColor.fromHex(GPImageEditorConfigs.colorSet[$0].bgColor) }
     }
+    var rxStackAlignment: Observable<UIStackView.Alignment> {
+        let alignments: [UIStackView.Alignment] = [.leading, .center, .trailing]
+        return rxAlignmentIndex.map{ alignments[$0] }
+    }
     var rxAlignment: Observable<NSTextAlignment> {
         let alignments: [NSTextAlignment] = [.left, .center, .right]
         return rxAlignmentIndex.map{ alignments[$0] }

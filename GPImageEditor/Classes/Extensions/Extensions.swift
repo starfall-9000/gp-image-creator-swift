@@ -51,3 +51,20 @@ public extension Reactive where Base: UILabel {
         return Binder(base) { $0.font = $1 }
     }
 }
+
+public extension Reactive where Base: UIStackView {
+    var alignment: Binder<UIStackView.Alignment> {
+        return Binder(base) { $0.alignment = $1 }
+    }
+}
+
+extension UITextView {
+    func scrollToBottom() {
+        if text.count > 0 {
+            let location = CGPoint(x: 0, y: max(0, contentSize.height - frame.size.height))
+            setContentOffset(location, animated: true)
+            isScrollEnabled = false
+            isScrollEnabled = true
+        }
+    }
+}

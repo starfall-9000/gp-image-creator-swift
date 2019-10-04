@@ -80,6 +80,8 @@ class GPTextEditorView: UIView {
     @IBOutlet weak var menuBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var textViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var placeholderLabel: UILabel!
+    @IBOutlet weak var placeholderOffsetConstraint: NSLayoutConstraint!
+    @IBOutlet weak var stackView: UIStackView!
     
     var showBgButton: UIButton!
     let hideButton = UIButton(type: .custom)
@@ -108,6 +110,7 @@ class GPTextEditorView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         GPTextEditorView.buildTextView(textView)
+        textView.isScrollEnabled = true
         textView.delegate = self
         
         fontButton.layer.masksToBounds = true
@@ -174,9 +177,14 @@ class GPTextEditorView: UIView {
 extension GPTextEditorView: UITextViewDelegate, NSLayoutManagerDelegate {
     func textViewDidChange(_ textView: UITextView) {
         let maxWidth = frame.width - 60
-        let newSize = textView.sizeThatFits(CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
+        var newSize = textView.sizeThatFits(CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
+        if textView.text.count == 0 {
+            newSize.width = placeholderLabel.frame.width
+        }
         textViewHeight.constant = newSize.height
         textViewWidthConstraint.constant = min(newSize.width, maxWidth)
+        textView.superview?.layoutIfNeeded()
+        textView.scrollToBottom()
     }
 }
 
