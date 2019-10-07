@@ -122,15 +122,15 @@ class GPCropViewController: Page<GPCropViewModel> {
         
         bottomView.addSubview(closeButton)
         closeButton.setImage(GPImageEditorBundle.imageFromBundle(imageName: "ic_crop_close"), for: .normal)
-        closeButton.autoPinEdge(toSuperviewEdge: .left, withInset: 12)
+        closeButton.autoPinEdge(toSuperviewEdge: .left)
         closeButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        closeButton.autoSetDimensions(to: .init(width: 16, height: 16))
+        closeButton.autoSetDimensions(to: .init(width: 40, height: 40))
         
         bottomView.addSubview(doneButton)
         doneButton.setImage(GPImageEditorBundle.imageFromBundle(imageName: "ic_crop_done"), for: .normal)
-        doneButton.autoPinEdge(toSuperviewEdge: .right, withInset: 16)
+        doneButton.autoPinEdge(toSuperviewEdge: .right, withInset: 8)
         doneButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        doneButton.autoSetDimensions(to: .init(width: 24, height: 24))
+        doneButton.autoSetDimensions(to: .init(width: 40, height: 40))
         
         let titleLabel = UILabel()
         bottomView.addSubview(titleLabel)
