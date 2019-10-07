@@ -39,6 +39,7 @@ class GPCropViewController: Page<GPCropViewModel> {
         imageMask.changeMaskType(.free)
         imageMask.isHidden = false
         updateImageView(with: .free)
+        sliderView.updateSliderConstraint()
     }
     
     override func initialize() {
