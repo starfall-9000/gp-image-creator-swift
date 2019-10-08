@@ -8,13 +8,13 @@ import DTMvvm
 
 public class GPTriangleView: AbstractView {
     
-    var color: UIColor = .clear {
+    public var color: UIColor = .clear {
         didSet {
             self.setNeedsDisplay()
         }
     }
     
-    var reversed = false {
+    public var reversed = false {
         didSet {
             if reversed {
                 transform = CGAffineTransform(rotationAngle: CGFloat.pi)
