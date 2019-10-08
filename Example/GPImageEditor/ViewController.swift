@@ -19,11 +19,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        UIFont.familyNames.forEach({ familyName in
-//            let fontNames = UIFont.fontNames(forFamilyName: familyName)
-//            print(familyName, fontNames)
-//        })
     }
     
     @IBAction func pickPhoto(sender: UIButton!) {
@@ -38,16 +33,28 @@ class ViewController: UIViewController {
             moveToEditor(with: image)
         }
     }
+    
+    @IBAction func otherEditPhoto(sender: UIButton!) {
+        if let image = imageView.image {
+            moveToOtherEditing(with: image)
+        }
+    }
 
     func moveToEditor(with image: UIImage?) {
-        guard let image = image else {
-            return
-        }
+        guard let image = image else { return }
+        
         GPImageEditor.present(from: self, image: image, animated: true, finished: { [weak self] (image) in
             self?.imageView.image = image
             }, completion: nil)
     }
     
+    func moveToOtherEditing(with image: UIImage?) {
+        guard let image = image else { return }
+        
+        EditPage.present(from: self, image: image, animated: true, finished: { [weak self] (image) in
+            self?.imageView.image = image
+            }, completion: nil)
+    }
 }
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -60,7 +67,8 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         let image = info[.originalImage] as! UIImage
         imageView.image = image
         dismiss(animated: true) {
-            self.moveToEditor(with: image)
+//            self.moveToEditor(with: image)
+            self.moveToOtherEditing(with: image)
         }
     }
 }
