@@ -30,6 +30,21 @@
 		BCBA2914234B38A700C0AB60 /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = BCBA2911234B38A700C0AB60 /* remove.png */; };
 		BCBA2915234B38A700C0AB60 /* remove@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCBA2912234B38A700C0AB60 /* remove@2x.png */; };
 		BCBA2916234B38A700C0AB60 /* remove@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCBA2913234B38A700C0AB60 /* remove@3x.png */; };
+		BCEF48FA234CDE5F00AF38B0 /* ic-tuong-phan-light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF48F7234CDE5F00AF38B0 /* ic-tuong-phan-light@2x.png */; };
+		BCEF48FB234CDE5F00AF38B0 /* ic-tuong-phan-light@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF48F8234CDE5F00AF38B0 /* ic-tuong-phan-light@3x.png */; };
+		BCEF48FC234CDE5F00AF38B0 /* ic-tuong-phan-light.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF48F9234CDE5F00AF38B0 /* ic-tuong-phan-light.png */; };
+		BCEF4900234CDE6800AF38B0 /* ic-brightness-light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF48FD234CDE6800AF38B0 /* ic-brightness-light@2x.png */; };
+		BCEF4901234CDE6800AF38B0 /* ic-brightness-light.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF48FE234CDE6800AF38B0 /* ic-brightness-light.png */; };
+		BCEF4902234CDE6800AF38B0 /* ic-brightness-light@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF48FF234CDE6800AF38B0 /* ic-brightness-light@3x.png */; };
+		BCEF4906234CDECB00AF38B0 /* ic-crop-light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF4903234CDECB00AF38B0 /* ic-crop-light@2x.png */; };
+		BCEF4907234CDECB00AF38B0 /* ic-crop-light@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF4904234CDECB00AF38B0 /* ic-crop-light@3x.png */; };
+		BCEF4908234CDECB00AF38B0 /* ic-crop-light.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF4905234CDECB00AF38B0 /* ic-crop-light.png */; };
+		BCEF490C234CDEEC00AF38B0 /* ic-temperature-light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF4909234CDEEC00AF38B0 /* ic-temperature-light@2x.png */; };
+		BCEF490D234CDEEC00AF38B0 /* ic-temperature-light@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF490A234CDEEC00AF38B0 /* ic-temperature-light@3x.png */; };
+		BCEF490E234CDEEC00AF38B0 /* ic-temperature-light.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF490B234CDEEC00AF38B0 /* ic-temperature-light.png */; };
+		BCEF4912234CDF6D00AF38B0 /* ic-do-net-light.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF490F234CDF6D00AF38B0 /* ic-do-net-light.png */; };
+		BCEF4913234CDF6D00AF38B0 /* ic-do-net-light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF4910234CDF6D00AF38B0 /* ic-do-net-light@2x.png */; };
+		BCEF4914234CDF6D00AF38B0 /* ic-do-net-light@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEF4911234CDF6D00AF38B0 /* ic-do-net-light@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +81,21 @@
 		BCBA2911234B38A700C0AB60 /* remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remove.png; sourceTree = "<group>"; };
 		BCBA2912234B38A700C0AB60 /* remove@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remove@2x.png"; sourceTree = "<group>"; };
 		BCBA2913234B38A700C0AB60 /* remove@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remove@3x.png"; sourceTree = "<group>"; };
+		BCEF48F7234CDE5F00AF38B0 /* ic-tuong-phan-light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-tuong-phan-light@2x.png"; sourceTree = "<group>"; };
+		BCEF48F8234CDE5F00AF38B0 /* ic-tuong-phan-light@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-tuong-phan-light@3x.png"; sourceTree = "<group>"; };
+		BCEF48F9234CDE5F00AF38B0 /* ic-tuong-phan-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-tuong-phan-light.png"; sourceTree = "<group>"; };
+		BCEF48FD234CDE6800AF38B0 /* ic-brightness-light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-brightness-light@2x.png"; sourceTree = "<group>"; };
+		BCEF48FE234CDE6800AF38B0 /* ic-brightness-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-brightness-light.png"; sourceTree = "<group>"; };
+		BCEF48FF234CDE6800AF38B0 /* ic-brightness-light@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-brightness-light@3x.png"; sourceTree = "<group>"; };
+		BCEF4903234CDECB00AF38B0 /* ic-crop-light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-crop-light@2x.png"; sourceTree = "<group>"; };
+		BCEF4904234CDECB00AF38B0 /* ic-crop-light@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-crop-light@3x.png"; sourceTree = "<group>"; };
+		BCEF4905234CDECB00AF38B0 /* ic-crop-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-crop-light.png"; sourceTree = "<group>"; };
+		BCEF4909234CDEEC00AF38B0 /* ic-temperature-light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-temperature-light@2x.png"; sourceTree = "<group>"; };
+		BCEF490A234CDEEC00AF38B0 /* ic-temperature-light@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-temperature-light@3x.png"; sourceTree = "<group>"; };
+		BCEF490B234CDEEC00AF38B0 /* ic-temperature-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-temperature-light.png"; sourceTree = "<group>"; };
+		BCEF490F234CDF6D00AF38B0 /* ic-do-net-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-do-net-light.png"; sourceTree = "<group>"; };
+		BCEF4910234CDF6D00AF38B0 /* ic-do-net-light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-do-net-light@2x.png"; sourceTree = "<group>"; };
+		BCEF4911234CDF6D00AF38B0 /* ic-do-net-light@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-do-net-light@3x.png"; sourceTree = "<group>"; };
 		DED391095BBDCCAF15A7C05B /* Pods_GPImageEditor_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GPImageEditor_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5CDF5236424D9F13636685 /* Pods_GPImageEditor_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GPImageEditor_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -202,6 +232,21 @@
 		BCBA2910234B389800C0AB60 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				BCEF490F234CDF6D00AF38B0 /* ic-do-net-light.png */,
+				BCEF4910234CDF6D00AF38B0 /* ic-do-net-light@2x.png */,
+				BCEF4911234CDF6D00AF38B0 /* ic-do-net-light@3x.png */,
+				BCEF490B234CDEEC00AF38B0 /* ic-temperature-light.png */,
+				BCEF4909234CDEEC00AF38B0 /* ic-temperature-light@2x.png */,
+				BCEF490A234CDEEC00AF38B0 /* ic-temperature-light@3x.png */,
+				BCEF4905234CDECB00AF38B0 /* ic-crop-light.png */,
+				BCEF4903234CDECB00AF38B0 /* ic-crop-light@2x.png */,
+				BCEF4904234CDECB00AF38B0 /* ic-crop-light@3x.png */,
+				BCEF48FE234CDE6800AF38B0 /* ic-brightness-light.png */,
+				BCEF48FD234CDE6800AF38B0 /* ic-brightness-light@2x.png */,
+				BCEF48FF234CDE6800AF38B0 /* ic-brightness-light@3x.png */,
+				BCEF48F9234CDE5F00AF38B0 /* ic-tuong-phan-light.png */,
+				BCEF48F7234CDE5F00AF38B0 /* ic-tuong-phan-light@2x.png */,
+				BCEF48F8234CDE5F00AF38B0 /* ic-tuong-phan-light@3x.png */,
 				BCBA2911234B38A700C0AB60 /* remove.png */,
 				BCBA2912234B38A700C0AB60 /* remove@2x.png */,
 				BCBA2913234B38A700C0AB60 /* remove@3x.png */,
@@ -276,24 +321,39 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCEF4907234CDECB00AF38B0 /* ic-crop-light@3x.png in Resources */,
 				7058A0FB233E149900C30A9D /* Pacifico-Regular.ttf in Resources */,
+				BCEF48FC234CDE5F00AF38B0 /* ic-tuong-phan-light.png in Resources */,
+				BCEF4912234CDF6D00AF38B0 /* ic-do-net-light.png in Resources */,
 				7041AE272330C08900A0C2D8 /* Nunito-Regular.ttf in Resources */,
 				7041AE262330C08900A0C2D8 /* BalooPaaji-Regular.ttf in Resources */,
 				7041AE282330C08900A0C2D8 /* Oswald-Regular.ttf in Resources */,
 				7041AE292330C08900A0C2D8 /* HeptaSlab-Regular.ttf in Resources */,
+				BCEF490E234CDEEC00AF38B0 /* ic-temperature-light.png in Resources */,
+				BCEF4900234CDE6800AF38B0 /* ic-brightness-light@2x.png in Resources */,
 				BC9B99622333705B007B3175 /* Main.storyboard in Resources */,
 				BCBA2915234B38A700C0AB60 /* remove@2x.png in Resources */,
+				BCEF48FB234CDE5F00AF38B0 /* ic-tuong-phan-light@3x.png in Resources */,
 				BCAE38CF234C517000E09443 /* ic-check-green@2x.png in Resources */,
+				BCEF490C234CDEEC00AF38B0 /* ic-temperature-light@2x.png in Resources */,
+				BCEF4908234CDECB00AF38B0 /* ic-crop-light.png in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				BCAE38CD234C517000E09443 /* ic-check-green@3x.png in Resources */,
 				7058A0FC233E149900C30A9D /* JustLovely-Roman.ttf in Resources */,
 				BCBA290D234AFE0800C0AB60 /* EditPage.xib in Resources */,
 				70B75EED233F3D7D00B8B7A9 /* Outfitter-Script.ttf in Resources */,
 				BCBA2914234B38A700C0AB60 /* remove.png in Resources */,
+				BCEF4914234CDF6D00AF38B0 /* ic-do-net-light@3x.png in Resources */,
+				BCEF48FA234CDE5F00AF38B0 /* ic-tuong-phan-light@2x.png in Resources */,
+				BCEF4906234CDECB00AF38B0 /* ic-crop-light@2x.png in Resources */,
+				BCEF4913234CDF6D00AF38B0 /* ic-do-net-light@2x.png in Resources */,
 				BCBA2916234B38A700C0AB60 /* remove@3x.png in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				BCEF4901234CDE6800AF38B0 /* ic-brightness-light.png in Resources */,
+				BCEF490D234CDEEC00AF38B0 /* ic-temperature-light@3x.png in Resources */,
 				BCAE38CE234C517000E09443 /* ic-check-green.png in Resources */,
 				7041AE2A2330C08900A0C2D8 /* DancingScript-Regular.ttf in Resources */,
+				BCEF4902234CDE6800AF38B0 /* ic-brightness-light@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

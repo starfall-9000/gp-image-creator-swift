@@ -24,13 +24,17 @@ enum EditPageType: Int {
 public class EditPageViewModel: ViewModel<UIImage> {
 
     var image: CIImage?
-    let rxBrightness = BehaviorRelay<Float>(value: 0.0)       // -1.0 to 1.0
-    let rxSaturation = BehaviorRelay<Float>(value: 1.0)       // 0.0 to 2.0
-    let rxContrast = BehaviorRelay<Float>(value: 1.0)         // 0.0 to 4.0
-    let rxTemperature = BehaviorRelay<Float>(value: 0)         // -3000 to 3000
+    // -1.0 to 1.0 default 0
+    let rxBrightness = BehaviorRelay<Float>(value: 0.0)
+    // 0.0 to 2.0 default 1
+    let rxSaturation = BehaviorRelay<Float>(value: 1.0)
+    // 0.0 to 4.0 default 1
+    let rxContrast = BehaviorRelay<Float>(value: 1.0)
+    // -3000 to 3000 default 0
+    let rxTemperature = BehaviorRelay<Float>(value: 0)
     
     let rxSelectedEditing = BehaviorRelay<EditPageType>(value: .temperature)
-    let rxOutputImage = BehaviorRelay<CIImage?>(value: nil)
+    let rxOutputImage = BehaviorRelay<UIImage?>(value: nil)
     var isApplyingFilter: Bool = false
     
     public required init(model: UIImage? = nil) {
@@ -44,10 +48,8 @@ public class EditPageViewModel: ViewModel<UIImage> {
                            rxSaturation,
                            rxContrast,
                            rxTemperature)
-            .observeOn(Scheduler.shared.backgroundScheduler)
             .subscribe(onNext: { [weak self] (_) in
                 guard let self = self else { return }
-                if self.isApplyingFilter { return }
 
                 self.applyImageChange(brightness: self.rxBrightness.value,
                                       saturation: self.rxSaturation.value,
@@ -58,15 +60,20 @@ public class EditPageViewModel: ViewModel<UIImage> {
     
     func applyImageChange(brightness: Float, saturation: Float, constrast: Float, temperature: Float) {
         guard let image = image else { return }
-
-        isApplyingFilter = true
-        let output = image.applyFilter(brightness: brightness,
-                                       saturation: saturation,
-                                       constrast: constrast,
-                                       temperature: temperature)
-        self.rxOutputImage.accept(output)
-        self.isApplyingFilter = false
+        if self.isApplyingFilter { return }
+        
+        self.isApplyingFilter = true
+        DispatchQueue.global(qos: .background).async {
+            let output = image.applyFilter(brightness: brightness,
+                                           saturation: saturation,
+                                           constrast: constrast,
+                                           temperature: temperature)
+            let endImage = output?.toUIImage()
+            self.rxOutputImage.accept(endImage)
+            self.isApplyingFilter = false
+        }
     }
+    
 }
 
 extension CIImage {
@@ -89,6 +96,12 @@ extension CIImage {
     
     func toUIImage() -> UIImage {
         let context: CIContext = CIContext.init(options: nil)
+        let cgImage: CGImage = context.createCGImage(self, from: self.extent)!
+        let image: UIImage = UIImage(cgImage: cgImage)
+        return image
+    }
+    
+    func toUIImage(in context: CIContext) -> UIImage {
         let cgImage: CGImage = context.createCGImage(self, from: self.extent)!
         let image: UIImage = UIImage(cgImage: cgImage)
         return image

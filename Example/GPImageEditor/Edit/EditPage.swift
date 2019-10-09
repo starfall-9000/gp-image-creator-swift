@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import RxCocoa
 import  RxSwift
 import DTMvvm
+import RxCocoa
 
 public class EditPage: UIViewController {
 
@@ -19,6 +19,8 @@ public class EditPage: UIViewController {
     @IBOutlet weak var contrastSlider: UISlider!
     @IBOutlet weak var saturationSlider: UISlider!
     @IBOutlet weak var tempSlider: UISlider!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var smallTitleLabels: [UILabel]!
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -61,20 +63,33 @@ public class EditPage: UIViewController {
         }) => disposeBag
         
         viewModel.rxOutputImage
-            .observeOn(MainScheduler.instance)
+            .subscribeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] (image) in
                 guard let self = self else { return }
                 guard let image = image else { return }
                 
-                self.imageView.image = image.toUIImage()
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                }
         }) => disposeBag
     }
     
     @IBAction func buttonDidTap(button: UIButton) {
         viewModel?.rxSelectedEditing.accept(EditPageType(rawValue: button.tag) ?? EditPageType.brightness)
+        
+        let index = buttons.index(of: button)
+        let label = smallTitleLabels[index ?? 0]
+        titleLabel.text = label.text
     }
     
     @IBAction func closeButtonTapped(button: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func doneTapped(button: UIButton) {
+        if let image = imageView.image ?? viewModel?.image {
+            self.doneBlock?(image as! UIImage)
+        }
         dismiss(animated: true, completion: nil)
     }
     
