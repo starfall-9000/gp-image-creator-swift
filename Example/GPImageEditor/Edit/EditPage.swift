@@ -15,17 +15,17 @@ public class EditPage: UIViewController {
 
     var doneBlock: ((UIImage) -> Void)?
     
-    @IBOutlet weak var brightnessSlider: UISlider!
-    @IBOutlet weak var contrastSlider: UISlider!
-    @IBOutlet weak var saturationSlider: UISlider!
-    @IBOutlet weak var tempSlider: UISlider!
+    @IBOutlet weak var brightnessSlider: EditPageSlider!
+    @IBOutlet weak var contrastSlider: EditPageSlider!
+    @IBOutlet weak var saturationSlider: EditPageSlider!
+    @IBOutlet weak var tempSlider: EditPageSlider!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet var smallTitleLabels: [UILabel]!
     
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet var buttons: [UIButton]!
-    @IBOutlet var sliders: [UISlider]!
+    @IBOutlet var sliders: [EditPageSlider]!
     
     var viewModel: EditPageViewModel?
     public var disposeBag: DisposeBag? = DisposeBag()

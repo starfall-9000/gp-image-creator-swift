@@ -35,6 +35,22 @@
 		BC7747E7234D88C80028B918 /* ic-crop-green.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747E4234D88C80028B918 /* ic-crop-green.png */; };
 		BC7747E8234D88C80028B918 /* ic-crop-green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747E5234D88C80028B918 /* ic-crop-green@2x.png */; };
 		BC7747E9234D88C80028B918 /* ic-crop-green@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747E6234D88C80028B918 /* ic-crop-green@3x.png */; };
+		BC7747ED234D8BDE0028B918 /* temperature-slider-image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747EA234D8BDD0028B918 /* temperature-slider-image@2x.png */; };
+		BC7747EE234D8BDE0028B918 /* temperature-slider-image.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747EB234D8BDE0028B918 /* temperature-slider-image.png */; };
+		BC7747EF234D8BDE0028B918 /* temperature-slider-image@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747EC234D8BDE0028B918 /* temperature-slider-image@3x.png */; };
+		BC7747F3234D8E210028B918 /* slider-thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747F0234D8E200028B918 /* slider-thumb.png */; };
+		BC7747F4234D8E210028B918 /* slider-thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747F1234D8E210028B918 /* slider-thumb@2x.png */; };
+		BC7747F5234D8E210028B918 /* slider-thumb@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747F2234D8E210028B918 /* slider-thumb@3x.png */; };
+		BC7747F7234D8F530028B918 /* EditPageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7747F6234D8F530028B918 /* EditPageSlider.swift */; };
+		BC77481F234DBBA90028B918 /* grey-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC77481C234DBBA80028B918 /* grey-track@2x.png */; };
+		BC774820234DBBA90028B918 /* grey-track@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC77481D234DBBA90028B918 /* grey-track@3x.png */; };
+		BC774821234DBBA90028B918 /* grey-track.png in Resources */ = {isa = PBXBuildFile; fileRef = BC77481E234DBBA90028B918 /* grey-track.png */; };
+		BC774825234DBBB00028B918 /* green-grey-track.png in Resources */ = {isa = PBXBuildFile; fileRef = BC774822234DBBAF0028B918 /* green-grey-track.png */; };
+		BC774826234DBBB00028B918 /* green-grey-track@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC774823234DBBAF0028B918 /* green-grey-track@3x.png */; };
+		BC774827234DBBB00028B918 /* green-grey-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC774824234DBBAF0028B918 /* green-grey-track@2x.png */; };
+		BC77482B234DBBC40028B918 /* grey-green-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC774828234DBBC30028B918 /* grey-green-track@2x.png */; };
+		BC77482C234DBBC40028B918 /* grey-green-track.png in Resources */ = {isa = PBXBuildFile; fileRef = BC774829234DBBC40028B918 /* grey-green-track.png */; };
+		BC77482D234DBBC40028B918 /* grey-green-track@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC77482A234DBBC40028B918 /* grey-green-track@3x.png */; };
 		BC9B99622333705B007B3175 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC9B99612333705B007B3175 /* Main.storyboard */; };
 		BCAE38CD234C517000E09443 /* ic-check-green@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCAE38CA234C517000E09443 /* ic-check-green@3x.png */; };
 		BCAE38CE234C517000E09443 /* ic-check-green.png in Resources */ = {isa = PBXBuildFile; fileRef = BCAE38CB234C517000E09443 /* ic-check-green.png */; };
@@ -101,6 +117,22 @@
 		BC7747E4234D88C80028B918 /* ic-crop-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-crop-green.png"; sourceTree = "<group>"; };
 		BC7747E5234D88C80028B918 /* ic-crop-green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-crop-green@2x.png"; sourceTree = "<group>"; };
 		BC7747E6234D88C80028B918 /* ic-crop-green@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-crop-green@3x.png"; sourceTree = "<group>"; };
+		BC7747EA234D8BDD0028B918 /* temperature-slider-image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "temperature-slider-image@2x.png"; sourceTree = "<group>"; };
+		BC7747EB234D8BDE0028B918 /* temperature-slider-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "temperature-slider-image.png"; sourceTree = "<group>"; };
+		BC7747EC234D8BDE0028B918 /* temperature-slider-image@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "temperature-slider-image@3x.png"; sourceTree = "<group>"; };
+		BC7747F0234D8E200028B918 /* slider-thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-thumb.png"; sourceTree = "<group>"; };
+		BC7747F1234D8E210028B918 /* slider-thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-thumb@2x.png"; sourceTree = "<group>"; };
+		BC7747F2234D8E210028B918 /* slider-thumb@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-thumb@3x.png"; sourceTree = "<group>"; };
+		BC7747F6234D8F530028B918 /* EditPageSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPageSlider.swift; sourceTree = "<group>"; };
+		BC77481C234DBBA80028B918 /* grey-track@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-track@2x.png"; sourceTree = "<group>"; };
+		BC77481D234DBBA90028B918 /* grey-track@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-track@3x.png"; sourceTree = "<group>"; };
+		BC77481E234DBBA90028B918 /* grey-track.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-track.png"; sourceTree = "<group>"; };
+		BC774822234DBBAF0028B918 /* green-grey-track.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green-grey-track.png"; sourceTree = "<group>"; };
+		BC774823234DBBAF0028B918 /* green-grey-track@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green-grey-track@3x.png"; sourceTree = "<group>"; };
+		BC774824234DBBAF0028B918 /* green-grey-track@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green-grey-track@2x.png"; sourceTree = "<group>"; };
+		BC774828234DBBC30028B918 /* grey-green-track@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-green-track@2x.png"; sourceTree = "<group>"; };
+		BC774829234DBBC40028B918 /* grey-green-track.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-green-track.png"; sourceTree = "<group>"; };
+		BC77482A234DBBC40028B918 /* grey-green-track@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-green-track@3x.png"; sourceTree = "<group>"; };
 		BC9B99612333705B007B3175 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BCAE38CA234C517000E09443 /* ic-check-green@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-check-green@3x.png"; sourceTree = "<group>"; };
 		BCAE38CB234C517000E09443 /* ic-check-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-check-green.png"; sourceTree = "<group>"; };
@@ -255,6 +287,7 @@
 				BCBA290A234AFE0800C0AB60 /* EditPage.swift */,
 				BCBA290B234AFE0800C0AB60 /* EditPage.xib */,
 				BCBA290E234B1C6700C0AB60 /* EditPageViewModel.swift */,
+				BC7747F6234D8F530028B918 /* EditPageSlider.swift */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -262,6 +295,21 @@
 		BCBA2910234B389800C0AB60 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				BC774829234DBBC40028B918 /* grey-green-track.png */,
+				BC774828234DBBC30028B918 /* grey-green-track@2x.png */,
+				BC77482A234DBBC40028B918 /* grey-green-track@3x.png */,
+				BC774822234DBBAF0028B918 /* green-grey-track.png */,
+				BC774824234DBBAF0028B918 /* green-grey-track@2x.png */,
+				BC774823234DBBAF0028B918 /* green-grey-track@3x.png */,
+				BC77481E234DBBA90028B918 /* grey-track.png */,
+				BC77481C234DBBA80028B918 /* grey-track@2x.png */,
+				BC77481D234DBBA90028B918 /* grey-track@3x.png */,
+				BC7747F0234D8E200028B918 /* slider-thumb.png */,
+				BC7747F1234D8E210028B918 /* slider-thumb@2x.png */,
+				BC7747F2234D8E210028B918 /* slider-thumb@3x.png */,
+				BC7747EB234D8BDE0028B918 /* temperature-slider-image.png */,
+				BC7747EA234D8BDD0028B918 /* temperature-slider-image@2x.png */,
+				BC7747EC234D8BDE0028B918 /* temperature-slider-image@3x.png */,
 				BC7747E4234D88C80028B918 /* ic-crop-green.png */,
 				BC7747E5234D88C80028B918 /* ic-crop-green@2x.png */,
 				BC7747E6234D88C80028B918 /* ic-crop-green@3x.png */,
@@ -369,35 +417,45 @@
 				BC7747DC234D88B90028B918 /* ic-tuong-phan-green@3x.png in Resources */,
 				BCEF4907234CDECB00AF38B0 /* ic-crop-light@3x.png in Resources */,
 				7058A0FB233E149900C30A9D /* Pacifico-Regular.ttf in Resources */,
+				BC774827234DBBB00028B918 /* green-grey-track@2x.png in Resources */,
 				BCEF48FC234CDE5F00AF38B0 /* ic-tuong-phan-light.png in Resources */,
 				BCEF4912234CDF6D00AF38B0 /* ic-do-net-light.png in Resources */,
 				7041AE272330C08900A0C2D8 /* Nunito-Regular.ttf in Resources */,
 				BC7747D6234D88B20028B918 /* ic-brightness-green@2x.png in Resources */,
 				7041AE262330C08900A0C2D8 /* BalooPaaji-Regular.ttf in Resources */,
+				BC7747F4234D8E210028B918 /* slider-thumb@2x.png in Resources */,
 				7041AE282330C08900A0C2D8 /* Oswald-Regular.ttf in Resources */,
+				BC774825234DBBB00028B918 /* green-grey-track.png in Resources */,
 				BC7747E7234D88C80028B918 /* ic-crop-green.png in Resources */,
 				7041AE292330C08900A0C2D8 /* HeptaSlab-Regular.ttf in Resources */,
+				BC77481F234DBBA90028B918 /* grey-track@2x.png in Resources */,
+				BC7747F3234D8E210028B918 /* slider-thumb.png in Resources */,
 				BCEF490E234CDEEC00AF38B0 /* ic-temperature-light.png in Resources */,
 				BC7747E3234D88C00028B918 /* ic-do-net-green@3x.png in Resources */,
+				BC774826234DBBB00028B918 /* green-grey-track@3x.png in Resources */,
 				BC7747E1234D88C00028B918 /* ic-do-net-green@2x.png in Resources */,
 				BCEF4900234CDE6800AF38B0 /* ic-brightness-light@2x.png in Resources */,
 				BC9B99622333705B007B3175 /* Main.storyboard in Resources */,
 				BCBA2915234B38A700C0AB60 /* remove@2x.png in Resources */,
 				BCEF48FB234CDE5F00AF38B0 /* ic-tuong-phan-light@3x.png in Resources */,
 				BCAE38CF234C517000E09443 /* ic-check-green@2x.png in Resources */,
+				BC774820234DBBA90028B918 /* grey-track@3x.png in Resources */,
 				BC7747DD234D88B90028B918 /* ic-tuong-phan-green.png in Resources */,
 				BCEF490C234CDEEC00AF38B0 /* ic-temperature-light@2x.png in Resources */,
 				BCEF4908234CDECB00AF38B0 /* ic-crop-light.png in Resources */,
 				BC7747E2234D88C00028B918 /* ic-do-net-green.png in Resources */,
+				BC77482B234DBBC40028B918 /* grey-green-track@2x.png in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				BCAE38CD234C517000E09443 /* ic-check-green@3x.png in Resources */,
 				7058A0FC233E149900C30A9D /* JustLovely-Roman.ttf in Resources */,
 				BC7747CF234D88A50028B918 /* ic-temperature-green@2x.png in Resources */,
+				BC7747EE234D8BDE0028B918 /* temperature-slider-image.png in Resources */,
 				BCBA290D234AFE0800C0AB60 /* EditPage.xib in Resources */,
 				70B75EED233F3D7D00B8B7A9 /* Outfitter-Script.ttf in Resources */,
 				BC7747E9234D88C80028B918 /* ic-crop-green@3x.png in Resources */,
 				BC7747DB234D88B90028B918 /* ic-tuong-phan-green@2x.png in Resources */,
 				BCBA2914234B38A700C0AB60 /* remove.png in Resources */,
+				BC7747F5234D8E210028B918 /* slider-thumb@3x.png in Resources */,
 				BCEF4914234CDF6D00AF38B0 /* ic-do-net-light@3x.png in Resources */,
 				BCEF48FA234CDE5F00AF38B0 /* ic-tuong-phan-light@2x.png in Resources */,
 				BCEF4906234CDECB00AF38B0 /* ic-crop-light@2x.png in Resources */,
@@ -406,13 +464,18 @@
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 				BC7747D0234D88A50028B918 /* ic-temperature-green@3x.png in Resources */,
 				BC7747D5234D88B20028B918 /* ic-brightness-green.png in Resources */,
+				BC774821234DBBA90028B918 /* grey-track.png in Resources */,
+				BC7747ED234D8BDE0028B918 /* temperature-slider-image@2x.png in Resources */,
 				BCEF4901234CDE6800AF38B0 /* ic-brightness-light.png in Resources */,
 				BCEF490D234CDEEC00AF38B0 /* ic-temperature-light@3x.png in Resources */,
 				BC7747D1234D88A50028B918 /* ic-temperature-green.png in Resources */,
 				BC7747D7234D88B20028B918 /* ic-brightness-green@3x.png in Resources */,
+				BC77482D234DBBC40028B918 /* grey-green-track@3x.png in Resources */,
 				BCAE38CE234C517000E09443 /* ic-check-green.png in Resources */,
 				7041AE2A2330C08900A0C2D8 /* DancingScript-Regular.ttf in Resources */,
 				BCEF4902234CDE6800AF38B0 /* ic-brightness-light@3x.png in Resources */,
+				BC7747EF234D8BDE0028B918 /* temperature-slider-image@3x.png in Resources */,
+				BC77482C234DBBC40028B918 /* grey-green-track.png in Resources */,
 				BC7747E8234D88C80028B918 /* ic-crop-green@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -491,6 +554,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC7747F7234D8F530028B918 /* EditPageSlider.swift in Sources */,
 				BCBA290C234AFE0800C0AB60 /* EditPage.swift in Sources */,
 				BCBA290F234B1C6700C0AB60 /* EditPageViewModel.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
