@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import DTMvvm
 import Action
-import GPImageEditor
 
 enum EditPageType: Int {
     case brightness = 0
@@ -92,33 +91,5 @@ extension CIImage {
                             parameters: [
                                 "inputNeutral": CIVector.init(x: CGFloat(temperature) + 6500, y: 0),
                                 "inputTargetNeutral": CIVector.init(x: 6500, y: 0)])
-    }
-    
-    func toUIImage() -> UIImage {
-        let context: CIContext = CIContext.init(options: nil)
-        let cgImage: CGImage = context.createCGImage(self, from: self.extent)!
-        let image: UIImage = UIImage(cgImage: cgImage)
-        return image
-    }
-    
-    func toUIImage(in context: CIContext) -> UIImage {
-        let cgImage: CGImage = context.createCGImage(self, from: self.extent)!
-        let image: UIImage = UIImage(cgImage: cgImage)
-        return image
-    }
-    
-    func toCGImage() -> CGImage? {
-        let context = CIContext(options: nil)
-        if let cgImage = context.createCGImage(self, from: self.extent) {
-            return cgImage
-        }
-        return nil
-    }
-}
-
-extension UIImage {
-    
-    func toCIImage() -> CIImage? {
-        return self.ciImage ?? CIImage(cgImage: self.cgImage!)
     }
 }

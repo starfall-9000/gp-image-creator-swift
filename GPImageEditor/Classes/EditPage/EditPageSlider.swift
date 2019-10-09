@@ -12,13 +12,13 @@ import RxSwift
 import DTMvvm
 import PureLayout
 
-class EditPageSlider: UISlider {
+public class EditPageSlider: UISlider {
 
     public var disposeBag: DisposeBag? = DisposeBag()
-    let greyTrackImage = UIImage(named: "grey-track")
-    let greyGreenTrackImage = UIImage(named: "grey-green-track")
-    let greenGreyTrackImage = UIImage(named: "green-grey-track")
-    let tempTrackImage = UIImage(named: "temp-track")
+    let greyTrackImage = UIImage(named: "grey-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
+    let greyGreenTrackImage = UIImage(named: "grey-green-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
+    let greenGreyTrackImage = UIImage(named: "green-grey-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
+    let tempTrackImage = UIImage(named: "temp-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
     let percentLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     
     var isLoaded: Bool = false
@@ -41,7 +41,6 @@ class EditPageSlider: UISlider {
             setMinimumTrackImage(greyTrackImage, for: .normal)
             setMaximumTrackImage(greyTrackImage, for: .normal)
         }
-        
         
         layer.masksToBounds = false
         setThumbImage(UIImage.init(named: "slider-thumb"), for: .normal)
@@ -111,7 +110,7 @@ class EditPageSlider: UISlider {
         }
     }
     
-    override func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
+    override public func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
         guard let image = currentThumbImage else {
             return super.thumbRect(forBounds: bounds, trackRect: rect, value: value)
         }

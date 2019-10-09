@@ -33,25 +33,11 @@ class ViewController: UIViewController {
             moveToEditor(with: image)
         }
     }
-    
-    @IBAction func otherEditPhoto(sender: UIButton!) {
-        if let image = imageView.image {
-            moveToOtherEditing(with: image)
-        }
-    }
 
     func moveToEditor(with image: UIImage?) {
         guard let image = image else { return }
         
         GPImageEditor.present(from: self, image: image, animated: true, finished: { [weak self] (image) in
-            self?.imageView.image = image
-            }, completion: nil)
-    }
-    
-    func moveToOtherEditing(with image: UIImage?) {
-        guard let image = image else { return }
-        
-        EditPage.present(from: self, image: image, animated: true, finished: { [weak self] (image) in
             self?.imageView.image = image
             }, completion: nil)
     }
@@ -67,8 +53,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         let image = info[.originalImage] as! UIImage
         imageView.image = image
         dismiss(animated: true) {
-//            self.moveToEditor(with: image)
-            self.moveToOtherEditing(with: image)
+            self.moveToEditor(with: image)
         }
     }
 }

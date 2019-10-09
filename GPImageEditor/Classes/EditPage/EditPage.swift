@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import  RxSwift
+import RxSwift
 import DTMvvm
 import RxCocoa
 
@@ -75,6 +75,18 @@ public class EditPage: UIViewController {
     }
     
     @IBAction func buttonDidTap(button: UIButton) {
+        if button.tag == EditPageType.cropAndRotate.rawValue {
+            guard let image = imageView.image else { return }
+            
+            GPCropViewController.presentCropEditor(from: self, image: image, animated: false, finished: { [weak self] (image) in
+                guard let self = self else { return }
+                self.viewModel?.model = image
+                self.viewModel?.image = image.toCIImage()
+                self.imageView.image = image
+            })
+            return
+        }
+        
         viewModel?.rxSelectedEditing.accept(EditPageType(rawValue: button.tag) ?? EditPageType.brightness)
         
         let index = buttons.index(of: button)
@@ -83,19 +95,19 @@ public class EditPage: UIViewController {
     }
     
     @IBAction func closeButtonTapped(button: UIButton) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: false, completion: nil)
     }
     
     @IBAction func doneTapped(button: UIButton) {
         if let image = imageView.image ?? viewModel?.image {
             self.doneBlock?(image as! UIImage)
         }
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: false, completion: nil)
     }
     
     // MARK: Static
     public static func create(with viewModel: EditPageViewModel?) -> EditPage {
-        let vc = EditPage(nibName: "EditPage", bundle: nil)
+        let vc = EditPage(nibName: "EditPage", bundle: GPImageEditorBundle.getBundle())
         vc.viewModel = viewModel
         return vc
     }
@@ -105,7 +117,17 @@ public class EditPage: UIViewController {
         let vc = EditPage.create(with: viewModel)
         vc.modalPresentationStyle = .fullScreen
         vc.doneBlock = finished
-        viewController.present(vc, animated: animated, completion: completion)
+        viewController.present(vc, animated: animated) {
+            vc.view.alpha = 0
+            UIView.animate(withDuration: 0.25, animations: {
+                vc.view.alpha = 1
+            }, completion: { (finished) in
+                if finished {
+                    completion?()
+                }
+            })
+        }
+//        viewController.present(vc, animated: animated, completion: completion)
     }
     
 }
