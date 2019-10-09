@@ -20,6 +20,21 @@
 		7058A0FC233E149900C30A9D /* JustLovely-Roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7058A0FA233E149900C30A9D /* JustLovely-Roman.ttf */; };
 		70B75EED233F3D7D00B8B7A9 /* Outfitter-Script.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70B75EEC233F3D7D00B8B7A9 /* Outfitter-Script.ttf */; };
 		8DB1335839003330E6D04483 /* Pods_GPImageEditor_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5CDF5236424D9F13636685 /* Pods_GPImageEditor_Example.framework */; };
+		BC7747CF234D88A50028B918 /* ic-temperature-green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747CC234D88A50028B918 /* ic-temperature-green@2x.png */; };
+		BC7747D0234D88A50028B918 /* ic-temperature-green@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747CD234D88A50028B918 /* ic-temperature-green@3x.png */; };
+		BC7747D1234D88A50028B918 /* ic-temperature-green.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747CE234D88A50028B918 /* ic-temperature-green.png */; };
+		BC7747D5234D88B20028B918 /* ic-brightness-green.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747D2234D88B20028B918 /* ic-brightness-green.png */; };
+		BC7747D6234D88B20028B918 /* ic-brightness-green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747D3234D88B20028B918 /* ic-brightness-green@2x.png */; };
+		BC7747D7234D88B20028B918 /* ic-brightness-green@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747D4234D88B20028B918 /* ic-brightness-green@3x.png */; };
+		BC7747DB234D88B90028B918 /* ic-tuong-phan-green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747D8234D88B80028B918 /* ic-tuong-phan-green@2x.png */; };
+		BC7747DC234D88B90028B918 /* ic-tuong-phan-green@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747D9234D88B80028B918 /* ic-tuong-phan-green@3x.png */; };
+		BC7747DD234D88B90028B918 /* ic-tuong-phan-green.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747DA234D88B80028B918 /* ic-tuong-phan-green.png */; };
+		BC7747E1234D88C00028B918 /* ic-do-net-green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747DE234D88C00028B918 /* ic-do-net-green@2x.png */; };
+		BC7747E2234D88C00028B918 /* ic-do-net-green.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747DF234D88C00028B918 /* ic-do-net-green.png */; };
+		BC7747E3234D88C00028B918 /* ic-do-net-green@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747E0234D88C00028B918 /* ic-do-net-green@3x.png */; };
+		BC7747E7234D88C80028B918 /* ic-crop-green.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747E4234D88C80028B918 /* ic-crop-green.png */; };
+		BC7747E8234D88C80028B918 /* ic-crop-green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747E5234D88C80028B918 /* ic-crop-green@2x.png */; };
+		BC7747E9234D88C80028B918 /* ic-crop-green@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7747E6234D88C80028B918 /* ic-crop-green@3x.png */; };
 		BC9B99622333705B007B3175 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC9B99612333705B007B3175 /* Main.storyboard */; };
 		BCAE38CD234C517000E09443 /* ic-check-green@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCAE38CA234C517000E09443 /* ic-check-green@3x.png */; };
 		BCAE38CE234C517000E09443 /* ic-check-green.png in Resources */ = {isa = PBXBuildFile; fileRef = BCAE38CB234C517000E09443 /* ic-check-green.png */; };
@@ -71,6 +86,21 @@
 		7F2B9F2695B11EC480E3A0A8 /* GPImageEditor.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = GPImageEditor.podspec; path = ../GPImageEditor.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		AB0A2C9965E2DD9C4D2A488C /* Pods-GPImageEditor_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPImageEditor_Example.debug.xcconfig"; path = "Target Support Files/Pods-GPImageEditor_Example/Pods-GPImageEditor_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B3D6D13EA2DAC659C24AEBD8 /* Pods-GPImageEditor_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPImageEditor_Tests.debug.xcconfig"; path = "Target Support Files/Pods-GPImageEditor_Tests/Pods-GPImageEditor_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		BC7747CC234D88A50028B918 /* ic-temperature-green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-temperature-green@2x.png"; sourceTree = "<group>"; };
+		BC7747CD234D88A50028B918 /* ic-temperature-green@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-temperature-green@3x.png"; sourceTree = "<group>"; };
+		BC7747CE234D88A50028B918 /* ic-temperature-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-temperature-green.png"; sourceTree = "<group>"; };
+		BC7747D2234D88B20028B918 /* ic-brightness-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-brightness-green.png"; sourceTree = "<group>"; };
+		BC7747D3234D88B20028B918 /* ic-brightness-green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-brightness-green@2x.png"; sourceTree = "<group>"; };
+		BC7747D4234D88B20028B918 /* ic-brightness-green@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-brightness-green@3x.png"; sourceTree = "<group>"; };
+		BC7747D8234D88B80028B918 /* ic-tuong-phan-green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-tuong-phan-green@2x.png"; sourceTree = "<group>"; };
+		BC7747D9234D88B80028B918 /* ic-tuong-phan-green@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-tuong-phan-green@3x.png"; sourceTree = "<group>"; };
+		BC7747DA234D88B80028B918 /* ic-tuong-phan-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-tuong-phan-green.png"; sourceTree = "<group>"; };
+		BC7747DE234D88C00028B918 /* ic-do-net-green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-do-net-green@2x.png"; sourceTree = "<group>"; };
+		BC7747DF234D88C00028B918 /* ic-do-net-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-do-net-green.png"; sourceTree = "<group>"; };
+		BC7747E0234D88C00028B918 /* ic-do-net-green@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-do-net-green@3x.png"; sourceTree = "<group>"; };
+		BC7747E4234D88C80028B918 /* ic-crop-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-crop-green.png"; sourceTree = "<group>"; };
+		BC7747E5234D88C80028B918 /* ic-crop-green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-crop-green@2x.png"; sourceTree = "<group>"; };
+		BC7747E6234D88C80028B918 /* ic-crop-green@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-crop-green@3x.png"; sourceTree = "<group>"; };
 		BC9B99612333705B007B3175 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BCAE38CA234C517000E09443 /* ic-check-green@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-check-green@3x.png"; sourceTree = "<group>"; };
 		BCAE38CB234C517000E09443 /* ic-check-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic-check-green.png"; sourceTree = "<group>"; };
@@ -232,6 +262,21 @@
 		BCBA2910234B389800C0AB60 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				BC7747E4234D88C80028B918 /* ic-crop-green.png */,
+				BC7747E5234D88C80028B918 /* ic-crop-green@2x.png */,
+				BC7747E6234D88C80028B918 /* ic-crop-green@3x.png */,
+				BC7747DF234D88C00028B918 /* ic-do-net-green.png */,
+				BC7747DE234D88C00028B918 /* ic-do-net-green@2x.png */,
+				BC7747E0234D88C00028B918 /* ic-do-net-green@3x.png */,
+				BC7747DA234D88B80028B918 /* ic-tuong-phan-green.png */,
+				BC7747D8234D88B80028B918 /* ic-tuong-phan-green@2x.png */,
+				BC7747D9234D88B80028B918 /* ic-tuong-phan-green@3x.png */,
+				BC7747D2234D88B20028B918 /* ic-brightness-green.png */,
+				BC7747D3234D88B20028B918 /* ic-brightness-green@2x.png */,
+				BC7747D4234D88B20028B918 /* ic-brightness-green@3x.png */,
+				BC7747CE234D88A50028B918 /* ic-temperature-green.png */,
+				BC7747CC234D88A50028B918 /* ic-temperature-green@2x.png */,
+				BC7747CD234D88A50028B918 /* ic-temperature-green@3x.png */,
 				BCEF490F234CDF6D00AF38B0 /* ic-do-net-light.png */,
 				BCEF4910234CDF6D00AF38B0 /* ic-do-net-light@2x.png */,
 				BCEF4911234CDF6D00AF38B0 /* ic-do-net-light@3x.png */,
@@ -321,27 +366,37 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC7747DC234D88B90028B918 /* ic-tuong-phan-green@3x.png in Resources */,
 				BCEF4907234CDECB00AF38B0 /* ic-crop-light@3x.png in Resources */,
 				7058A0FB233E149900C30A9D /* Pacifico-Regular.ttf in Resources */,
 				BCEF48FC234CDE5F00AF38B0 /* ic-tuong-phan-light.png in Resources */,
 				BCEF4912234CDF6D00AF38B0 /* ic-do-net-light.png in Resources */,
 				7041AE272330C08900A0C2D8 /* Nunito-Regular.ttf in Resources */,
+				BC7747D6234D88B20028B918 /* ic-brightness-green@2x.png in Resources */,
 				7041AE262330C08900A0C2D8 /* BalooPaaji-Regular.ttf in Resources */,
 				7041AE282330C08900A0C2D8 /* Oswald-Regular.ttf in Resources */,
+				BC7747E7234D88C80028B918 /* ic-crop-green.png in Resources */,
 				7041AE292330C08900A0C2D8 /* HeptaSlab-Regular.ttf in Resources */,
 				BCEF490E234CDEEC00AF38B0 /* ic-temperature-light.png in Resources */,
+				BC7747E3234D88C00028B918 /* ic-do-net-green@3x.png in Resources */,
+				BC7747E1234D88C00028B918 /* ic-do-net-green@2x.png in Resources */,
 				BCEF4900234CDE6800AF38B0 /* ic-brightness-light@2x.png in Resources */,
 				BC9B99622333705B007B3175 /* Main.storyboard in Resources */,
 				BCBA2915234B38A700C0AB60 /* remove@2x.png in Resources */,
 				BCEF48FB234CDE5F00AF38B0 /* ic-tuong-phan-light@3x.png in Resources */,
 				BCAE38CF234C517000E09443 /* ic-check-green@2x.png in Resources */,
+				BC7747DD234D88B90028B918 /* ic-tuong-phan-green.png in Resources */,
 				BCEF490C234CDEEC00AF38B0 /* ic-temperature-light@2x.png in Resources */,
 				BCEF4908234CDECB00AF38B0 /* ic-crop-light.png in Resources */,
+				BC7747E2234D88C00028B918 /* ic-do-net-green.png in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				BCAE38CD234C517000E09443 /* ic-check-green@3x.png in Resources */,
 				7058A0FC233E149900C30A9D /* JustLovely-Roman.ttf in Resources */,
+				BC7747CF234D88A50028B918 /* ic-temperature-green@2x.png in Resources */,
 				BCBA290D234AFE0800C0AB60 /* EditPage.xib in Resources */,
 				70B75EED233F3D7D00B8B7A9 /* Outfitter-Script.ttf in Resources */,
+				BC7747E9234D88C80028B918 /* ic-crop-green@3x.png in Resources */,
+				BC7747DB234D88B90028B918 /* ic-tuong-phan-green@2x.png in Resources */,
 				BCBA2914234B38A700C0AB60 /* remove.png in Resources */,
 				BCEF4914234CDF6D00AF38B0 /* ic-do-net-light@3x.png in Resources */,
 				BCEF48FA234CDE5F00AF38B0 /* ic-tuong-phan-light@2x.png in Resources */,
@@ -349,11 +404,16 @@
 				BCEF4913234CDF6D00AF38B0 /* ic-do-net-light@2x.png in Resources */,
 				BCBA2916234B38A700C0AB60 /* remove@3x.png in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				BC7747D0234D88A50028B918 /* ic-temperature-green@3x.png in Resources */,
+				BC7747D5234D88B20028B918 /* ic-brightness-green.png in Resources */,
 				BCEF4901234CDE6800AF38B0 /* ic-brightness-light.png in Resources */,
 				BCEF490D234CDEEC00AF38B0 /* ic-temperature-light@3x.png in Resources */,
+				BC7747D1234D88A50028B918 /* ic-temperature-green.png in Resources */,
+				BC7747D7234D88B20028B918 /* ic-brightness-green@3x.png in Resources */,
 				BCAE38CE234C517000E09443 /* ic-check-green.png in Resources */,
 				7041AE2A2330C08900A0C2D8 /* DancingScript-Regular.ttf in Resources */,
 				BCEF4902234CDE6800AF38B0 /* ic-brightness-light@3x.png in Resources */,
+				BC7747E8234D88C80028B918 /* ic-crop-green@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -58,7 +58,7 @@ public class EditPage: UIViewController {
                     slider.isHidden = slider.tag != NSInteger(type.rawValue)
                 }
                 for button in self.buttons {
-                    button.isSelected = button.tag != NSInteger(type.rawValue)
+                    button.isSelected = button.tag == NSInteger(type.rawValue)
                 }
         }) => disposeBag
         
