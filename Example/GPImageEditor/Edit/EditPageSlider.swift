@@ -10,6 +10,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import DTMvvm
+import PureLayout
 
 class EditPageSlider: UISlider {
 
@@ -17,6 +18,10 @@ class EditPageSlider: UISlider {
     let greyTrackImage = UIImage(named: "grey-track")
     let greyGreenTrackImage = UIImage(named: "grey-green-track")
     let greenGreyTrackImage = UIImage(named: "green-grey-track")
+    let tempTrackImage = UIImage(named: "temp-track")
+    let percentLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    
+    var isLoaded: Bool = false
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -24,6 +29,20 @@ class EditPageSlider: UISlider {
     }
 
     func setups() {
+        setupPercentlabel()
+        
+        addTarget(self, action: #selector(didEndDragging), for: .touchUpInside)
+        addTarget(self, action: #selector(didEndDragging), for: .touchUpOutside)
+        
+        if tag == EditPageType.temperature.rawValue {
+            setMinimumTrackImage(tempTrackImage, for: .normal)
+            setMaximumTrackImage(tempTrackImage, for: .normal)
+        } else {
+            setMinimumTrackImage(greyTrackImage, for: .normal)
+            setMaximumTrackImage(greyTrackImage, for: .normal)
+        }
+        
+        
         layer.masksToBounds = false
         setThumbImage(UIImage.init(named: "slider-thumb"), for: .normal)
         bindValueChange()
@@ -31,12 +50,49 @@ class EditPageSlider: UISlider {
     
     func bindValueChange() {
         rx.value.subscribe(onNext: { [weak self] (value) in
-            self?.updateTrackImages(with: value)
+            guard let self = self else { return }
+            if self.tag != EditPageType.temperature.rawValue {
+                self.updateTrackImages(with: value)
+            }
+            if self.isLoaded {
+                self.showPercentLabel()
+            }
+            self.isLoaded = true
         }) => disposeBag
     }
     
     deinit {
         disposeBag = nil
+    }
+    
+    func setupPercentlabel() {
+        addSubview(percentLabel)
+        percentLabel.isHidden = true
+        percentLabel.backgroundColor = UIColor.darkGray
+        percentLabel.textColor = UIColor.white
+        percentLabel.layer.masksToBounds = true
+        percentLabel.textAlignment = .center
+        percentLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        percentLabel.layer.cornerRadius = percentLabel.frame.size.width / 2
+    }
+    
+    func showPercentLabel() {
+        let trackRect = self.trackRect(forBounds: bounds)
+        let thumbFrame = thumbRect(forBounds: bounds, trackRect: trackRect, value: value)
+        percentLabel.center = CGPoint(x: max(thumbFrame.midX, percentLabel.frame.size.width / 2),
+                                      y: thumbFrame.midY - thumbFrame.size.height / 2 - percentLabel.frame.size.height / 2)
+        
+        let centerValue = (maximumValue + minimumValue) / 2
+        let totalDistance = maximumValue - minimumValue
+        let offset = 100 * 2 * CGFloat(value - centerValue) / CGFloat(totalDistance)
+        
+        let text = String(format: "%d", Int(offset))
+        percentLabel.text = text
+        percentLabel.isHidden = false
+    }
+    
+    @objc func didEndDragging() {
+        percentLabel.isHidden = true
     }
     
     func updateTrackImages(with value: Float) {
