@@ -6,15 +6,15 @@
 
 import DTMvvm
 
-class GPTriangleView: AbstractView {
+public class GPTriangleView: AbstractView {
     
-    var color: UIColor = .clear {
+    public var color: UIColor = .clear {
         didSet {
             self.setNeedsDisplay()
         }
     }
     
-    var reversed = false {
+    public var reversed = false {
         didSet {
             if reversed {
                 transform = CGAffineTransform(rotationAngle: CGFloat.pi)
@@ -24,7 +24,7 @@ class GPTriangleView: AbstractView {
         }
     }
     
-    override func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext() else { return }
         
         context.beginPath()

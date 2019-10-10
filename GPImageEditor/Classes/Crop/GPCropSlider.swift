@@ -47,12 +47,15 @@ class GPCropSlider: UIView {
         rightHiddenSlider.isHidden = true
         leftHiddenSlider.autoPinEdge(.left, to: .left, of: slider)
         leftSliderConstraint = leftHiddenSlider.autoPinEdge(.right, to: .left, of: sliderCenter)
-        leftHiddenSlider.autoAlignAxis(.horizontal, toSameAxisOf: slider)
         leftHiddenSlider.autoSetDimension(.height, toSize: 2)
         rightSliderConstraint = rightHiddenSlider.autoPinEdge(.left, to: .right, of: sliderCenter)
         rightHiddenSlider.autoPinEdge(.right, to: .right, of: slider)
-        rightHiddenSlider.autoAlignAxis(.horizontal, toSameAxisOf: slider)
         rightHiddenSlider.autoSetDimension(.height, toSize: 2)
+    }
+    
+    public func updateSliderConstraint() {
+        leftHiddenSlider.autoAlignAxis(.horizontal, toSameAxisOf: slider.subviews[0])
+        rightHiddenSlider.autoAlignAxis(.horizontal, toSameAxisOf: slider.subviews[0])
     }
     
     public func updateSliderUI(_ value: Float) {

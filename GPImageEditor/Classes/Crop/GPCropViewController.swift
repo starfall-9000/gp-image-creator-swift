@@ -39,6 +39,7 @@ class GPCropViewController: Page<GPCropViewModel> {
         imageMask.changeMaskType(.free)
         imageMask.isHidden = false
         updateImageView(with: .free)
+        sliderView.updateSliderConstraint()
     }
     
     override func initialize() {
@@ -121,15 +122,15 @@ class GPCropViewController: Page<GPCropViewModel> {
         
         bottomView.addSubview(closeButton)
         closeButton.setImage(GPImageEditorBundle.imageFromBundle(imageName: "ic_crop_close"), for: .normal)
-        closeButton.autoPinEdge(toSuperviewEdge: .left, withInset: 12)
+        closeButton.autoPinEdge(toSuperviewEdge: .left)
         closeButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        closeButton.autoSetDimensions(to: .init(width: 16, height: 16))
+        closeButton.autoSetDimensions(to: .init(width: 40, height: 40))
         
         bottomView.addSubview(doneButton)
         doneButton.setImage(GPImageEditorBundle.imageFromBundle(imageName: "ic_crop_done"), for: .normal)
-        doneButton.autoPinEdge(toSuperviewEdge: .right, withInset: 16)
+        doneButton.autoPinEdge(toSuperviewEdge: .right, withInset: 8)
         doneButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        doneButton.autoSetDimensions(to: .init(width: 24, height: 24))
+        doneButton.autoSetDimensions(to: .init(width: 40, height: 40))
         
         let titleLabel = UILabel()
         bottomView.addSubview(titleLabel)
@@ -168,25 +169,31 @@ class GPCropViewController: Page<GPCropViewModel> {
         viewModel.rxImageCenter ~> imageMask.displayImageView.rx.center => disposeBag
         viewModel.rxSliderValue <~> sliderView.slider.rx.value => disposeBag
         
-        viewModel.rxImageRotateAngle.subscribe(onNext: { (rotateAngle) in
-            guard let viewModel = self.viewModel,
-                let image = viewModel.model,
-                rotateAngle != 0 else { return }
-
-            let a = self.imageMask.height * abs(sin(rotateAngle))
-            let b = self.imageMask.width * abs(cos(rotateAngle))
-            let c = self.imageMask.width * abs(sin(rotateAngle))
-            let d = self.imageMask.height * abs(cos(rotateAngle))
-            
-            let scaleX = (a + b) / self.imageMask.width
-            let scaleY = (c + d) / self.imageMask.height
-            var scale = max(scaleX, scaleY)
-            if image.size.isLandscape() != self.imageMask.frame.size.isLandscape() {
-                scale = min(scaleX, scaleY)
-            }
-            
-            viewModel.rxImageScale.accept(scale)
-        }) => disposeBag
+        viewModel.rxImageRotateAngle
+            .withPrevious()
+            .subscribe(onNext: { (currentRotateAngle, rotateAngle) in
+                guard let viewModel = self.viewModel,
+                    let image = viewModel.model,
+                    rotateAngle != 0 else { return }
+                
+                let a = self.imageMask.height * abs(sin(rotateAngle))
+                let b = self.imageMask.width * abs(cos(rotateAngle))
+                let c = self.imageMask.width * abs(sin(rotateAngle))
+                let d = self.imageMask.height * abs(cos(rotateAngle))
+                
+                let scaleX = (a + b) / self.imageMask.width
+                let scaleY = (c + d) / self.imageMask.height
+                var scale = max(scaleX, scaleY)
+                if image.size.isLandscape() != self.imageMask.frame.size.isLandscape() {
+                    scale = min(scaleX, scaleY)
+                }
+                let currentScale = viewModel.rxImageScale.value
+                let diffRotateAngle = abs(rotateAngle) - abs(currentRotateAngle ?? 0)
+                let diffScale = scale - currentScale
+                if diffRotateAngle * diffScale > 0 {
+                    viewModel.rxImageScale.accept(scale)
+                }
+            }) => disposeBag
         
         viewModel.rxSliderValue.subscribe(onNext: { [weak self] (value) in
             guard let self = self else { return }

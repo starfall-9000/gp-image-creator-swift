@@ -19,4 +19,8 @@ public struct GPImageEditor {
         viewController.present(vc, animated: animated, completion: completion)
     }
     
+    public static func presentEditPage(from viewController: UIViewController, image: UIImage, animated: Bool, finished: @escaping ((UIImage) -> Void)) {
+        EditPage.present(from: viewController, image: image, animated: animated, finished: finished)
+    }
+    
 }
