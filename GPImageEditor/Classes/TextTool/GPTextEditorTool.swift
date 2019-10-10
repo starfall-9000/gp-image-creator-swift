@@ -41,7 +41,7 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
         viewModel.rxFont ~> contentView.textView.rx.font => disposeBag
         viewModel.rxFont ~> contentView.placeholderLabel.rx.font => disposeBag
         viewModel.rxFontName ~> contentView.fontButton.rx.title(for: .normal) => disposeBag
-        viewModel.rxFontButtonWidth ~> contentView.fontButtonWidth.rx.constant => disposeBag
+//        viewModel.rxFontButtonWidth ~> contentView.fontButtonWidth.rx.constant => disposeBag
         viewModel.rxAlignmentIcon ~> contentView.alignButton.rx.image(for: .normal) => disposeBag
         viewModel.rxText.map{ $0 != nil && $0!.count > 0 } ~> contentView.placeholderLabel.rx.isHidden => disposeBag
         

@@ -21,15 +21,15 @@ public class GPTextEditorViewModel: ViewModel<StickerInfo> {
     let rxColorIndex = BehaviorRelay<Int>(value: 0)
     let rxBgColorHidden = BehaviorRelay<Bool>(value: true)
     let rxAlignmentIndex = BehaviorRelay<Int>(value: 0)
-    var rxFontButtonWidth: Observable<CGFloat> {
-        return rxFontIndex.map{
-            let config = GPImageEditorConfigs.fontSet[$0]
-            let font = UIFont.boldSystemFont(ofSize: 16)
-            let constraintRect = CGSize(width: CGFloat.greatestFiniteMagnitude, height: 20)
-            let boundingBox = config.name.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
-            return boundingBox.size.width + 30
-        }
-    }
+//    var rxFontButtonWidth: Observable<CGFloat> {
+//        return rxFontIndex.map{
+//            let config = GPImageEditorConfigs.fontSet[$0]
+//            let font = UIFont.boldSystemFont(ofSize: 16)
+//            let constraintRect = CGSize(width: CGFloat.greatestFiniteMagnitude, height: 20)
+//            let boundingBox = config.name.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+//            return boundingBox.size.width + 30
+//        }
+//    }
     var rxTextColor: Observable<UIColor?> {
         return rxColorIndex.map{
             let color = self.rxBgColorHidden.value ? GPImageEditorConfigs.colorSet[$0].bgColor : GPImageEditorConfigs.colorSet[$0].textColor
