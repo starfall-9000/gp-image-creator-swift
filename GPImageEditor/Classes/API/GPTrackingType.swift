@@ -8,15 +8,15 @@
 import Foundation
 
 struct PEAnalyticsEvent {
-    static let PHOTO_EDITOR_SHOWN = "Photo Editor Shown"
-    static let PHOTO_EDITOR_FINISHED = "Photo Editor Finished"
-    static let PHOTO_EDITOR_CANCEL = "Photo Editor Cancel"
+    static let PHOTO_EDITOR_SHOWN = "photo_editor_shown"
+    static let PHOTO_EDITOR_FINISHED = "photo_editor_finished"
+    static let PHOTO_EDITOR_CANCEL = "photo_editor_cancel"
     
-    static let FILTER_ID = "Filter ID"
-    static let STICKER_IDS = "Sticker IDs"
-    static let EMOJI_IDS = "Emoji IDs"
-    static let HAVE_TEXT = "Have Text"
-    static let HAVE_CROP = "Have Crop"
+    static let FILTER_ID = "filter_id"
+    static let STICKER_IDS = "sticker_ids"
+    static let EMOJI_IDS = "emoji_ids"
+    static let HAVE_TEXT = "have_text"
+    static let HAVE_CROP = "have_crop"
 }
 
 public protocol GPTrackingType {
