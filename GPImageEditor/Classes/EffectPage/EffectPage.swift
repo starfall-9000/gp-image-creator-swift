@@ -179,6 +179,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBAction func textTapped() {
         GPTextEditorTool.show(inView: stickerLayer) { [weak self] (text) in
             guard let self = self, let text = text else { return }
+            self.viewModel?.stickerInfos.append(text.info)
             self.handleAddNewSticker(text, tutorial: .GPTextEditTutorial)
         }
     }
