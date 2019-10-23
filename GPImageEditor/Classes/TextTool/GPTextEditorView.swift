@@ -72,13 +72,15 @@ class GPTextEditorView: UIView {
     @IBOutlet weak var alignButton: UIButton!
     @IBOutlet weak var fontButton: UIButton!
     @IBOutlet weak var changeColorButton: UIButton!
+    @IBOutlet var bottomView: UIView!
     @IBOutlet weak var menuBottomView: UIView!
     @IBOutlet weak var colorPickerView: UIView!
     @IBOutlet weak var colorScrollView: ScrollLayout!
     @IBOutlet weak var fontButtonWidth: NSLayoutConstraint!
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var menuBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var contentViewHeight: NSLayoutConstraint!
     @IBOutlet weak var textViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var stackOffsetConstraint: NSLayoutConstraint!
     @IBOutlet weak var placeholderLabel: UILabel!
     @IBOutlet weak var placeholderOffsetConstraint: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
@@ -104,7 +106,7 @@ class GPTextEditorView: UIView {
         if #available(iOS 11.0, *) {
             textView.contentInsetAdjustmentBehavior = .never
         }
-        textView.textContainerInset = .only(top: 0, bottom: 0, left: 10, right: 10)
+        textView.textContainerInset = .only(top: 10, bottom: 10, left: 10, right: 10)
     }
     
     override func awakeFromNib() {
@@ -132,6 +134,8 @@ class GPTextEditorView: UIView {
         colorPickerView.isHidden = true
         addColorPicker()
         showKeyboard()
+        bottomView.removeFromSuperview()
+        textView.inputAccessoryView = bottomView
     }
     
     @objc func handleHide(_ sender: UIButton) {
@@ -141,16 +145,14 @@ class GPTextEditorView: UIView {
     func showKeyboard() {
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification)
             .subscribe(onNext: { [weak self] notification in
+                guard let self = self else { return }
                 if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                     let keyboardRectangle = keyboardFrame.cgRectValue
                     let keyboardHeight = keyboardRectangle.height
-                    let animationTime = (notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
-                    self?.menuBottomConstraint.constant = keyboardHeight
-                    UIView.animate(withDuration: animationTime, animations: {
-                        self?.menuBottomView.superview?.layoutIfNeeded()
-                    })                    
-                    self?.disposeBag = nil
+                    
+                    self.contentViewHeight.constant = UIScreen.main.bounds.height - keyboardHeight - 48
                 }
+                self.disposeBag = nil
             }) => disposeBag
         textView.becomeFirstResponder()
     }
@@ -229,20 +231,25 @@ extension GPTextEditorView {
         let originalWidth = textViewWidthConstraint.constant
         let originalHeight = textViewHeight.constant
         let originalFontSize = textView.font?.pointSize ?? 0
+        let originalStackOffset = stackOffsetConstraint.constant
+        stackOffsetConstraint.constant = -originalWidth * scale
         textViewHeight.constant = originalHeight * scale
         textViewWidthConstraint.constant = originalWidth * scale
         textView.font = UIFont(name: textView.font?.fontName ?? "", size: originalFontSize * scale)
         textView.layer.cornerRadius = 4 * scale
-        textView.textContainerInset = .only(top: 0, bottom: 0, left: 10 * scale, right: 10 * scale)
+        textView.textContainerInset = .only(top: 10 * scale, bottom: 10 * scale, left: 10 * scale, right: 10 * scale)
+        stackView.layoutIfNeeded()
         textView.layoutIfNeeded()
         
         let image = UIImage.imageWithView(view: textView, size: textView.frame.size)
         
+        stackOffsetConstraint.constant = originalStackOffset
         textViewHeight.constant = originalHeight
         textViewWidthConstraint.constant = originalWidth
         textView.font = UIFont(name: textView.font?.fontName ?? "", size: originalFontSize)
         textView.layer.cornerRadius = 4
-        textView.textContainerInset = .only(top: 0, bottom: 0, left: 10, right: 10)
+        textView.textContainerInset = .only(top: 10, bottom: 10, left: 10, right: 10)
+        stackView.layoutIfNeeded()
         textView.layoutIfNeeded()
         return image
     }

@@ -12,8 +12,8 @@ import ObjectMapper
 public class PEFontInfo: Model {
     var name: String = ""
     var font: String = ""
-    var size: CGFloat = 30
-    var inset: CGFloat = 10
+    var size: Int = 40
+    var inset: Int = 10
     
     override public func mapping(map: Map) {
         name <- map["name"]
@@ -65,6 +65,7 @@ public class GPImageEditorConfigs {
     
     static public var fontSet: [PEFontInfo] = [
         PEFontInfo(JSON: ["name": "Chữ đậm", "font": "BalooPaaji-Regular", "size": 30, "inset": 2])!,
-        PEFontInfo(JSON: ["name": "Mềm mại", "font": "JustLovely-Roman", "size": 50, "inset": 2])!,
-        PEFontInfo(JSON: ["name": "Tinh nghịch", "font": "Pacifico-Regular", "size": 30, "inset": 2])!]
+        PEFontInfo(JSON: ["name": "Mềm mại", "font": "JustLovely-Roman", "size": 68, "inset": 2])!,
+        PEFontInfo(JSON: ["name": "Tinh nghịch", "font": "Pacifico-Regular", "size": 30, "inset": 2])!,
+        PEFontInfo(JSON: ["name": "Thành phố", "font": "iCielPrOutfitterScript-Reg2", "size": 52, "inset": 2])!]
 }

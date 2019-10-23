@@ -78,7 +78,8 @@ public class StickerListView: CollectionView<StickerListViewModel> {
         guard let indexPath = cellViewModel.indexPath,
             let cell = collectionView(collectionView, cellForItemAt: indexPath) as? StickerCell
             else { return }
-        completion?(cell.photoImg.image, cell.bounds.size, cellViewModel.model?.id ?? "")
+        let newSize = CGSize(width: cell.bounds.size.width*1.5, height: cell.bounds.size.height*1.5)
+        completion?(cell.photoImg.image, newSize, cellViewModel.model?.id ?? "")
     }
 }
 

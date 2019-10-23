@@ -52,7 +52,10 @@ public class GPTextEditorViewModel: ViewModel<StickerInfo> {
         return rxAlignmentIndex.map{ GPImageEditorBundle.imageFromBundle(imageName: names[$0]) }
     }
     var rxFont: Observable<UIFont?> {
-        return rxFontIndex.map{ UIFont(name: GPImageEditorConfigs.fontSet[$0].font, size: kFontSize) }
+        return rxFontIndex.map{
+            let fontInfo = GPImageEditorConfigs.fontSet[$0]
+            return UIFont(name: fontInfo.font, size: CGFloat(fontInfo.size))
+        }
     }
     
     var rxFontName: Observable<String?> {
@@ -60,7 +63,7 @@ public class GPTextEditorViewModel: ViewModel<StickerInfo> {
     }
     
     var rxTextInset: Observable<CGFloat> {
-        return rxFontIndex.map{ GPImageEditorConfigs.fontSet[$0].inset }
+        return rxFontIndex.map{ CGFloat(GPImageEditorConfigs.fontSet[$0].inset) }
     }
     
     lazy var changeColorAction: Action<Int, Void> = {
