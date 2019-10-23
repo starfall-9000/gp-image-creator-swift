@@ -95,14 +95,14 @@ public class EditPage: UIViewController {
     }
     
     @IBAction func closeButtonTapped(button: UIButton) {
-        dismiss(animated: false, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func doneTapped(button: UIButton) {
         if let image = imageView.image ?? viewModel?.image {
             self.doneBlock?(image as! UIImage)
         }
-        dismiss(animated: false, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: Static
@@ -117,17 +117,7 @@ public class EditPage: UIViewController {
         let vc = EditPage.create(with: viewModel)
         vc.modalPresentationStyle = .fullScreen
         vc.doneBlock = finished
-        viewController.present(vc, animated: animated) {
-            vc.view.alpha = 0
-            UIView.animate(withDuration: 0.25, animations: {
-                vc.view.alpha = 1
-            }, completion: { (finished) in
-                if finished {
-                    completion?()
-                }
-            })
-        }
-//        viewController.present(vc, animated: animated, completion: completion)
+        viewController.present(vc, animated: animated, completion: completion)
     }
     
 }

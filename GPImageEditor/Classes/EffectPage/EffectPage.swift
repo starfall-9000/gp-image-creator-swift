@@ -191,7 +191,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBAction func cropTapped() {
         guard let image = imageView.image else { return }
         
-        GPImageEditor.presentEditPage(from: self, image: image, animated: false, finished: { [weak self] (image) in
+        GPImageEditor.presentEditPage(from: self, image: image, animated: true, finished: { [weak self] (image) in
             self?.viewModel?.sourceImage = image
             self?.viewModel?.thumbImage = image.thumbImage()
             self?.imageView.image = image
