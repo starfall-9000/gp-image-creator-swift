@@ -125,12 +125,10 @@ class GPTextEditorView: UIView {
             addSubview(hideButton)
             bringSubviewToFront(hideButton)
             hideButton.autoPinEdgesToSuperviewEdges()
-            hideButton.autoMatch(.height, to: .height, of: stackView.superview!)
             hideButton.addSubview(tutorialView)
             tutorialView.autoAlignAxis(toSuperviewAxis: .vertical)
             
             tutorialView.autoPinEdge(.bottom, to: .bottom, of: stackView.superview!, withOffset: -10)
-//            tutorialView.autoPinEdge(.bottom, to: .top, of: menuBottomView, withOffset: -10)
             hideButton.addTarget(self, action: #selector(handleHide(_:)), for: .touchUpInside)
         }
         
