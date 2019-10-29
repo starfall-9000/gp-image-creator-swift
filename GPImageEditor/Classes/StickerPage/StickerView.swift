@@ -183,9 +183,11 @@ public class StickersLayerView: UIView {
             }
         }
     }
-
-    func getDeleteButtonFrameInSelf() -> CGRect {
-        return deleteButton.convert(deleteButton.bounds, to: self)
+    
+    func shouldDelete(activeView: StickerView) -> Bool {
+        let viewFrame = activeView.convert(activeView.bounds, to: self)
+        let deleteButtonFrame = deleteButton.convert(deleteButton.bounds, to: self)
+        return viewFrame.contains(deleteButtonFrame)
     }
     
     @objc func drag(gest: UIPanGestureRecognizer) {
@@ -193,7 +195,6 @@ public class StickersLayerView: UIView {
         layoutIfNeeded()
         
         let translation = gest.translation(in: self)
-        let touchPoint = gest.location(in: self)
         switch (gest.state) {
         case .began:
             if let stickerView = findActiveStickerView(location: gest.location(in: self)) {
@@ -209,9 +210,7 @@ public class StickersLayerView: UIView {
             if isDragging {
                 stickerView.horizontalConstraint.constant = offSet.x + translation.x
                 stickerView.verticalConstraint.constant = offSet.y + translation.y
-                
-                deleteButton.isSelected = getDeleteButtonFrameInSelf().contains(touchPoint)
-                
+                deleteButton.isSelected = shouldDelete(activeView: stickerView)
                 layoutIfNeeded()
             }
             break
@@ -219,7 +218,7 @@ public class StickersLayerView: UIView {
         case .ended:
             isDragging = false
             hideDeleteButton()
-            if getDeleteButtonFrameInSelf().contains(touchPoint) {
+            if shouldDelete(activeView: stickerView) {
                 deleteSticker(stickerView: stickerView)
             }
             endEditing()
@@ -428,8 +427,6 @@ public class StickerView: UIView {
             textView.font = UIFont(name: textView.font?.fontName ?? "", size: currentSize)
             currentCornerRadius = currentCornerRadius * scale
             textView.layer.cornerRadius = currentCornerRadius
-//            currentInsets = .only(top: currentInsets.top * scale, bottom: currentInsets.bottom * scale, left: currentInsets.left * scale, right: currentInsets.right * scale)
-//            textView.textContainerInset = currentInsets
             layoutIfNeeded()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                 self.imageView.image = UIImage.imageWithView(view: textView, size: textView.frame.size)

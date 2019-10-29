@@ -42,10 +42,6 @@ public class StickerListView: CollectionView<StickerListViewModel> {
         guard let viewModel = viewModel else { return }
         viewModel.rxLoading ~> loadingView.rx.isAnimating => disposeBag
         viewModel.rxLoading.map{ !$0 } ~> loadingView.rx.isHidden => disposeBag
-        
-//        collectionView.rx.endReach.subscribe(onNext: {
-//            viewModel.loadMore()
-//        }) => disposeBag
     }
     
     override public func cellIdentifier(_ cellViewModel: StickerCellViewModel) -> String {
