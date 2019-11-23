@@ -68,3 +68,20 @@ extension UITextView {
         }
     }
 }
+
+extension UIAlertController {
+    static func showAlertController(in viewController: UIViewController, title: String? = nil, message: String? = nil, cancelButtonTitle: String? = nil, otherButtonTitles: [String]? = nil, tap: ((_ alertVC: UIAlertController, _ buttonIndex: Int) -> Void)? = nil) {
+        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: cancelButtonTitle ?? "Hủy", style: UIAlertAction.Style.cancel, handler: { (action) in
+            tap?(controller, 0)
+        }))
+        if let otherTitles = otherButtonTitles {
+            for i in 0..<otherTitles.count {
+                controller.addAction(UIAlertAction(title: otherTitles[i], style: .default, handler: { (action) in
+                    tap?(controller, cancelButtonTitle != nil ? i + 1 : i)
+                }))
+            }
+        }
+        viewController.present(controller, animated: true, completion: nil)
+    }
+}

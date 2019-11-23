@@ -75,8 +75,18 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func backAction() {
-        viewModel?.recordEditorCancel()
-        dismiss(animated: true, completion: nil)
+        UIAlertController
+            .showAlertController(in: self,
+                                 title: "Thông báo",
+                                 message: "Bạn sẽ mất mọi thay đổi đã thực hiện cho ảnh này.",
+                                 cancelButtonTitle: "Hủy",
+                                 otherButtonTitles: ["Tiếp tục chỉnh sửa"]) { [weak self] (alert, index) in
+                                    guard let self = self else { return }
+                                    if index == 0 {
+                                        self.viewModel?.recordEditorCancel()
+                                        self.dismiss(animated: true, completion: nil)
+                                    }
+        }
     }
     
     @IBAction func hideShowEffectsTapped() {
