@@ -8,6 +8,7 @@
 import Foundation
 import CoreGraphics
 import UIKit
+import AudioToolbox
 
 public protocol GPStickerPageDelegate: AnyObject {
     func stickerDidStartEditing(stickerView: UIView?)
@@ -100,6 +101,7 @@ public class StickersLayerView: UIView {
     
     func showDeleteButton() {
         addDeleteButton()
+        deleteButton.superview?.bringSubviewToFront(deleteButton)
         deleteButton.alpha = 0
         deleteButton.isHidden = false
         UIView.animate(withDuration: 0.3) {
@@ -184,10 +186,11 @@ public class StickersLayerView: UIView {
         }
     }
     
-    func shouldDelete(activeView: StickerView) -> Bool {
-        let viewFrame = activeView.convert(activeView.bounds, to: self)
-        let deleteButtonFrame = deleteButton.convert(deleteButton.bounds, to: self)
-        return viewFrame.contains(deleteButtonFrame)
+    func shouldDelete(_ touchPoint: CGPoint) -> Bool {
+        var deleteButtonFrame = deleteButton.convert(deleteButton.bounds, to: self)
+        deleteButtonFrame.origin = CGPoint(x: deleteButtonFrame.origin.x - deleteButtonFrame.width/2, y: deleteButtonFrame.origin.y - deleteButtonFrame.height/2)
+        deleteButtonFrame.size = CGSize(width: deleteButtonFrame.size.width*2, height: deleteButtonFrame.size.height*2)
+        return deleteButtonFrame.contains(touchPoint)
     }
     
     @objc func drag(gest: UIPanGestureRecognizer) {
@@ -195,6 +198,7 @@ public class StickersLayerView: UIView {
         layoutIfNeeded()
         
         let translation = gest.translation(in: self)
+        let touchPoint = gest.location(in: self)
         switch (gest.state) {
         case .began:
             if let stickerView = findActiveStickerView(location: gest.location(in: self)) {
@@ -210,7 +214,13 @@ public class StickersLayerView: UIView {
             if isDragging {
                 stickerView.horizontalConstraint.constant = offSet.x + translation.x
                 stickerView.verticalConstraint.constant = offSet.y + translation.y
-                deleteButton.isSelected = shouldDelete(activeView: stickerView)
+                if deleteButton.isSelected != shouldDelete(touchPoint) && !deleteButton.isSelected {
+                    if #available(iOS 10.0, *) {
+                        let generator = UINotificationFeedbackGenerator()
+                        generator.notificationOccurred(.success)
+                    }
+                }
+                deleteButton.isSelected = shouldDelete(touchPoint)
                 layoutIfNeeded()
             }
             break
@@ -218,7 +228,7 @@ public class StickersLayerView: UIView {
         case .ended:
             isDragging = false
             hideDeleteButton()
-            if shouldDelete(activeView: stickerView) {
+            if shouldDelete(touchPoint) {
                 deleteSticker(stickerView: stickerView)
             }
             endEditing()
