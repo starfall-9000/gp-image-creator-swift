@@ -23,7 +23,7 @@ enum EditPageType: Int {
 public class EditPageViewModel: ViewModel<UIImage> {
 
     var image: CIImage?
-    // -1.0 to 1.0 default 0
+    // -0.75 to 0.75 default 0
     let rxBrightness = BehaviorRelay<Float>(value: 0.0)
     // 0.0 to 2.0 default 1
     let rxSaturation = BehaviorRelay<Float>(value: 1.0)
@@ -82,11 +82,13 @@ extension CIImage {
                      constrast: Float,
                      temperature: Float) -> CIImage? {
         return self
+            .applyingFilter("CIExposureAdjust",
+                            parameters: ["inputEV": brightness])
             .applyingFilter("CIColorControls",
-                                   parameters: [
-                                    kCIInputSaturationKey: saturation,
-                                    kCIInputBrightnessKey: brightness,
-                                    kCIInputContrastKey: constrast])
+                            parameters: [
+                                kCIInputSaturationKey: saturation,
+//                                    kCIInputBrightnessKey: brightness,
+                                kCIInputContrastKey: constrast])
             .applyingFilter("CITemperatureAndTint",
                             parameters: [
                                 "inputNeutral": CIVector.init(x: CGFloat(temperature) + 6500, y: 0),
