@@ -35,10 +35,10 @@ public class EditPageSlider: UISlider {
         addTarget(self, action: #selector(didEndDragging), for: .touchUpOutside)
         
         if tag == EditPageType.temperature.rawValue {
-            setMinimumTrackImage(tempTrackImage, for: .normal)
+            setMinimumTrackImage(tempTrackImage?.resizableImage(withCapInsets: .zero), for: .normal)
             setMaximumTrackImage(tempTrackImage, for: .normal)
         } else {
-            setMinimumTrackImage(greyTrackImage, for: .normal)
+            setMinimumTrackImage(greyTrackImage?.resizableImage(withCapInsets: .zero), for: .normal)
             setMaximumTrackImage(greyTrackImage, for: .normal)
         }
         
@@ -97,15 +97,15 @@ public class EditPageSlider: UISlider {
     func updateTrackImages(with value: Float) {
         let midValue = (minimumValue + maximumValue) / 2.0
         if value == midValue {
-            setMinimumTrackImage(greyTrackImage, for: .normal)
+            setMinimumTrackImage(greyTrackImage?.resizableImage(withCapInsets: .zero), for: .normal)
             setMaximumTrackImage(greyTrackImage, for: .normal)
         }
         if value > midValue {
-            setMinimumTrackImage(greyGreenTrackImage, for: .normal)
+            setMinimumTrackImage(greyGreenTrackImage?.resizableImage(withCapInsets: .zero), for: .normal)
             setMaximumTrackImage(greyTrackImage, for: .normal)
         }
         if value < midValue {
-            setMinimumTrackImage(greyTrackImage, for: .normal)
+            setMinimumTrackImage(greyTrackImage?.resizableImage(withCapInsets: .zero), for: .normal)
             setMaximumTrackImage(greenGreyTrackImage, for: .normal)
         }
     }

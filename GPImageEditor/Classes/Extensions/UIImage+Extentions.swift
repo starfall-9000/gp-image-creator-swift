@@ -99,6 +99,11 @@ extension UIImage {
         return croppedImage
     }
     
+    func cropByWidth(percent: CGFloat) -> UIImage? {
+        let rect = CGRect(x: 0, y: 0, width: percent * size.width, height: size.height)
+        return cropImage(rect)
+    }
+    
     func sizeForEditing(with bounds: CGSize) -> CGSize {
         let scale = bounds.width / size.width
         let height = size.height * scale

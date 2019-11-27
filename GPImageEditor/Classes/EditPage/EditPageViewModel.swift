@@ -72,7 +72,6 @@ public class EditPageViewModel: ViewModel<UIImage> {
             self.isApplyingFilter = false
         }
     }
-    
 }
 
 extension CIImage {
@@ -82,11 +81,12 @@ extension CIImage {
                      constrast: Float,
                      temperature: Float) -> CIImage? {
         return self
+            .applyingFilter("CIExposureAdjust",
+                            parameters: ["inputEV": brightness])
             .applyingFilter("CIColorControls",
-                                   parameters: [
-                                    kCIInputSaturationKey: saturation,
-                                    kCIInputBrightnessKey: brightness,
-                                    kCIInputContrastKey: constrast])
+                            parameters: [
+                                kCIInputSaturationKey: saturation,
+                                kCIInputContrastKey: constrast])
             .applyingFilter("CITemperatureAndTint",
                             parameters: [
                                 "inputNeutral": CIVector.init(x: CGFloat(temperature) + 6500, y: 0),
