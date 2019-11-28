@@ -15,10 +15,10 @@ import PureLayout
 public class EditPageSlider: UISlider {
 
     public var disposeBag: DisposeBag? = DisposeBag()
-    let greyTrackImage = UIImage(named: "grey-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
-    let greyGreenTrackImage = UIImage(named: "grey-green-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
-    let greenGreyTrackImage = UIImage(named: "green-grey-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
-    let tempTrackImage = UIImage(named: "temp-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
+    var greyTrackImage = UIImage(named: "grey-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
+    var greyGreenTrackImage = UIImage(named: "grey-green-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
+    var greenGreyTrackImage = UIImage(named: "green-grey-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
+    var tempTrackImage = UIImage(named: "temp-track", in: GPImageEditorBundle.getBundle(), compatibleWith: nil)
     let percentLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     
     var isLoaded: Bool = false
@@ -30,21 +30,34 @@ public class EditPageSlider: UISlider {
 
     func setups() {
         setupPercentlabel()
+        resizeImagess()
         
         addTarget(self, action: #selector(didEndDragging), for: .touchUpInside)
         addTarget(self, action: #selector(didEndDragging), for: .touchUpOutside)
         
         if tag == EditPageType.temperature.rawValue {
-            setMinimumTrackImage(tempTrackImage?.resizableImage(withCapInsets: .zero), for: .normal)
-            setMaximumTrackImage(tempTrackImage, for: .normal)
+            setMinimumTrackImage(resizeImage(image: tempTrackImage), for: .normal)
+            setMaximumTrackImage(resizeImage(image: tempTrackImage), for: .normal)
         } else {
-            setMinimumTrackImage(greyTrackImage?.resizableImage(withCapInsets: .zero), for: .normal)
-            setMaximumTrackImage(greyTrackImage, for: .normal)
+            setMinimumTrackImage(resizeImage(image: greyTrackImage), for: .normal)
+            setMaximumTrackImage(resizeImage(image: greyTrackImage), for: .normal)
         }
         
         layer.masksToBounds = false
         setThumbImage(UIImage.init(named: "slider-thumb"), for: .normal)
         bindValueChange()
+    }
+    
+    func resizeImagess() {
+        let size = CGSize(width: UIScreen.main.bounds.width, height: height)
+        greyTrackImage = greyTrackImage?.resizeImage(targetSize: size)
+        greyGreenTrackImage = greyGreenTrackImage?.resizeImage(targetSize: size)
+        greenGreyTrackImage = greenGreyTrackImage?.resizeImage(targetSize: size)
+        tempTrackImage = tempTrackImage?.resizeImage(targetSize: size)
+    }
+    
+    func resizeImage(image: UIImage?) -> UIImage? {
+        return image?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
     }
     
     func bindValueChange() {
@@ -97,16 +110,16 @@ public class EditPageSlider: UISlider {
     func updateTrackImages(with value: Float) {
         let midValue = (minimumValue + maximumValue) / 2.0
         if value == midValue {
-            setMinimumTrackImage(greyTrackImage?.resizableImage(withCapInsets: .zero), for: .normal)
-            setMaximumTrackImage(greyTrackImage, for: .normal)
+            setMinimumTrackImage(resizeImage(image: greyTrackImage), for: .normal)
+            setMaximumTrackImage(resizeImage(image: greyTrackImage), for: .normal)
         }
         if value > midValue {
-            setMinimumTrackImage(greyGreenTrackImage?.resizableImage(withCapInsets: .zero), for: .normal)
-            setMaximumTrackImage(greyTrackImage, for: .normal)
+            setMinimumTrackImage(resizeImage(image: greyGreenTrackImage), for: .normal)
+            setMaximumTrackImage(resizeImage(image: greyTrackImage), for: .normal)
         }
         if value < midValue {
-            setMinimumTrackImage(greyTrackImage?.resizableImage(withCapInsets: .zero), for: .normal)
-            setMaximumTrackImage(greenGreyTrackImage, for: .normal)
+            setMinimumTrackImage(resizeImage(image: greyTrackImage), for: .normal)
+            setMaximumTrackImage(resizeImage(image: greenGreyTrackImage), for: .normal)
         }
     }
     
