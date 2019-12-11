@@ -8,10 +8,12 @@
 
 import UIKit
 import DTMvvm
+import GPImageEditor
 
 class GPFrameEditorViewController: BasePage {
     var viewModel: GPFrameEditorViewModel? = nil
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var frameImageView: UIImageView!
     
     override func initialize() {
         super.initialize()
@@ -30,6 +32,11 @@ class GPFrameEditorViewController: BasePage {
         }) { (finished) in
             self.dismiss(animated: false, completion: nil)
         }
+    }
+    
+    @IBAction func applyAction(_ sender: UIButton) {
+        let image = GPImageEditorBundle.imageFromBundle(imageName: "Frame 1")
+        frameImageView.image = image
     }
 }
 
