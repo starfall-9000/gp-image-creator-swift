@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		320E466E23A0877900C7D898 /* GPFrameEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320E466C23A0877900C7D898 /* GPFrameEditorViewController.swift */; };
+		320E466F23A0877900C7D898 /* GPFrameEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320E466D23A0877900C7D898 /* GPFrameEditorViewController.xib */; };
+		3213EAD1239F8D88001990BD /* GPFrameEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3213EAD0239F8D88001990BD /* GPFrameEditorViewModel.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
@@ -27,6 +30,9 @@
 		09226650FF64C6DB0D22A4D7 /* Pods-GPImageEditor_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPImageEditor_Example.release.xcconfig"; path = "Target Support Files/Pods-GPImageEditor_Example/Pods-GPImageEditor_Example.release.xcconfig"; sourceTree = "<group>"; };
 		1918C8DFBC2F9B89D8859A2D /* Pods-GPImageEditor_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPImageEditor_Tests.release.xcconfig"; path = "Target Support Files/Pods-GPImageEditor_Tests/Pods-GPImageEditor_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		318EAF7AAD58AED200562657 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		320E466C23A0877900C7D898 /* GPFrameEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPFrameEditorViewController.swift; sourceTree = "<group>"; };
+		320E466D23A0877900C7D898 /* GPFrameEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GPFrameEditorViewController.xib; sourceTree = "<group>"; };
+		3213EAD0239F8D88001990BD /* GPFrameEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPFrameEditorViewModel.swift; sourceTree = "<group>"; };
 		358C0DBF5FADFF65F8A89D8D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* GPImageEditor_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPImageEditor_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -64,6 +70,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3213EACF239F8D4B001990BD /* FrameEditor */ = {
+			isa = PBXGroup;
+			children = (
+				320E466C23A0877900C7D898 /* GPFrameEditorViewController.swift */,
+				3213EAD0239F8D88001990BD /* GPFrameEditorViewModel.swift */,
+				320E466D23A0877900C7D898 /* GPFrameEditorViewController.xib */,
+			);
+			path = FrameEditor;
+			sourceTree = "<group>";
+		};
 		58A89B2D1471C6BFB1D53D5E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +114,7 @@
 		607FACD21AFB9204008FA782 /* Example for GPImageEditor */ = {
 			isa = PBXGroup;
 			children = (
+				3213EACF239F8D4B001990BD /* FrameEditor */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				7041AE202330C08900A0C2D8 /* Fonts */,
@@ -241,6 +258,7 @@
 				BC9B99622333705B007B3175 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				7058A0FC233E149900C30A9D /* JustLovely-Roman.ttf in Resources */,
+				320E466F23A0877900C7D898 /* GPFrameEditorViewController.xib in Resources */,
 				70B75EED233F3D7D00B8B7A9 /* Outfitter-Script.ttf in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 				7041AE2A2330C08900A0C2D8 /* DancingScript-Regular.ttf in Resources */,
@@ -321,6 +339,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				320E466E23A0877900C7D898 /* GPFrameEditorViewController.swift in Sources */,
+				3213EAD1239F8D88001990BD /* GPFrameEditorViewModel.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
