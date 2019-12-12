@@ -49,6 +49,11 @@ public class EffectPageViewModel: NSObject {
     
     public var items: [GPImageFilter] = [
         GPImageFilter(name: "Ảnh gốc", applier: nil),
+        GPImageFilter(name: "Mắt biếc 1", applier: GPImageFilter.matbiec1Frame, imageStr: "matbiec_thumb_1"),
+        GPImageFilter(name: "Mắt biếc 2", applier: GPImageFilter.matbiec2Frame, imageStr: "matbiec_thumb_2"),
+        GPImageFilter(name: "Mắt biếc 3", applier: GPImageFilter.matbiec3Frame, imageStr: "matbiec_thumb_3"),
+        GPImageFilter(name: "Mắt biếc 4", applier: GPImageFilter.matbiec4Frame, imageStr: "matbiec_thumb_4"),
+        GPImageFilter(name: "Filter MB", applier: GPImageFilter.matbiec4Frame, imageStr: "matbiec_thumb_5"),
         GPImageFilter(name: "Giá lạnh", applier: GPImageFilter.clarendonFilter),
         GPImageFilter(name: "Trầm lắng", coreImageFilterName: "CIPhotoEffectProcess"),
         GPImageFilter(name: "Sôi động", coreImageFilterName: "CIPhotoEffectTransfer"),

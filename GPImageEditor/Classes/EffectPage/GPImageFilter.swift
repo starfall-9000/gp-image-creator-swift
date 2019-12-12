@@ -26,10 +26,15 @@ public class GPImageFilter: NSObject {
         self.applier = GPImageFilter.coreImageFilter(name: coreImageFilterName)
     }
     
-    public init(name: String, applier: FilterApplierType?) {
+    public init(name: String,
+                applier: FilterApplierType?,
+                imageStr: String? = nil) {
         super.init()
         self.name = name
         self.applier = applier
+        if let imageStr = imageStr {
+            self.thumbImage = GPImageEditorBundle.imageFromBundle(imageName: imageStr)
+        }
     }
     
     func thumbImageObserver(from image: UIImage?) -> Observable<UIImage?> {
@@ -162,37 +167,70 @@ public class GPImageFilter: NSObject {
     }
     
     private static func partyFrameImage() -> UIImage? {
-        let bundle = GPImageEditorBundle.getBundle()
-        let image = UIImage(named: "Frame 1", in: bundle, compatibleWith: nil)
-        return image
+        return GPImageEditorBundle.imageFromBundle(imageName: "Frame 1")
     }
     
     private static func petroFrameImage() -> UIImage? {
-        let bundle = GPImageEditorBundle.getBundle()
-        let image = UIImage(named: "Frame 2", in: bundle, compatibleWith: nil)
-        return image
+        return GPImageEditorBundle.imageFromBundle(imageName: "Frame 2")
     }
     
     private static func comicFrameImage() -> UIImage? {
-        let bundle = GPImageEditorBundle.getBundle()
-        let image = UIImage(named: "Frame 3", in: bundle, compatibleWith: nil)
-        return image
+        return GPImageEditorBundle.imageFromBundle(imageName: "Frame 3")
+    }
+    
+    private static func matbiec1FrameImage() -> UIImage? {
+        return GPImageEditorBundle.imageFromBundle(imageName: "matbiec_filter_1")
+    }
+    
+    private static func matbiec2FrameImage() -> UIImage? {
+        return GPImageEditorBundle.imageFromBundle(imageName: "matbiec_filter_2")
+    }
+    
+    private static func matbiec3FrameImage() -> UIImage? {
+        return GPImageEditorBundle.imageFromBundle(imageName: "matbiec_filter_3")
+    }
+    
+    private static func matbiec4FrameImage() -> UIImage? {
+        return GPImageEditorBundle.imageFromBundle(imageName: "matbiec_filter_4")
     }
     
     public static func partyFrame(foregroundImage: CIImage) -> CIImage? {
         let frame = GPImageFilter.partyFrameImage()
-        let endImage = foregroundImage.toUIImage().imageWithBottomFrame(frame: frame)
-        return endImage?.toCIImage()
+        return createEndImage(frame, foregroundImage: foregroundImage)
     }
     
     public static func petroFrame(foregroundImage: CIImage) -> CIImage? {
         let frame = GPImageFilter.petroFrameImage()
-        let endImage = foregroundImage.toUIImage().imageWithBottomFrame(frame: frame)
-        return endImage?.toCIImage()
+        return createEndImage(frame, foregroundImage: foregroundImage)
     }
     
     public static func comicFrame(foregroundImage: CIImage) -> CIImage? {
         let frame = GPImageFilter.comicFrameImage()
+        return createEndImage(frame, foregroundImage: foregroundImage)
+    }
+    
+    public static func matbiec1Frame(foregroundImage: CIImage) -> CIImage? {
+        let frame = GPImageFilter.matbiec1FrameImage()
+        return createEndImage(frame, foregroundImage: foregroundImage)
+    }
+    
+    public static func matbiec2Frame(foregroundImage: CIImage) -> CIImage? {
+        let frame = GPImageFilter.matbiec2FrameImage()
+        return createEndImage(frame, foregroundImage: foregroundImage)
+    }
+    
+    public static func matbiec3Frame(foregroundImage: CIImage) -> CIImage? {
+        let frame = GPImageFilter.matbiec3FrameImage()
+        return createEndImage(frame, foregroundImage: foregroundImage)
+    }
+    
+    public static func matbiec4Frame(foregroundImage: CIImage) -> CIImage? {
+        let frame = GPImageFilter.matbiec4FrameImage()
+        return createEndImage(frame, foregroundImage: foregroundImage)
+    }
+    
+    public static func createEndImage(_ frame: UIImage?,
+                                      foregroundImage: CIImage) -> CIImage? {
         let endImage = foregroundImage.toUIImage().imageWithBottomFrame(frame: frame)
         return endImage?.toCIImage()
     }
