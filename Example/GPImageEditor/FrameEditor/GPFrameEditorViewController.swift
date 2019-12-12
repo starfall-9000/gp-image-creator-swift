@@ -10,20 +10,38 @@ import UIKit
 import DTMvvm
 import GPImageEditor
 
-class GPFrameEditorViewController: BasePage {
+public class GPFrameEditorViewController: BasePage {
     var viewModel: GPFrameEditorViewModel? = nil
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var frameImageView: UIImageView!
+    @IBOutlet weak var frameWidth: NSLayoutConstraint!
+    @IBOutlet weak var frameHeight: NSLayoutConstraint!
     
-    override func initialize() {
+    override public func initialize() {
         super.initialize()
         viewModel?.react()
+        addGesture()
     }
     
-    override func bindViewAndViewModel() {
+    override public func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel?.rxImageCenter.accept(frameImageView.center)
+    }
+    
+    override public func bindViewAndViewModel() {
         super.bindViewAndViewModel()
         guard let viewModel = viewModel else { return }
+        viewModel.rxImageCenter.accept(frameImageView.center)
         viewModel.rxImage ~> imageView.rx.image => disposeBag
+        viewModel.rxImageTransform ~> imageView.rx.transform => disposeBag
+        viewModel.rxImageCenter ~> imageView.rx.center => disposeBag
+    }
+    
+    func addGesture() {
+        let scaleGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchImage(_:)))
+        imageView.addGestureRecognizer(scaleGesture)
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanImage(_:)))
+        imageView.addGestureRecognizer(panGesture)
     }
     
     @IBAction func backAction(_ sender: UIButton) {
@@ -35,8 +53,29 @@ class GPFrameEditorViewController: BasePage {
     }
     
     @IBAction func applyAction(_ sender: UIButton) {
-        let image = GPImageEditorBundle.imageFromBundle(imageName: "Frame 1")
+        guard let image = GPImageEditorBundle.imageFromBundle(imageName: "Frame 1")
+        else { return }
+        let imageViewSize = image.calcImageSize(toFitSize: imageView.frame.size)
+        frameWidth.constant = imageViewSize.width
+        frameHeight.constant = imageViewSize.height
         frameImageView.image = image
+    }
+    
+    @objc func handlePinchImage(_ sender: UIPinchGestureRecognizer) {
+        if sender.state == .began || sender.state == .changed {
+            viewModel?.handleZoom(sender.scale)
+            sender.scale = 1
+        }
+    }
+    
+    @objc func handlePanImage(_ sender: UIPanGestureRecognizer) {
+        if sender.state == .began || sender.state == .changed {
+            viewModel?.handlePan(sender.translation(in: sender.view?.superview))
+            sender.setTranslation(.zero, in: sender.view?.superview)
+        }
+        if sender.state == .ended {
+            //
+        }
     }
 }
 
