@@ -44,12 +44,16 @@ public class GPFrameEditorViewController: BasePage {
         imageView.addGestureRecognizer(panGesture)
     }
     
-    @IBAction func backAction(_ sender: UIButton) {
+    func dismissScreen() {
         UIView.animate(withDuration: 0.25, animations: {
             self.view.alpha = 0
         }) { (finished) in
             self.dismiss(animated: false, completion: nil)
         }
+    }
+    
+    @IBAction func backAction(_ sender: UIButton) {
+        dismissScreen()
     }
     
     @IBAction func applyAction(_ sender: UIButton) {
@@ -59,6 +63,14 @@ public class GPFrameEditorViewController: BasePage {
         frameWidth.constant = imageViewSize.width
         frameHeight.constant = imageViewSize.height
         frameImageView.image = image
+    }
+    
+    @IBAction func doneAction(_ sender: UIButton) {
+        guard let viewModel = viewModel else { return }
+        let maskFrame = imageView.calcMaskInImage(imageMask: frameImageView,
+                                                  imageScale: viewModel.rxImageScale.value)
+        viewModel.handleDone(maskFrame)
+        dismissScreen()
     }
     
     @objc func handlePinchImage(_ sender: UIPinchGestureRecognizer) {

@@ -10,6 +10,7 @@ import UIKit
 import DTMvvm
 import RxCocoa
 import RxSwift
+import GPImageEditor
 
 public class GPFrameEditorViewModel: ViewModel<UIImage> {
     var finishedBlock: ((UIImage) -> Void)?
@@ -47,6 +48,33 @@ public class GPFrameEditorViewModel: ViewModel<UIImage> {
         currentCenter = CGPoint(x: currentCenter.x + translation.x,
                                 y: currentCenter.y + translation.y)
         rxImageCenter.accept(currentCenter)
+    }
+    
+    func handleDone(_ maskFrame: CGRect) {
+        guard
+            let image = model,
+            let ciImage = CIImage(image: image),
+            let ciFilter = CIFilter(name: "CIAffineTransform",
+                                    parameters: [kCIInputImageKey: ciImage])
+            else { return }
+        ciFilter.setDefaults()
+        let transform = rxImageTransform.value.inverted2DMatrixTransform()
+        ciFilter.setValue(transform, forKey: "inputTransform")
+        let context = CIContext(options: [CIContextOption.useSoftwareRenderer: false])
+        guard
+            let outputImage = ciFilter.outputImage,
+            let imageRef = context.createCGImage(outputImage, from: outputImage.extent),
+            let result = UIImage(cgImage: imageRef).cropImage(in: maskFrame)
+            else { return }
+        applyFilter(result)
+    }
+    
+    func applyFilter(_ image: UIImage) {
+        let filter = GPImageFilter(name: "Comic",
+                                   applier: GPImageFilter.comicFrame)
+        if let filterResult = filter.applyFilter(image: image) {
+            finishedBlock?(filterResult)
+        }
     }
     
 }
