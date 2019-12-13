@@ -123,6 +123,8 @@ public class EffectPageViewModel: NSObject {
     }
     
     func handleZoom(_ scale: CGFloat) {
+        // not enable this feature with image frame not has gesture
+        guard (rxSelectedFilter.value?.allowGesture ?? false) else { return }
         var newScale = rxImageScale.value * scale
         newScale = newScale < GP_MIN_FRAME_SCALE ? GP_MIN_FRAME_SCALE : newScale
         newScale = newScale > GP_MAX_FRAME_SCALE ? GP_MAX_FRAME_SCALE : newScale
@@ -130,6 +132,8 @@ public class EffectPageViewModel: NSObject {
     }
     
     func handlePan(_ translation: CGPoint) {
+        // not enable this feature with image frame not has gesture
+        guard (rxSelectedFilter.value?.allowGesture ?? false) else { return }
         var currentCenter = rxImageCenter.value
         currentCenter = CGPoint(x: currentCenter.x + translation.x,
                                 y: currentCenter.y + translation.y)

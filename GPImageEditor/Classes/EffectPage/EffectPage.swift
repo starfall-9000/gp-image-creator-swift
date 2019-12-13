@@ -71,8 +71,6 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             isDidAppear = true
             viewModel?.rxImageCenter.accept(frameImageView.center)
             viewModel?.recordEditorShown()
-            imageWidth.constant = stickerLayer.width
-            imageHeight.constant = stickerLayer.height
         }
     }
     
@@ -89,8 +87,9 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             .map({ return $0?.defaultForegroundSize })
             .subscribe(onNext: { [weak self] size in
                 guard let self = self else { return }
-                self.imageWidth.constant = size?.width ?? self.stickerLayer.width
-                self.imageHeight.constant = size?.height ?? self.stickerLayer.height
+                let imageSize = viewModel.maxImageSizeForEditing()
+                self.imageWidth.constant = size?.width ?? imageSize.width
+                self.imageHeight.constant = size?.height ?? imageSize.height
             }) => disposeBag
     }
     
@@ -149,11 +148,6 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @objc func handlePinchImage(_ sender: UIPinchGestureRecognizer) {
-        guard (viewModel?.rxSelectedFilter.value?.allowGesture ?? false)
-        else {
-            // not enable this feature with image frame not has gesture
-            return
-        }
         if sender.state == .began || sender.state == .changed {
             viewModel?.handleZoom(sender.scale)
             sender.scale = 1
@@ -161,11 +155,6 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @objc func handlePanImage(_ sender: UIPanGestureRecognizer) {
-        guard (viewModel?.rxSelectedFilter.value?.allowGesture ?? false)
-        else {
-            // not enable this feature with image frame not has gesture
-            return
-        }
         if sender.state == .began || sender.state == .changed {
             viewModel?.handlePan(sender.translation(in: sender.view?.superview))
             sender.setTranslation(.zero, in: sender.view?.superview)
@@ -277,6 +266,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
                 = imageView.calcMaskInImage(imageMask: frameImageView,
                                             imageScale: viewModel.rxImageScale.value)
             imageView.image = viewModel.handleMergeGestureFrame(filterFrame: filterFrame)
+            viewModel.resetImageTransform()
+            viewModel.rxImageCenter.accept(frameImageView.center)
         }
         guard let image = imageView.image else {
             self.doneBlock?(viewModel.sourceImage)
@@ -396,5 +387,17 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
             frameHeight.constant = imageViewSize.height
             frameImageView.image = frame
         }
+    }
+    
+    public func stickerDidPanBackground(_ sender: UIPanGestureRecognizer) {
+        handlePanImage(sender)
+    }
+    
+    public func stickerDidScaleBackground(_ sender: UIPinchGestureRecognizer) {
+        handlePinchImage(sender)
+    }
+    
+    public func stickerDidRotateBackground(_ sender: UIRotationGestureRecognizer) {
+        //
     }
 }
