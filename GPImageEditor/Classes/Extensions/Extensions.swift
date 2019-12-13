@@ -18,6 +18,53 @@ public extension UIImage {
         UIGraphicsEndImageContext()
         return img
     }
+    
+    // return true if needed scale width to fit max size, height is ratio with width
+    // return false if needed scale heigh to fit max size, width is ratio with height
+    func shouldScaleWidth(toFitSize size: CGSize) -> Bool {
+        return self.size.width / size.width > self.size.height / size.height
+    }
+    
+    // calc image view size to fit maxium size
+    func calcImageSize(toFitSize size: CGSize) -> CGSize {
+        if self.size.width == 0 || self.size.height == 0 {
+            return self.size
+        }
+        var width: CGFloat = 0
+        var height: CGFloat = 0
+        if shouldScaleWidth(toFitSize: size) {
+            width = size.width
+            height = width * self.size.height / self.size.width
+        } else {
+            height = size.height
+            width = height * self.size.width / self.size.height
+        }
+        return CGSize(width: width, height: height)
+    }
+    
+    // crop image with transform
+    func cropTransformImage(maskFrame: CGRect,
+                            transform: CGAffineTransform,
+                            isFlipped: Bool = false) -> UIImage {
+        guard
+            let ciImage = CIImage(image: self),
+            let ciFilter = CIFilter(name: "CIAffineTransform",
+                                    parameters: [kCIInputImageKey: ciImage])
+            else { return self }
+        ciFilter.setDefaults()
+        var cropTransform = transform.inverted2DMatrixTransform()
+        if isFlipped {
+            cropTransform = cropTransform.flipped2DMatrixTransform()
+        }
+        ciFilter.setValue(cropTransform, forKey: "inputTransform")
+        let context = CIContext(options: [CIContextOption.useSoftwareRenderer: false])
+        guard
+            let outputImage = ciFilter.outputImage,
+            let imageRef = context.createCGImage(outputImage, from: outputImage.extent),
+            let result = UIImage(cgImage: imageRef).cropImage(in: maskFrame)
+            else { return self }
+        return result
+    }
 }
 
 extension String {

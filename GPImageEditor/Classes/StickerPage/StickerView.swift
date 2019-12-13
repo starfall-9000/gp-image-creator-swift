@@ -14,6 +14,9 @@ public protocol GPStickerPageDelegate: AnyObject {
     func stickerDidStartEditing(stickerView: UIView?)
     func stickerDidEndEditing(stickerView: UIView?)
     func stickerEditingParentView() -> UIView?
+    func stickerDidPanBackground(_ sender: UIPanGestureRecognizer)
+    func stickerDidScaleBackground(_ sender: UIPinchGestureRecognizer)
+    func stickerDidRotateBackground(_ sender: UIRotationGestureRecognizer)
 }
 
 public class StickersLayerView: UIView {
@@ -161,6 +164,11 @@ public class StickersLayerView: UIView {
     
     @objc func rotate(gest: UIRotationGestureRecognizer) {
         var originalRotation = CGFloat()
+        guard let _ = findActiveStickerView(location: gest.location(in: self))
+        else {
+            delegate?.stickerDidRotateBackground(gest)
+            return
+        }
         if let viewToTransform = activeView {
             switch (gest.state) {
             case .began:
@@ -207,6 +215,8 @@ public class StickersLayerView: UIView {
                 showDeleteButton()
                 isDragging = true
                 offSet = CGPoint(x: stickerView.horizontalConstraint.constant, y: stickerView.verticalConstraint.constant)
+            } else {
+                delegate?.stickerDidPanBackground(gest)
             }
             break;
             
@@ -222,6 +232,8 @@ public class StickersLayerView: UIView {
                 }
                 deleteButton.isSelected = shouldDelete(touchPoint)
                 layoutIfNeeded()
+            } else {
+                delegate?.stickerDidPanBackground(gest)
             }
             break
             
@@ -240,6 +252,11 @@ public class StickersLayerView: UIView {
     }
     
     @objc func pinch(gest:UIPinchGestureRecognizer) {
+        guard let _ = findActiveStickerView(location: gest.location(in: self))
+        else {
+            delegate?.stickerDidScaleBackground(gest)
+            return
+        }
         guard let stickerView = activeView else { return }
         layoutIfNeeded()
         let scale = gest.scale

@@ -23,6 +23,14 @@ public class EffectPageViewModel: NSObject {
     let rxHideTutorial = BehaviorRelay<Bool>(value: false)
     var stickerInfos: [StickerInfo] = []
     
+    let rxImageCenter = BehaviorRelay<CGPoint> (value: .zero)
+    let rxImageScale = BehaviorRelay<CGFloat> (value: 1)
+    let rxImageTransform = BehaviorRelay<CGAffineTransform> (value: .identity)
+    var disposeBag: DisposeBag? = DisposeBag()
+    
+    let GP_MIN_FRAME_SCALE: CGFloat = 0.1
+    let GP_MAX_FRAME_SCALE: CGFloat = 5
+    
     init(image: UIImage) {
         sourceImage = image.fixedOrientation()
         thumbImage = sourceImage.thumbImage()
@@ -34,6 +42,24 @@ public class EffectPageViewModel: NSObject {
             thumbImage = sourceImage.thumbImage()
         }
         rxSelectedFilter.accept(items.first)
+        rxImageScale.subscribe(onNext: { [weak self] (_) in
+            guard let self = self else { return }
+            self.applyImageChange()
+        }) => disposeBag
+    }
+    
+    deinit {
+       disposeBag = nil
+    }
+    
+    public func applyImageChange() {
+        let imageScale = rxImageScale.value
+        let transform = CGAffineTransform(scaleX: imageScale, y: imageScale)
+        rxImageTransform.accept(transform)
+    }
+    
+    public func resetImageTransform() {
+        rxImageScale.accept(1)
     }
     
     func maxImageSizeForEditing() -> CGSize {
@@ -49,6 +75,10 @@ public class EffectPageViewModel: NSObject {
     
     public var items: [GPImageFilter] = [
         GPImageFilter(name: "Ảnh gốc", applier: nil),
+        GPImageFilter.initWithType(.matbiec1),
+        GPImageFilter.initWithType(.matbiec2),
+        GPImageFilter.initWithType(.matbiec3),
+        GPImageFilter.initWithType(.matbiec4),
         GPImageFilter(name: "Giá lạnh", applier: GPImageFilter.clarendonFilter),
         GPImageFilter(name: "Trầm lắng", coreImageFilterName: "CIPhotoEffectProcess"),
         GPImageFilter(name: "Sôi động", coreImageFilterName: "CIPhotoEffectTransfer"),
@@ -60,6 +90,15 @@ public class EffectPageViewModel: NSObject {
         GPImageFilter(name: "Petro", applier: GPImageFilter.petroFrame),
         GPImageFilter(name: "Comic", applier: GPImageFilter.comicFrame),
     ]
+    
+    func handleMergeGestureFrame(filterFrame: CGRect) -> UIImage? {
+        guard let filter = rxSelectedFilter.value, filter.allowGesture
+        else { return sourceImage }
+        let cropImage
+            = sourceImage.cropTransformImage(maskFrame: filterFrame,
+                                             transform: rxImageTransform.value)
+        return filter.applyFilter(image: cropImage)
+    }
     
     func recordEditorFinished() {
         var params: [AnyHashable: Any] = [:]
@@ -80,6 +119,24 @@ public class EffectPageViewModel: NSObject {
         params[PEAnalyticsEvent.HAVE_TEXT] = texts.count > 0 ? "true" : "false"
         
         GPImageEditorConfigs.analyticsTracker?.recordEvent(PEAnalyticsEvent.PHOTO_EDITOR_FINISHED, params: params)
+    }
+    
+    func handleZoom(_ scale: CGFloat) {
+        // not enable this feature with image frame not has gesture
+        guard (rxSelectedFilter.value?.allowGesture ?? false) else { return }
+        var newScale = rxImageScale.value * scale
+        newScale = newScale < GP_MIN_FRAME_SCALE ? GP_MIN_FRAME_SCALE : newScale
+        newScale = newScale > GP_MAX_FRAME_SCALE ? GP_MAX_FRAME_SCALE : newScale
+        rxImageScale.accept(newScale)
+    }
+    
+    func handlePan(_ translation: CGPoint) {
+        // not enable this feature with image frame not has gesture
+        guard (rxSelectedFilter.value?.allowGesture ?? false) else { return }
+        var currentCenter = rxImageCenter.value
+        currentCenter = CGPoint(x: currentCenter.x + translation.x,
+                                y: currentCenter.y + translation.y)
+        rxImageCenter.accept(currentCenter)
     }
     
     func recordEditorCancel() {

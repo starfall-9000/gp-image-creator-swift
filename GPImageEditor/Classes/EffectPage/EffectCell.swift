@@ -55,7 +55,7 @@ public class EffectCell: UICollectionViewCell {
             let selected = filter == self.model
             let color = selected ? UIColor(hexString: "#6FBE49") : UIColor.white
             let borderColor = selected ? UIColor.white : .clear
-            self.imageView.setBorder(with: borderColor, width: 1)
+            self.imageView.setBorder(with: borderColor, width: 2.5)
             self.titleLabel.textColor = color
             self.titleLabel.font = selected ? UIFont.boldSystemFont(ofSize: 12) : UIFont.systemFont(ofSize: 12)
         }) => disposeBag

@@ -72,24 +72,8 @@ public class GPCropViewModel: ViewModel<UIImage> {
     }
     
     private func handleDone(maskFrame: CGRect) {
-        guard
-            let image = model,
-            let ciImage = CIImage(image: image),
-            let ciFilter = CIFilter(name: "CIAffineTransform",
-                                    parameters: [kCIInputImageKey: ciImage])
-            else { return }
-        ciFilter.setDefaults()
-        var transform = rxImageTransform.value.inverted2DMatrixTransform()
-        if (rxIsFlippedImage.value) {
-            transform = transform.flipped2DMatrixTransform()
-        }
-        ciFilter.setValue(transform, forKey: "inputTransform")
-        let context = CIContext(options: [CIContextOption.useSoftwareRenderer: false])
-        guard
-            let outputImage = ciFilter.outputImage,
-            let imageRef = context.createCGImage(outputImage, from: outputImage.extent),
-            let result = UIImage(cgImage: imageRef).cropImage(in: maskFrame)
-            else { return }
+        guard let image = model else { return }
+        let result = image.cropTransformImage(maskFrame: maskFrame, transform: rxImageTransform.value, isFlipped: rxIsFlippedImage.value)
         model = result
         finishedBlock?(result)
     }
