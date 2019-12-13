@@ -19,6 +19,9 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var frameImageView: UIImageView!
+    @IBOutlet weak var frameWidth: NSLayoutConstraint? = nil
+    @IBOutlet weak var frameHeight: NSLayoutConstraint? = nil
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var bottomMenuView: UIView!
     @IBOutlet weak var bottomGradient: UIImageView!
@@ -211,6 +214,9 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func doneTapped() {
+        if (viewModel?.rxSelectedFilter.value?.allowGesture ?? false) {
+            imageView.image = viewModel?.handleMergeGestureFrame()
+        }
         guard let image = imageView.image else {
             self.doneBlock?(viewModel!.sourceImage)
             return
@@ -305,7 +311,26 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
         guard let filter = viewModel?.items[indexPath.row] else { return }
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         viewModel?.rxSelectedFilter.accept(filter)
+        if filter.allowGesture {
+            didSelectGestureFilter(filter: filter)
+        } else {
+            didSelectNormalFilter(filter: filter)
+        }
+    }
+    
+    public func didSelectNormalFilter(filter: GPImageFilter) {
+        frameImageView.isHidden = true
         guard let sourceImage = viewModel?.sourceImage else { return }
         imageView.image = filter.applyFilter(image: sourceImage)
+    }
+    
+    public func didSelectGestureFilter(filter: GPImageFilter) {
+        frameImageView.isHidden = false
+        imageView.image = viewModel?.sourceImage
+        if let frame = filter.frame {
+            frameImageView.image = frame
+            frameWidth?.constant = frame.size.width
+            frameHeight?.constant = frame.size.height
+        }
     }
 }
