@@ -41,6 +41,30 @@ public extension UIImage {
         }
         return CGSize(width: width, height: height)
     }
+    
+    // crop image with transform
+    func cropTransformImage(maskFrame: CGRect,
+                            transform: CGAffineTransform,
+                            isFlipped: Bool = false) -> UIImage {
+        guard
+            let ciImage = CIImage(image: self),
+            let ciFilter = CIFilter(name: "CIAffineTransform",
+                                    parameters: [kCIInputImageKey: ciImage])
+            else { return self }
+        ciFilter.setDefaults()
+        var cropTransform = transform.inverted2DMatrixTransform()
+        if isFlipped {
+            cropTransform = cropTransform.flipped2DMatrixTransform()
+        }
+        ciFilter.setValue(cropTransform, forKey: "inputTransform")
+        let context = CIContext(options: [CIContextOption.useSoftwareRenderer: false])
+        guard
+            let outputImage = ciFilter.outputImage,
+            let imageRef = context.createCGImage(outputImage, from: outputImage.extent),
+            let result = UIImage(cgImage: imageRef).cropImage(in: maskFrame)
+            else { return self }
+        return result
+    }
 }
 
 extension String {

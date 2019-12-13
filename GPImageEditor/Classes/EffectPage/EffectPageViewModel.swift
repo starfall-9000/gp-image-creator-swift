@@ -92,10 +92,13 @@ public class EffectPageViewModel: NSObject {
         GPImageFilter(name: "Comic", applier: GPImageFilter.comicFrame),
     ]
     
-    func handleMergeGestureFrame() -> UIImage? {
+    func handleMergeGestureFrame(filterFrame: CGRect) -> UIImage? {
         guard let filter = rxSelectedFilter.value, filter.allowGesture
         else { return sourceImage }
-        return filter.applyFilter(image: sourceImage)
+        let cropImage
+            = sourceImage.cropTransformImage(maskFrame: filterFrame,
+                                             transform: rxImageTransform.value)
+        return filter.applyFilter(image: cropImage)
     }
     
     func recordEditorFinished() {

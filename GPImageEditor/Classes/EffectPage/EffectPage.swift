@@ -256,11 +256,15 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func doneTapped() {
-        if (viewModel?.rxSelectedFilter.value?.allowGesture ?? false) {
-            imageView.image = viewModel?.handleMergeGestureFrame()
+        guard let viewModel = viewModel else { return }
+        if (viewModel.rxSelectedFilter.value?.allowGesture ?? false) {
+            let filterFrame
+                = imageView.calcMaskInImage(imageMask: frameImageView,
+                                            imageScale: viewModel.rxImageScale.value)
+            imageView.image = viewModel.handleMergeGestureFrame(filterFrame: filterFrame)
         }
         guard let image = imageView.image else {
-            self.doneBlock?(viewModel!.sourceImage)
+            self.doneBlock?(viewModel.sourceImage)
             return
         }
         StickerPickerPage.mixedImage(originalImage: image, view: stickerLayer) { [weak self] (mixedImage) in
