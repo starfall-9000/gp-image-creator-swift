@@ -35,6 +35,10 @@ public class GPImageFilter: NSObject {
         self.applier = applier
     }
     
+    public static func initWithType(_ type: GPImageFilterType) -> GPImageFilter {
+        return type.getImageFilter()
+    }
+    
     func thumbImageObserver(from image: UIImage?) -> Observable<UIImage?> {
         guard let image = image else { return Observable.just(nil) }
         if thumbImage != nil {
