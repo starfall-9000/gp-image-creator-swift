@@ -18,6 +18,29 @@ public extension UIImage {
         UIGraphicsEndImageContext()
         return img
     }
+    
+    // return true if needed scale width to fit max size, height is ratio with width
+    // return false if needed scale heigh to fit max size, width is ratio with height
+    func shouldScaleWidth(toFitSize size: CGSize) -> Bool {
+        return self.size.width / size.width > self.size.height / size.height
+    }
+    
+    // calc image view size to fit maxium size
+    func calcImageSize(toFitSize size: CGSize) -> CGSize {
+        if self.size.width == 0 || self.size.height == 0 {
+            return self.size
+        }
+        var width: CGFloat = 0
+        var height: CGFloat = 0
+        if shouldScaleWidth(toFitSize: size) {
+            width = size.width
+            height = width * self.size.height / self.size.width
+        } else {
+            height = size.height
+            width = height * self.size.width / self.size.height
+        }
+        return CGSize(width: width, height: height)
+    }
 }
 
 extension String {

@@ -19,9 +19,10 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var frameBlurView: UIView!
     @IBOutlet weak var frameImageView: UIImageView!
-    @IBOutlet weak var frameWidth: NSLayoutConstraint? = nil
-    @IBOutlet weak var frameHeight: NSLayoutConstraint? = nil
+    @IBOutlet weak var frameWidth: NSLayoutConstraint!
+    @IBOutlet weak var frameHeight: NSLayoutConstraint!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var bottomMenuView: UIView!
     @IBOutlet weak var bottomGradient: UIImageView!
@@ -56,6 +57,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         addGestures()
         collectionView.isHidden = true
         bottomGradient.isHidden = true
+        bindViewAndViewModel()
     }
     
     public override func viewDidAppear(_ animated: Bool) {
@@ -65,8 +67,16 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             self.collectionView.top = self.view.height
             showEffectTool()
             isDidAppear = true
+            viewModel?.rxImageCenter.accept(frameImageView.center)
             viewModel?.recordEditorShown()
         }
+    }
+    
+    func bindViewAndViewModel() {
+        guard let viewModel = viewModel else { return }
+        viewModel.rxImageCenter.accept(frameImageView.center)
+        viewModel.rxImageTransform ~> imageView.rx.transform => disposeBag
+        viewModel.rxImageCenter ~> imageView.rx.center => disposeBag
     }
     
     private func addGestures() {
@@ -75,6 +85,10 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longGesturePressed))
         longPressRecognizer.minimumPressDuration = 0.75
         stickerLayer.addGestureRecognizer(longPressRecognizer)
+        let scaleGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchImage(_:)))
+        stickerLayer.addGestureRecognizer(scaleGesture)
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanImage(_:)))
+        stickerLayer.addGestureRecognizer(panGesture)
     }
     
     @IBAction func backAction() {
@@ -106,12 +120,40 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @objc func longGesturePressed(gesture: UILongPressGestureRecognizer) {
+        if (viewModel?.rxSelectedFilter.value?.allowGesture ?? false) {
+            // not enable this feature with image frame has gesture
+            return
+        }
         if gesture.state == .ended {
             imageView.isHidden = false
             sourceImageView.isHidden = true
         } else {
             imageView.isHidden = true
             sourceImageView.isHidden = false
+        }
+    }
+    
+    @objc func handlePinchImage(_ sender: UIPinchGestureRecognizer) {
+        guard (viewModel?.rxSelectedFilter.value?.allowGesture ?? false)
+        else {
+            // not enable this feature with image frame not has gesture
+            return
+        }
+        if sender.state == .began || sender.state == .changed {
+            viewModel?.handleZoom(sender.scale)
+            sender.scale = 1
+        }
+    }
+    
+    @objc func handlePanImage(_ sender: UIPanGestureRecognizer) {
+        guard (viewModel?.rxSelectedFilter.value?.allowGesture ?? false)
+        else {
+            // not enable this feature with image frame not has gesture
+            return
+        }
+        if sender.state == .began || sender.state == .changed {
+            viewModel?.handlePan(sender.translation(in: sender.view?.superview))
+            sender.setTranslation(.zero, in: sender.view?.superview)
         }
     }
     
@@ -311,6 +353,8 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
         guard let filter = viewModel?.items[indexPath.row] else { return }
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         viewModel?.rxSelectedFilter.accept(filter)
+        viewModel?.rxImageCenter.accept(stickerLayer.center)
+        viewModel?.resetImageTransform()
         if filter.allowGesture {
             didSelectGestureFilter(filter: filter)
         } else {
@@ -320,17 +364,22 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
     
     public func didSelectNormalFilter(filter: GPImageFilter) {
         frameImageView.isHidden = true
+        frameBlurView.isHidden = true
+        sourceImageView.isHidden = false
         guard let sourceImage = viewModel?.sourceImage else { return }
         imageView.image = filter.applyFilter(image: sourceImage)
     }
     
     public func didSelectGestureFilter(filter: GPImageFilter) {
         frameImageView.isHidden = false
+        frameBlurView.isHidden = false
+        sourceImageView.isHidden = true
         imageView.image = viewModel?.sourceImage
         if let frame = filter.frame {
+            let imageViewSize = frame.calcImageSize(toFitSize: imageView.frame.size)
+            frameWidth.constant = imageViewSize.width
+            frameHeight.constant = imageViewSize.height
             frameImageView.image = frame
-            frameWidth?.constant = frame.size.width
-            frameHeight?.constant = frame.size.height
         }
     }
 }
