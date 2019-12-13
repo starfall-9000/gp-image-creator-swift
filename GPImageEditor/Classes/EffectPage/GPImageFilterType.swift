@@ -63,4 +63,20 @@ public enum GPImageFilterType {
             return "matbiec_thumb_5"
         }
     }
+    
+    public func getDefaultForegroundSize() -> CGSize {
+        var width = UIScreen.main.bounds.width
+        let imageRatio = width / 375
+        var height: CGFloat = 0
+        switch self {
+        case .matbiec1, .matbiec5, .matbiec4:
+            height = 500 * imageRatio
+            break
+        case .matbiec2, .matbiec3:
+            width = 343 * imageRatio
+            height = 396 * imageRatio
+            break
+        }
+        return CGSize(width: width, height: height)
+    }
 }

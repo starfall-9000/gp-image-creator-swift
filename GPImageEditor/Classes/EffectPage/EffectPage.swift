@@ -19,6 +19,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageWidth: NSLayoutConstraint!
+    @IBOutlet weak var imageHeight: NSLayoutConstraint!
     @IBOutlet weak var frameBlurView: UIView!
     @IBOutlet weak var frameImageView: UIImageView!
     @IBOutlet weak var frameWidth: NSLayoutConstraint!
@@ -69,6 +71,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             isDidAppear = true
             viewModel?.rxImageCenter.accept(frameImageView.center)
             viewModel?.recordEditorShown()
+            imageWidth.constant = stickerLayer.width
+            imageHeight.constant = stickerLayer.height
         }
     }
     
@@ -77,6 +81,17 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         viewModel.rxImageCenter.accept(frameImageView.center)
         viewModel.rxImageTransform ~> imageView.rx.transform => disposeBag
         viewModel.rxImageCenter ~> imageView.rx.center => disposeBag
+        viewModel.rxSelectedFilter.map({ return !($0?.allowGesture ?? true) })
+            ~> frameImageView.rx.isHidden => disposeBag
+        viewModel.rxSelectedFilter.map({ return !($0?.allowGesture ?? true) })
+            ~> frameBlurView.rx.isHidden => disposeBag
+        viewModel.rxSelectedFilter
+            .map({ return $0?.defaultForegroundSize })
+            .subscribe(onNext: { [weak self] size in
+                guard let self = self else { return }
+                self.imageWidth.constant = size?.width ?? self.stickerLayer.width
+                self.imageHeight.constant = size?.height ?? self.stickerLayer.height
+            }) => disposeBag
     }
     
     private func addGestures() {
@@ -367,20 +382,16 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     public func didSelectNormalFilter(filter: GPImageFilter) {
-        frameImageView.isHidden = true
-        frameBlurView.isHidden = true
         sourceImageView.isHidden = false
         guard let sourceImage = viewModel?.sourceImage else { return }
         imageView.image = filter.applyFilter(image: sourceImage)
     }
     
     public func didSelectGestureFilter(filter: GPImageFilter) {
-        frameImageView.isHidden = false
-        frameBlurView.isHidden = false
         sourceImageView.isHidden = true
         imageView.image = viewModel?.sourceImage
         if let frame = filter.frame {
-            let imageViewSize = frame.calcImageSize(toFitSize: imageView.frame.size)
+            let imageViewSize = frame.calcImageSize(toFitSize: stickerLayer.frame.size)
             frameWidth.constant = imageViewSize.width
             frameHeight.constant = imageViewSize.height
             frameImageView.image = frame

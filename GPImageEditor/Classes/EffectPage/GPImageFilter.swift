@@ -21,6 +21,7 @@ public class GPImageFilter: NSObject {
     var thumbImage: UIImage?
     var frame: UIImage? = nil
     var allowGesture: Bool = false
+    var defaultForegroundSize: CGSize? = nil
     
     public init(name: String, coreImageFilterName: String) {
         super.init()
