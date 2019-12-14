@@ -16,19 +16,26 @@ public enum GPImageFilterType {
     
     public func getImageFilter() -> GPImageFilter {
         var filter: GPImageFilter
+        var allowGesture = true
         switch self {
         case .matbiec1:
             filter = GPImageFilter(name: "Mắt biếc 1", applier: GPImageFilter.matbiec1Frame)
+            break
         case .matbiec2:
             filter = GPImageFilter(name: "Mắt biếc 2", applier: GPImageFilter.matbiec2Frame)
+            break
         case .matbiec3:
             filter = GPImageFilter(name: "Mắt biếc 3", applier: GPImageFilter.matbiec3Frame)
+            break
         case .matbiec4:
             filter = GPImageFilter(name: "Mắt biếc 4", applier: GPImageFilter.matbiec4Frame)
+            break
         case .matbiec5:
-            filter = GPImageFilter(name: "Filter MB", applier: GPImageFilter.matbiec1Frame)
+            filter = GPImageFilter(name: "Filter MB", applier: GPImageFilter.matbiec5Filter)
+            allowGesture = false
+            break
         }
-        filter.allowGesture = true
+        filter.allowGesture = allowGesture
         filter.frame = getFrame()
         filter.thumbImage = GPImageEditorBundle.imageFromBundle(imageName: getThumbIcon())
         return filter
@@ -45,7 +52,7 @@ public enum GPImageFilterType {
         case .matbiec4:
             return GPImageFilter.matbiec4FrameImage()
         case .matbiec5:
-            return GPImageFilter.matbiec1FrameImage()
+            return nil
         }
     }
     

@@ -168,6 +168,23 @@ public class GPImageFilter: NSObject {
                 ])
     }
     
+    public static func matbiec5Filter(foregroundImage: CIImage) -> CIImage? {
+        let overlayImage = getResizeFilterImage(name: "matbiec_overlay_5",
+                                                rect: foregroundImage.extent)
+        let softLightImage = getResizeFilterImage(name: "matbiec_soft_light_5",
+                                                  rect: foregroundImage.extent)
+        var result = foregroundImage
+        let gaussianBlur = CIFilter(name: "CIGaussianBlur",
+                                    parameters: ["inputImage": result,
+                                                 "inputRadius": 2])
+        result = gaussianBlur?.outputImage ?? result
+        result = overlayImage.applyingFilter("CIOverlayBlendMode",
+                                             parameters: ["inputBackgroundImage": result])
+        result = softLightImage.applyingFilter("CIOverlayBlendMode",
+                                               parameters: ["inputBackgroundImage": result])
+        return result
+    }
+    
     private static func partyFrameImage() -> UIImage? {
         return GPImageEditorBundle.imageFromBundle(imageName: "Frame 1")
     }
@@ -247,6 +264,15 @@ public class GPImageFilter: NSObject {
     private static func getColorImage(red: Int, green: Int, blue: Int, alpha: Int = 255, rect: CGRect) -> CIImage {
         let color = self.getColor(red: red, green: green, blue: blue, alpha: alpha)
         return CIImage(color: color).cropped(to: rect)
+    }
+    
+    private static func getResizeFilterImage(name: String, rect: CGRect) -> CIImage {
+        let image
+            = GPImageEditorBundle
+                .imageFromBundle(imageName: name)?
+                .resizeImage(targetSize: rect.size, shouldChangeRatio: true)
+                .toCIImage()
+        return image ?? CIImage()
     }
     
 }
