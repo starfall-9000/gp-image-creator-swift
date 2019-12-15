@@ -373,13 +373,11 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     public func didSelectNormalFilter(filter: GPImageFilter) {
-        sourceImageView.isHidden = false
         guard let sourceImage = viewModel?.sourceImage else { return }
         imageView.image = filter.applyFilter(image: sourceImage)
     }
     
     public func didSelectGestureFilter(filter: GPImageFilter) {
-        sourceImageView.isHidden = true
         imageView.image = viewModel?.sourceImage
         if let frame = filter.frame {
             let imageViewSize = frame.calcImageSize(toFitSize: stickerLayer.frame.size)
