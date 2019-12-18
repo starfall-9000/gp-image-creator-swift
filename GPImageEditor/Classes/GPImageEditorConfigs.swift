@@ -49,6 +49,7 @@ public class GPImageEditorConfigs {
     static public var stickersAPIPath: String = "/sticker"
     static public var userToken = ""
     static public var enableZoomText = false
+    static public var fromStory = false
     static public var textScaleFactor: CGFloat = UIScreen.main.scale
     static public var dependencyManager: DependencyManager? = nil {
         didSet {

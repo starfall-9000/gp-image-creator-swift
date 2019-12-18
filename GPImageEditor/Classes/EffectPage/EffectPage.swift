@@ -54,6 +54,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         imageView.image = viewModel?.sourceImage
         sourceImageView.image = viewModel?.sourceImage
         doneButton.cornerRadius = 18
+        let doneText = GPImageEditorConfigs.fromStory ? "Đăng" : "Xong"
+        doneButton.setTitle(doneText, for: .normal)
         setupCollectionView()
         setupTutorial()
         addGestures()
