@@ -433,7 +433,7 @@ public class StickerView: UIView {
         textView.text = info.text
         let fontConfig = GPImageEditorConfigs.fontSet[info.fontIndex]
         textView.font = UIFont(name: fontConfig.font, size: CGFloat(fontConfig.size))
-        GPTextEditorView.buildTextView(textView)
+        textView.buildEditorTextView()
     }
     
     func updateZoomBegan() {

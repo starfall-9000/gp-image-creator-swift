@@ -105,7 +105,24 @@ public extension Reactive where Base: UIStackView {
     }
 }
 
-extension UITextView {
+public extension UITextView {
+    func buildEditorTextView() {
+        layer.masksToBounds = true
+        layer.cornerRadius = 4
+        isScrollEnabled = false
+        contentInset = .zero
+        textContainerInset = .zero
+        textContainer.lineFragmentPadding = 0
+        textContainer.maximumNumberOfLines = 6
+        layoutManager.usesFontLeading = false
+        autocorrectionType = .no
+        spellCheckingType = .no
+        if #available(iOS 11.0, *) {
+            contentInsetAdjustmentBehavior = .never
+        }
+        textContainerInset = .only(top: 10, bottom: 10, left: 10, right: 10)
+    }
+    
     func scrollToBottom() {
         if text.count > 0 {
             let location = CGPoint(x: 0, y: max(0, contentSize.height - frame.size.height))
@@ -132,3 +149,19 @@ extension UIAlertController {
         viewController.present(controller, animated: true, completion: nil)
     }
 }
+
+public extension Notification {
+    func getKeyboardFrame() -> CGRect {
+        if let keyboardFrame: NSValue = userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            return keyboardFrame.cgRectValue
+        }
+        return CGRect.zero
+    }
+    
+    func getKeyboardHeight() -> CGFloat {
+        let keyboardFrame = getKeyboardFrame()
+        let keyboardHeight = keyboardFrame.height
+        return keyboardHeight
+    }
+}
+

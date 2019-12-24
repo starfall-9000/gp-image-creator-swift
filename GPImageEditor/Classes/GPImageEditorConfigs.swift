@@ -10,10 +10,10 @@ import DTMvvm
 import ObjectMapper
 
 public class PEFontInfo: Model {
-    var name: String = ""
-    var font: String = ""
-    var size: Int = 40
-    var inset: Int = 10
+    public var name: String = ""
+    public var font: String = ""
+    public var size: Int = 40
+    public var inset: Int = 10
     
     override public func mapping(map: Map) {
         name <- map["name"]

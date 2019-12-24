@@ -92,26 +92,9 @@ class GPTextEditorView: UIView {
     var colorButtons: [ColorButton] = []
     private var disposeBag: DisposeBag? = DisposeBag()
     
-    static func buildTextView(_ textView: UITextView) {
-        textView.layer.masksToBounds = true
-        textView.layer.cornerRadius = 4
-        textView.isScrollEnabled = false
-        textView.contentInset = .zero
-        textView.textContainerInset = .zero
-        textView.textContainer.lineFragmentPadding = 0
-        textView.textContainer.maximumNumberOfLines = 6
-        textView.layoutManager.usesFontLeading = false
-        textView.autocorrectionType = .no
-        textView.spellCheckingType = .no
-        if #available(iOS 11.0, *) {
-            textView.contentInsetAdjustmentBehavior = .never
-        }
-        textView.textContainerInset = .only(top: 10, bottom: 10, left: 10, right: 10)
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        GPTextEditorView.buildTextView(textView)
+        textView.buildEditorTextView()
         textView.isScrollEnabled = true
         textView.delegate = self
         
@@ -147,12 +130,8 @@ class GPTextEditorView: UIView {
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification)
             .subscribe(onNext: { [weak self] notification in
                 guard let self = self else { return }
-                if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                    let keyboardRectangle = keyboardFrame.cgRectValue
-                    let keyboardHeight = keyboardRectangle.height
-                    
-                    self.contentViewHeight.constant = UIScreen.main.bounds.height - keyboardHeight
-                }
+                let keyboardHeight = notification.getKeyboardHeight()
+                self.contentViewHeight.constant = UIScreen.main.bounds.height - keyboardHeight
                 self.disposeBag = nil
             }) => disposeBag
         textView.becomeFirstResponder()
