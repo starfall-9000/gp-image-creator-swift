@@ -12,6 +12,7 @@ import RxSwift
 
 public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     var doneBlock: ((UIImage) -> Void)?
+    var didDismissScreen: ((Bool) -> Void)? = nil
     let cellSize = CGSize(width: 70, height: 130)
     let cellName = "EffectCell"
     let hideButton = UIButton(type: .custom)
@@ -117,7 +118,10 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
                                     guard let self = self else { return }
                                     if index == 0 {
                                         self.viewModel?.recordEditorCancel()
-                                        self.dismiss(animated: true, completion: nil)
+                                        self.dismiss(animated: true, completion: { [weak self] in
+                                            guard let self = self else { return }
+                                            self.didDismissScreen?(false)
+                                        })
                                     }
         }
     }
@@ -276,13 +280,17 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             return
         }
         StickerPickerPage.mixedImage(originalImage: image, view: stickerLayer) { [weak self] (mixedImage) in
+            guard let self = self else { return }
             if let mixed = mixedImage {
-                self?.doneBlock?(mixed)
+                self.doneBlock?(mixed)
             } else {
-                self?.doneBlock?(image)
+                self.doneBlock?(image)
             }
-            self?.viewModel?.recordEditorFinished()
-            self?.dismiss(animated: true, completion: nil)
+            self.viewModel?.recordEditorFinished()
+            self.dismiss(animated: true, completion: { [weak self] in
+                guard let self = self else { return }
+                self.didDismissScreen?(true)
+            })
         }
     }
 
