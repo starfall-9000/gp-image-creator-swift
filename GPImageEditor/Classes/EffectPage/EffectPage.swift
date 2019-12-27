@@ -13,6 +13,7 @@ import RxSwift
 public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     var doneBlock: ((UIImage) -> Void)?
     var didDismissScreen: ((Bool) -> Void)? = nil
+    var handlePrivacyAction: (() -> Void)? = nil
     let cellSize = CGSize(width: 70, height: 130)
     let cellName = "EffectCell"
     let hideButton = UIButton(type: .custom)
@@ -26,6 +27,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var frameImageView: UIImageView!
     @IBOutlet weak var frameWidth: NSLayoutConstraint!
     @IBOutlet weak var frameHeight: NSLayoutConstraint!
+    @IBOutlet weak var privacyView: UIView!
+    @IBOutlet weak var topEffectButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var bottomMenuView: UIView!
     @IBOutlet weak var bottomGradient: UIImageView!
@@ -51,12 +54,12 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     public override func viewDidLoad() {
         super.viewDidLoad()
         disposeBag = DisposeBag()
-        bottomMenuHeightConstraint.constant = viewModel?.kBottomMenuHeight ?? 60
+        let bottomHeight = viewModel?.kBottomMenuHeight ?? 60
+        bottomMenuHeightConstraint.constant = bottomHeight + 8
         imageView.image = viewModel?.sourceImage
         sourceImageView.image = viewModel?.sourceImage
         doneButton.cornerRadius = 18
-        let doneText = GPImageEditorConfigs.fromStory ? "Đăng" : "Xong"
-        doneButton.setTitle(doneText, for: .normal)
+        setupStoryView()
         setupCollectionView()
         setupTutorial()
         addGestures()
@@ -65,12 +68,25 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         bindViewAndViewModel()
     }
     
+    func setupStoryView() {
+        let isStory = GPImageEditorConfigs.fromStory
+        let doneText = isStory ? "Đăng" : "Xong"
+        doneButton.setTitle(doneText, for: .normal)
+        showEffectButton.isHidden = isStory
+        privacyView.isHidden = !isStory
+        topEffectButton.isHidden = !isStory
+    }
+    
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !isDidAppear {
             self.bottomGradient.top = self.bottomMenuView.top
             self.collectionView.top = self.view.height
-            showEffectTool()
+            if GPImageEditorConfigs.fromStory {
+                hideEffectTool()
+            } else {
+                showEffectTool()
+            }
             isDidAppear = true
             viewModel?.rxImageCenter.accept(frameImageView.center)
             viewModel?.recordEditorShown()
@@ -135,6 +151,10 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         }
     }
     
+    @IBAction func privacyAction() {
+        handlePrivacyAction?()
+    }
+    
     @objc func viewTapGesture(gesture: UITapGestureRecognizer) {
         textTapped()
     }
@@ -176,6 +196,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             let imageName = "arrow-down-icon.png"
             let bundle = GPImageEditorBundle.getBundle()
             self.showEffectButton.setImage(UIImage(named: imageName, in: bundle, compatibleWith: nil), for: .normal)
+            self.topEffectButton.setImage(UIImage(named: "ic_editor_effect_active", in: bundle, compatibleWith: nil), for: .normal)
         }
     }
     
@@ -186,6 +207,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             let imageName = "arrow-top-icon.png"
             let bundle = GPImageEditorBundle.getBundle()
             self.showEffectButton.setImage(UIImage(named: imageName, in: bundle, compatibleWith: nil), for: .normal)
+            self.topEffectButton.setImage(UIImage(named: "ic_editor_effect", in: bundle, compatibleWith: nil), for: .normal)
         }
     }
     
