@@ -11,10 +11,11 @@ import UIKit
 
 public struct GPImageEditor {
     
-    public static func present(from viewController: UIViewController, image: UIImage, animated: Bool, handlePrivacyAction: (() -> Void)? = nil, finished: @escaping ((UIImage) -> Void), completion: (() -> Void)? = nil, didDismissScreen: ((Bool) -> Void)? = nil) {
+    public static func present(from viewController: UIViewController, image: UIImage, animated: Bool, fromStory: Bool = false, handlePrivacyAction: (() -> Void)? = nil, finished: @escaping ((UIImage) -> Void), completion: (() -> Void)? = nil, didDismissScreen: ((Bool) -> Void)? = nil) {
         let viewModel = EffectPageViewModel(image: image)
         let vc = EffectPage.create(with: viewModel)
         vc.modalPresentationStyle = .fullScreen
+        vc.fromStory = fromStory
         vc.doneBlock = finished
         vc.didDismissScreen = didDismissScreen
         vc.handlePrivacyAction = handlePrivacyAction

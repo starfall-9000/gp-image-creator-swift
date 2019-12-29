@@ -18,6 +18,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     let cellName = "EffectCell"
     let hideButton = UIButton(type: .custom)
     var disposeBag: DisposeBag? = nil
+    var fromStory: Bool = false
     
     @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
@@ -69,12 +70,11 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     func setupStoryView() {
-        let isStory = GPImageEditorConfigs.fromStory
-        let doneText = isStory ? "Đăng" : "Xong"
+        let doneText = fromStory ? "Đăng" : "Xong"
         doneButton.setTitle(doneText, for: .normal)
-        showEffectButton.isHidden = isStory
-        privacyView.isHidden = !isStory
-        topEffectButton.isHidden = !isStory
+        showEffectButton.isHidden = fromStory
+        privacyView.isHidden = !fromStory
+        topEffectButton.isHidden = !fromStory
     }
     
     public override func viewDidAppear(_ animated: Bool) {
@@ -82,7 +82,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         if !isDidAppear {
             self.bottomGradient.top = self.bottomMenuView.top
             self.collectionView.top = self.view.height
-            if GPImageEditorConfigs.fromStory {
+            if fromStory {
                 hideEffectTool()
             } else {
                 showEffectTool()
