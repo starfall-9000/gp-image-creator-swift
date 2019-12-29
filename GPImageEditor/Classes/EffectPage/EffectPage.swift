@@ -335,6 +335,7 @@ extension EffectPage: GPStickerPageDelegate {
             for view in self.topViews {
                 view.alpha = 0
             }
+            self.topEffectButton.alpha = 0
             for view in self.bottomViews {
                 view.alpha = 0
             }
@@ -342,6 +343,7 @@ extension EffectPage: GPStickerPageDelegate {
             for view in self.topViews {
                 view.isHidden = true
             }
+            self.topEffectButton.isHidden = true
             for view in self.bottomViews {
                 view.isHidden = true
             }
@@ -352,6 +354,7 @@ extension EffectPage: GPStickerPageDelegate {
         for view in self.topViews {
             view.isHidden = false
         }
+        topEffectButton.isHidden = !fromStory
         for view in self.bottomViews {
             view.isHidden = false
         }
@@ -360,6 +363,7 @@ extension EffectPage: GPStickerPageDelegate {
             for view in self.topViews {
                 view.alpha = 1
             }
+            self.topEffectButton.alpha = 1
             for view in self.bottomViews {
                 view.alpha = 1
             }
