@@ -158,6 +158,9 @@ class GPTextEditorView: UIView {
 
 extension GPTextEditorView: UITextViewDelegate, NSLayoutManagerDelegate {
     func textViewDidChange(_ textView: UITextView) {
+        if (textView.text.count > 0) {
+            handleHide(hideButton)
+        }
         let maxWidth = frame.width - 60
         var newSize = textView.sizeThatFits(CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
         if textView.text.count == 0 {

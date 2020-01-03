@@ -14,6 +14,7 @@ public protocol GPStickerPageDelegate: AnyObject {
     func stickerDidStartEditing(stickerView: UIView?)
     func stickerDidEndEditing(stickerView: UIView?)
     func stickerEditingParentView() -> UIView?
+    func stickerDidTapStickerView(_ sender: UITapGestureRecognizer)
     func stickerDidPanBackground(_ sender: UIPanGestureRecognizer)
     func stickerDidScaleBackground(_ sender: UIPinchGestureRecognizer)
     func stickerDidRotateBackground(_ sender: UIRotationGestureRecognizer)
@@ -286,6 +287,7 @@ public class StickersLayerView: UIView {
     }
     
     @objc func tap(sender: UITapGestureRecognizer) {
+        delegate?.stickerDidTapStickerView(sender)
         let location = sender.location(in: self)
         if let view = findActiveStickerView(location: location) {
             activeView = view

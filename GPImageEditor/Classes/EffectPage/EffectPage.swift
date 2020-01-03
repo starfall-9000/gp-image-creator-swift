@@ -16,7 +16,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     var handlePrivacyAction: (() -> Void)? = nil
     let cellSize = CGSize(width: 70, height: 130)
     let cellName = "EffectCell"
-    let hideButton = UIButton(type: .custom)
+    var tutorialView: GPTutorialView? = nil
     var disposeBag: DisposeBag? = nil
     var fromStory: Bool = false
     
@@ -220,13 +220,12 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     private func setupTutorial() {
-        stickerLayer.addSubview(hideButton)
-        hideButton.autoPinEdgesToSuperviewEdges()
-        hideButton.rx.tap
-            .subscribe(onNext: { self.viewModel?.rxHideTutorial.accept(true) })
-            => disposeBag
         guard let viewModel = viewModel else { return }
-        viewModel.rxHideTutorial ~> hideButton.rx.isHidden => disposeBag
+        viewModel.rxHideTutorial
+            .observeOn(Scheduler.shared.mainScheduler)
+            .subscribe(onNext: { [weak self] isHidden in
+                self?.tutorialView?.isHidden = isHidden
+            }) => disposeBag
         viewModel.rxHideTutorial.accept(true)
     }
     
@@ -236,14 +235,15 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         stickerView.layerView?.delegate = self
         let shouldShowTutorial = GPTutorialView.shouldShowTutorial(tutorial)
         if (shouldShowTutorial) {
+            self.tutorialView?.removeFromSuperview()
             let tutorialView = GPTutorialView.tutorialWithType(tutorial)
-            hideButton.subviews.forEach({ $0.removeFromSuperview() })
-            hideButton.addSubview(tutorialView)
+            stickerLayer.addSubview(tutorialView)
+            tutorialView.isUserInteractionEnabled = false
             tutorialView.autoAlignAxis(toSuperviewAxis: .vertical)
-            stickerLayer.bringSubviewToFront(hideButton)
             tutorialTopConstraint?.autoRemove()
             let offset: CGFloat = tutorial == .GPStickerTutorial ? 10 : -10
             tutorialTopConstraint = tutorialView.autoPinEdge(.top, to: .bottom, of: stickerView.imageView, withOffset: offset)
+            self.tutorialView = tutorialView
             viewModel.rxHideTutorial.accept(false)
         }
     }
@@ -372,6 +372,7 @@ extension EffectPage: GPStickerPageDelegate {
     
     public func stickerDidStartEditing(stickerView: UIView?) {
         hideBarViews()
+        viewModel?.rxHideTutorial.accept(true)
     }
     
     public func stickerDidEndEditing(stickerView: UIView?) {
@@ -380,6 +381,22 @@ extension EffectPage: GPStickerPageDelegate {
     
     public func stickerEditingParentView() -> UIView? {
         return view
+    }
+    
+    public func stickerDidTapStickerView(_ sender: UITapGestureRecognizer) {
+        viewModel?.rxHideTutorial.accept(true)
+    }
+    
+    public func stickerDidPanBackground(_ sender: UIPanGestureRecognizer) {
+        handlePanImage(sender)
+    }
+    
+    public func stickerDidScaleBackground(_ sender: UIPinchGestureRecognizer) {
+        handlePinchImage(sender)
+    }
+    
+    public func stickerDidRotateBackground(_ sender: UIRotationGestureRecognizer) {
+        //
     }
 }
 
@@ -421,17 +438,5 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
             frameHeight.constant = imageViewSize.height
             frameImageView.image = frame
         }
-    }
-    
-    public func stickerDidPanBackground(_ sender: UIPanGestureRecognizer) {
-        handlePanImage(sender)
-    }
-    
-    public func stickerDidScaleBackground(_ sender: UIPinchGestureRecognizer) {
-        handlePinchImage(sender)
-    }
-    
-    public func stickerDidRotateBackground(_ sender: UIRotationGestureRecognizer) {
-        //
     }
 }
