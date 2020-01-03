@@ -324,7 +324,11 @@ extension StickersLayerView {
             layer?.render(in: context)
             let tmpImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            let cropImage = tmpImage?.cropImage(CGRect(x: imageDrawPoint.x, y: imageDrawPoint.y, width: imgSize.width, height: imgSize.height))
+            let maskFrame = CGRect(x: imageDrawPoint.x * imgScale,
+                                   y: imageDrawPoint.y * imgScale,
+                                   width: imgSize.width * imgScale,
+                                   height: imgSize.height * imgScale)
+            let cropImage = tmpImage?.cropImage(maskFrame)
             return cropImage
         }
         return nil
