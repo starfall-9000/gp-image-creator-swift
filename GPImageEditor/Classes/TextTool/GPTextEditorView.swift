@@ -223,6 +223,8 @@ extension GPTextEditorView {
         textView.textContainerInset = .only(top: 10 * scale, bottom: 10 * scale, left: 10 * scale, right: 10 * scale)
         stackView.layoutIfNeeded()
         textView.layoutIfNeeded()
+        textView.setContentOffset(.zero, animated: false)
+        textView.contentSize = textView.frame.size
         
         let image = UIImage.imageWithView(view: textView, size: textView.frame.size)
         
