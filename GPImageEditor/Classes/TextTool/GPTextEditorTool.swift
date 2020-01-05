@@ -21,7 +21,8 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
         super.initialize()
         backgroundColor = .clear
         addSubview(contentView)
-        contentView.autoPinEdgesToSuperviewEdges()
+        contentView.autoPinEdgesToSuperviewEdges(with: .all(0), excludingEdge: .top)
+        contentView.autoPinEdge(toSuperviewEdge: .top, withInset: 100)
     }
     
     override public func destroy() {
@@ -114,6 +115,7 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
             let textView = contentView.textView
             else { return }
         contentView.textView.resignFirstResponder()
+        contentView.resetView()
         if textView.text.count > 0 {
             let size = textView.frame.size
             if let image = contentView.captureTextView(scale: GPImageEditorConfigs.textScaleFactor) {

@@ -131,10 +131,14 @@ class GPTextEditorView: UIView {
             .subscribe(onNext: { [weak self] notification in
                 guard let self = self else { return }
                 let keyboardHeight = notification.getKeyboardHeight()
-                self.contentViewHeight.constant = UIScreen.main.bounds.height - keyboardHeight
-                self.disposeBag = nil
+                self.contentViewHeight.constant = UIScreen.main.bounds.height - keyboardHeight - 100
             }) => disposeBag
         textView.becomeFirstResponder()
+    }
+    
+    func resetView() {
+        contentViewHeight.constant = UIScreen.main.bounds.height - 100
+        textViewDidChange(textView)
     }
     
     func addColorPicker() {
@@ -158,6 +162,8 @@ class GPTextEditorView: UIView {
 
 extension GPTextEditorView: UITextViewDelegate, NSLayoutManagerDelegate {
     func textViewDidChange(_ textView: UITextView) {
+        superview?.layoutIfNeeded()
+        let maxHeight = contentViewHeight.constant
         if (textView.text.count > 0) {
             handleHide(hideButton)
         }
@@ -166,7 +172,7 @@ extension GPTextEditorView: UITextViewDelegate, NSLayoutManagerDelegate {
         if textView.text.count == 0 {
             newSize.width = placeholderLabel.frame.width
         }
-        textViewHeight.constant = newSize.height
+        textViewHeight.constant = min(newSize.height, maxHeight)
         textViewWidthConstraint.constant = min(newSize.width, maxWidth)
         textView.superview?.layoutIfNeeded()
         textView.scrollToBottom()
