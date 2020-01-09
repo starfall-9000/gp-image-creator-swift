@@ -19,6 +19,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     var tutorialView: GPTutorialView? = nil
     var disposeBag: DisposeBag? = nil
     var fromStory: Bool = false
+    public var validInternet: (() -> Bool)? = nil
     
     @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
@@ -289,6 +290,10 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     
     @IBAction func doneTapped() {
         guard let viewModel = viewModel else { return }
+        if let validInternet = validInternet {
+            let isReachable = validInternet()
+            if (!isReachable) { return }
+        }
         if (viewModel.rxSelectedFilter.value?.allowGesture ?? false) {
             let filterFrame
                 = imageView.calcMaskInImage(imageMask: frameImageView,
