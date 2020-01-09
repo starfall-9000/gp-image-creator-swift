@@ -114,6 +114,8 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
             let viewModel = viewModel,
             let textView = contentView.textView
             else { return }
+        let trimText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        viewModel.rxText.accept(trimText)
         contentView.textView.resignFirstResponder()
         contentView.resetView()
         if textView.text.count > 0 {
