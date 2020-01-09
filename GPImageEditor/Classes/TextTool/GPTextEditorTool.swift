@@ -120,10 +120,15 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
         contentView.resetView()
         if textView.text.count > 0 {
             let size = textView.frame.size
-            if let image = contentView.captureTextView(scale: GPImageEditorConfigs.textScaleFactor) {
-                let info = viewModel.getStickerInfo(image: image, size: size)
-                let stickerView = StickersLayerView.addSticker(stickerInfo: info, toView: containerView)
-                completion?(stickerView)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                guard let self = self else { return }
+                if let image = self.contentView
+                    .captureTextView(scale: GPImageEditorConfigs.textScaleFactor) {
+                    let info = viewModel.getStickerInfo(image: image, size: size)
+                    let stickerView
+                        = StickersLayerView.addSticker(stickerInfo: info, toView: containerView)
+                    self.completion?(stickerView)
+                }
             }
         }
         contentView.cancelAction()
