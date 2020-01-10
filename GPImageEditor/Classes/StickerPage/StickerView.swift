@@ -134,7 +134,7 @@ public class StickersLayerView: UIView {
     func deleteSticker(stickerView: StickerView) {
         var nextTarget: StickerView? = nil
         guard
-            let index = subviews.index(of: stickerView)
+            let index = subviews.firstIndex(of: stickerView)
             else { return }
         
         

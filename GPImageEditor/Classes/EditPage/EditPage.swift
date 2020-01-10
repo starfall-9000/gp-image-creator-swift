@@ -89,7 +89,7 @@ public class EditPage: UIViewController {
         
         viewModel?.rxSelectedEditing.accept(EditPageType(rawValue: button.tag) ?? EditPageType.brightness)
         
-        let index = buttons.index(of: button)
+        let index = buttons.firstIndex(of: button)
         let label = smallTitleLabels[index ?? 0]
         titleLabel.text = label.text
     }
