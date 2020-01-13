@@ -31,6 +31,8 @@ public class EffectPageViewModel: NSObject {
     let GP_MIN_FRAME_SCALE: CGFloat = 0.1
     let GP_MAX_FRAME_SCALE: CGFloat = 5
     
+    let stickerAPI: StickerAPIService? = GPImageEditorConfigs.dependencyManager?.getService()
+    
     init(image: UIImage) {
         sourceImage = image.fixedOrientation()
         thumbImage = sourceImage.thumbImage()
@@ -50,6 +52,17 @@ public class EffectPageViewModel: NSObject {
     
     deinit {
        disposeBag = nil
+    }
+    
+    public func react() {
+        getFrame()
+    }
+    
+    func getFrame() {
+        stickerAPI?.getFrame()
+            .subscribe(onSuccess: { response in
+                print(response.frames)
+            }, onError: nil) => disposeBag
     }
     
     public func applyImageChange() {

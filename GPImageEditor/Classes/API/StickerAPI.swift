@@ -9,8 +9,8 @@ import Foundation
 import Moya
 
 enum StickerAPI {
-    
     case getStickerList(page: Int)
+    case getFrame(fromCache: Bool)
 }
 
 extension StickerAPI: TargetType {
@@ -24,12 +24,14 @@ extension StickerAPI: TargetType {
         switch self {
         case .getStickerList:
             return GPImageEditorConfigs.stickersAPIPath
+        case .getFrame:
+            return GPImageEditorConfigs.frameAPIPath
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getStickerList:
+        case .getStickerList, .getFrame:
             return .get
         }
     }
@@ -45,6 +47,8 @@ extension StickerAPI: TargetType {
                 else { return Data() }
             let contentData = try? Data(contentsOf: url)
             return contentData ?? Data()
+        case .getFrame:
+            return Data()
         }
     }
     
@@ -56,6 +60,8 @@ extension StickerAPI: TargetType {
                 "page" : page
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
+        case .getFrame:
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         }
     }
 }
@@ -65,6 +71,8 @@ extension StickerAPI: MoyaCacheable {
         switch self {
         case .getStickerList:
             return .returnCacheDataElseLoad
+        case .getFrame(let fromCache):
+            return fromCache ? .returnCacheDataElseLoad : .reloadIgnoringLocalCacheData
         }
     }
 }

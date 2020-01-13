@@ -40,4 +40,10 @@ class StickerAPIService {
             .request(.getStickerList(page: page))
             .mapObject(StickerResponse.self)        
     }
+    
+    public func getFrame(fromCache: Bool = true) -> Single<FrameResponse> {
+        return stickerProvider.rx
+            .request(.getFrame(fromCache: fromCache))
+            .mapObject(FrameResponse.self)
+    }
 }

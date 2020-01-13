@@ -68,6 +68,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         collectionView.isHidden = true
         bottomGradient.isHidden = true
         bindViewAndViewModel()
+        viewModel?.react()
     }
     
     func setupStoryView() {
