@@ -50,7 +50,7 @@ public class EditPage: UIViewController {
         viewModel.rxTemperature <~> tempSlider.rx.value => disposeBag
         
         viewModel.rxSelectedEditing
-            .subscribeOn(MainScheduler.instance)
+            .observeOn(Scheduler.shared.mainScheduler)
             .subscribe(onNext: { [weak self] (type) in
                 guard let self = self else { return }
                 
@@ -63,7 +63,7 @@ public class EditPage: UIViewController {
         }) => disposeBag
         
         viewModel.rxOutputImage
-            .subscribeOn(MainScheduler.instance)
+            .observeOn(Scheduler.shared.mainScheduler)
             .subscribe(onNext: { [weak self] (image) in
                 guard let self = self else { return }
                 guard let image = image else { return }
