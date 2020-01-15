@@ -32,12 +32,18 @@ class StickerResponse: Model {
     }
 }
 
-class StickerAPIService {
+public class StickerAPIService {
     private let stickerProvider = MoyaProvider<StickerAPI>(plugins: [MoyaCacheablePlugin()])
     
     func getStickerList(page: Int) -> Single<StickerResponse> {
         return stickerProvider.rx
             .request(.getStickerList(page: page))
             .mapObject(StickerResponse.self)        
+    }
+    
+    public func getFrame(fromCache: Bool = true) -> Single<FrameResponse> {
+        return stickerProvider.rx
+            .request(.getFrame(fromCache: fromCache))
+            .mapObject(FrameResponse.self)
     }
 }

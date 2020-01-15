@@ -68,6 +68,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         collectionView.isHidden = true
         bottomGradient.isHidden = true
         bindViewAndViewModel()
+        viewModel?.react()
     }
     
     func setupStoryView() {
@@ -110,6 +111,11 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
                 let imageSize = viewModel.maxImageSizeForEditing()
                 self.imageWidth.constant = size?.width ?? imageSize.width
                 self.imageHeight.constant = size?.height ?? imageSize.height
+            }) => disposeBag
+        viewModel.rxListItem
+            .observeOn(Scheduler.shared.mainScheduler)
+            .subscribe(onNext: { [weak self] _ in
+                self?.collectionView.reloadData()
             }) => disposeBag
     }
     
@@ -407,18 +413,18 @@ extension EffectPage: GPStickerPageDelegate {
 
 extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let viewModel = viewModel else { return 0 }
-        return viewModel.items.count
+        guard let listItem = viewModel?.rxListItem.value else { return 0 }
+        return listItem.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellName, for: indexPath) as! EffectCell
-        cell.bind(model: viewModel?.items[indexPath.row], viewModel: viewModel)
+        cell.bind(model: viewModel?.getImageFilter(indexPath.row), viewModel: viewModel)
         return cell
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let filter = viewModel?.items[indexPath.row] else { return }
+        guard let filter = viewModel?.getImageFilter(indexPath.row) else { return }
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         viewModel?.rxSelectedFilter.accept(filter)
         viewModel?.rxImageCenter.accept(stickerLayer.center)
@@ -437,11 +443,16 @@ extension EffectPage: UICollectionViewDelegate, UICollectionViewDataSource {
     
     public func didSelectGestureFilter(filter: GPImageFilter) {
         imageView.image = viewModel?.sourceImage
-        if let frame = filter.frame {
-            let imageViewSize = frame.calcImageSize(toFitSize: stickerLayer.frame.size)
-            frameWidth.constant = imageViewSize.width
-            frameHeight.constant = imageViewSize.height
-            frameImageView.image = frame
-        }
+        filter.frameImageObserve()
+            .observeOn(Scheduler.shared.mainScheduler)
+            .subscribe(onNext: { [weak self] frameImage in
+                guard let self = self else { return }
+                if let imageViewSize = frameImage?
+                    .calcImageSize(toFitSize: self.stickerLayer.frame.size) {
+                    self.frameWidth.constant = imageViewSize.width
+                    self.frameHeight.constant = imageViewSize.height
+                    self.frameImageView.image = frameImage
+                }
+            }) => disposeBag
     }
 }
