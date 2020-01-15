@@ -11,7 +11,7 @@ import Moya
 import DTMvvm
 import ObjectMapper
 
-class FrameModel: Model {
+public class FrameModel: Model {
     var id: String = ""
     var title: String = ""
     var smallThumb: String = ""
@@ -26,7 +26,7 @@ class FrameModel: Model {
         self.init(JSON: [String: Any]())!
     }
     
-    override func mapping(map: Map) {
+    override public func mapping(map: Map) {
         id <- map["id"]
         title <- map["title"]
         smallThumb <- map["media.small"]

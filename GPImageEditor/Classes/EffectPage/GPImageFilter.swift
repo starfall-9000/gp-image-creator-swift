@@ -11,6 +11,8 @@ import CoreImage
 import UIKit
 import RxCocoa
 import RxSwift
+import DTMvvm
+import Alamofire
 
 public typealias FilterApplierType = ((_ image: CIImage) -> CIImage?)
 
@@ -19,9 +21,10 @@ public class GPImageFilter: NSObject {
     var name = ""
     var applier: FilterApplierType?
     var thumbImage: UIImage?
-    var frame: UIImage? = nil
+    var frameImage: UIImage? = nil
     var allowGesture: Bool = false
     var defaultForegroundSize: CGSize? = nil
+    var frameModel: FrameModel? = nil
     
     public init(name: String, coreImageFilterName: String) {
         super.init()
@@ -35,12 +38,19 @@ public class GPImageFilter: NSObject {
         self.applier = applier
     }
     
+    public init(frame: FrameModel) {
+        super.init()
+        self.name = frame.title
+        self.allowGesture = true
+        self.frameModel = frame
+        self.applier = applyFrame
+    }
+    
     public static func initWithType(_ type: GPImageFilterType) -> GPImageFilter {
         return type.getImageFilter()
     }
     
     func thumbImageObserver(from image: UIImage?) -> Observable<UIImage?> {
-        guard let image = image else { return Observable.just(nil) }
         if thumbImage != nil {
             return Observable.just(thumbImage)
         }
@@ -56,16 +66,59 @@ public class GPImageFilter: NSObject {
             let image = GPImageFilter.comicFrameImage()
             return Observable.just(image?.thumbImage())
         }
-        
+        if frameModel != nil {
+            return thumbModelFrameImage(url: frameModel?.smallThumb ?? "")
+        } else {
+            return thumbFilterImage(from: image)
+        }
+    }
+    
+    func thumbFilterImage(from image: UIImage?) -> Observable<UIImage?> {
+        guard let image = image else { return Observable.just(nil) }
         return Observable.create({ [weak self] (observer) -> Disposable in
             guard let self = self else { return Disposables.create() }
-            
             self.thumbImage = self.applyFilter(image: image)
             observer.onNext(self.thumbImage)
             observer.onCompleted()
             return Disposables.create()
         })
     }
+    
+    func thumbModelFrameImage(url: String,
+                              target: String = "thumbImage") -> Observable<UIImage?> {
+        return Observable.create({ observer -> Disposable in
+            if let url = URL(string: url) {
+                Alamofire.request(url)
+                    .responseImage(completionHandler: { [weak self] response in
+                        if target == "thumbImage" {
+                            self?.thumbImage = response.value
+                        } else {
+                            self?.frameImage = response.value
+                        }
+                        observer.onNext(response.value)
+                        observer.onCompleted()
+                    })
+            }
+            return Disposables.create()
+        })
+    }
+    
+    func frameImageObserve() -> Observable<UIImage?> {
+        if frameImage != nil {
+            return Observable.just(frameImage)
+        }
+        if frameModel != nil {
+            return thumbModelFrameImage(url: frameModel?.largeThumb ?? "",
+                                        target: "frameImage")
+        }
+        return Observable.just(nil)
+    }
+    
+    func applyFrame(foregroundImage: CIImage) -> CIImage? {
+        return GPImageFilter.createEndImage(frameImage,
+                                            foregroundImage: foregroundImage)
+    }
+    
     
     func applyFilter(image: UIImage) -> UIImage? {
         guard let ciImage = image.toCIImage() else { return image }

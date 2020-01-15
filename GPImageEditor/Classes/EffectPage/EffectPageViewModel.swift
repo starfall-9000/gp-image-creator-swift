@@ -14,6 +14,7 @@ import CoreImage
 
 public class EffectPageViewModel: NSObject {
     
+    let rxListItem = BehaviorRelay<[GPImageFilter]> (value: [])
     let kBottomMenuHeight = 60 as CGFloat
     let iPhoneXBottomBarHeight = 34 as CGFloat
     var sourceImage: UIImage
@@ -43,7 +44,6 @@ public class EffectPageViewModel: NSObject {
             sourceImage = image
             thumbImage = sourceImage.thumbImage()
         }
-        rxSelectedFilter.accept(items.first)
         rxImageScale.subscribe(onNext: { [weak self] (_) in
             guard let self = self else { return }
             self.applyImageChange()
@@ -55,14 +55,24 @@ public class EffectPageViewModel: NSObject {
     }
     
     public func react() {
+        let listItem = getListDefaultItem()
+        rxListItem.accept(listItem)
+        rxSelectedFilter.accept(listItem.first)
         getFrame()
     }
     
     func getFrame() {
         stickerAPI?.getFrame()
-            .subscribe(onSuccess: { response in
-                print(response.frames)
+            .subscribe(onSuccess: { [weak self] response in
+                self?.makeListItem(response.frames)
             }, onError: nil) => disposeBag
+    }
+    
+    func makeListItem(_ frames: [FrameModel]) {
+        var listItem = getListDefaultItem()
+        let newFrames = frames.map({ return GPImageFilter(frame: $0) })
+        listItem.insert(contentsOf: newFrames, at: 1)
+        rxListItem.accept(listItem)
     }
     
     public func applyImageChange() {
@@ -86,24 +96,35 @@ public class EffectPageViewModel: NSObject {
         return CGSize(width: UIScreen.main.bounds.width, height: height)
     }
     
-    public var items: [GPImageFilter] = [
-        GPImageFilter(name: "Ảnh gốc", applier: nil),
-        GPImageFilter.initWithType(.matbiec1),
-        GPImageFilter.initWithType(.matbiec2),
-        GPImageFilter.initWithType(.matbiec3),
-        GPImageFilter.initWithType(.matbiec4),
-        GPImageFilter.initWithType(.matbiec5),
-        GPImageFilter(name: "Giá lạnh", applier: GPImageFilter.clarendonFilter),
-        GPImageFilter(name: "Trầm lắng", coreImageFilterName: "CIPhotoEffectProcess"),
-        GPImageFilter(name: "Sôi động", coreImageFilterName: "CIPhotoEffectTransfer"),
-        GPImageFilter(name: "Hà Nội", coreImageFilterName: "CIPhotoEffectChrome"),
-        GPImageFilter(name: "Huế", coreImageFilterName: "CIPhotoEffectInstant"),
-        GPImageFilter(name: "Hội An", coreImageFilterName: "CIPhotoEffectMono"),
-        GPImageFilter(name: "Sài Gòn", coreImageFilterName: "CILinearToSRGBToneCurve"),
-        GPImageFilter(name: "Party", applier: GPImageFilter.partyFrame),
-        GPImageFilter(name: "Petro", applier: GPImageFilter.petroFrame),
-        GPImageFilter(name: "Comic", applier: GPImageFilter.comicFrame),
-    ]
+    func getImageFilter(_ index: Int) -> GPImageFilter? {
+        let listItem = rxListItem.value
+        if index < listItem.count {
+            return listItem[index]
+        } else {
+            return nil
+        }
+    }
+    
+    func getListDefaultItem() -> [GPImageFilter] {
+        return [
+            GPImageFilter(name: "Ảnh gốc", applier: nil),
+            GPImageFilter.initWithType(.matbiec1),
+            GPImageFilter.initWithType(.matbiec2),
+            GPImageFilter.initWithType(.matbiec3),
+            GPImageFilter.initWithType(.matbiec4),
+            GPImageFilter.initWithType(.matbiec5),
+            GPImageFilter(name: "Giá lạnh", applier: GPImageFilter.clarendonFilter),
+            GPImageFilter(name: "Trầm lắng", coreImageFilterName: "CIPhotoEffectProcess"),
+            GPImageFilter(name: "Sôi động", coreImageFilterName: "CIPhotoEffectTransfer"),
+            GPImageFilter(name: "Hà Nội", coreImageFilterName: "CIPhotoEffectChrome"),
+            GPImageFilter(name: "Huế", coreImageFilterName: "CIPhotoEffectInstant"),
+            GPImageFilter(name: "Hội An", coreImageFilterName: "CIPhotoEffectMono"),
+            GPImageFilter(name: "Sài Gòn", coreImageFilterName: "CILinearToSRGBToneCurve"),
+            GPImageFilter(name: "Party", applier: GPImageFilter.partyFrame),
+            GPImageFilter(name: "Petro", applier: GPImageFilter.petroFrame),
+            GPImageFilter(name: "Comic", applier: GPImageFilter.comicFrame),
+        ]
+    }
     
     func handleMergeGestureFrame(filterFrame: CGRect) -> UIImage? {
         guard let filter = rxSelectedFilter.value, filter.allowGesture

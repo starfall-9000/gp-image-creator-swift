@@ -36,7 +36,7 @@ public enum GPImageFilterType {
             break
         }
         filter.allowGesture = allowGesture
-        filter.frame = getFrame()
+        filter.frameImage = getFrame()
         filter.thumbImage = GPImageEditorBundle.imageFromBundle(imageName: getThumbIcon())
         return filter
     }

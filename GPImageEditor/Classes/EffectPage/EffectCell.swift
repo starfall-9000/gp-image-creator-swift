@@ -27,7 +27,7 @@ public class EffectCell: UICollectionViewCell {
     func bind(model: GPImageFilter?, viewModel: EffectPageViewModel?) {
         self.model = model
         self.viewModel = viewModel
-        
+        disposeBag = DisposeBag()
         setup()
         bindViewModel()
     }
