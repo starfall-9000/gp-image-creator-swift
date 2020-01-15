@@ -32,7 +32,7 @@ class StickerResponse: Model {
     }
 }
 
-class StickerAPIService {
+public class StickerAPIService {
     private let stickerProvider = MoyaProvider<StickerAPI>(plugins: [MoyaCacheablePlugin()])
     
     func getStickerList(page: Int) -> Single<StickerResponse> {

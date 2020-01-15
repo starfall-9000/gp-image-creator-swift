@@ -39,7 +39,7 @@ public class FrameModel: Model {
     }
 }
 
-class FrameResponse: Model {
+public class FrameResponse: Model {
     var code: ResponseCode = .success
     var message: String = ""
     var frames: [FrameModel] = []
@@ -48,7 +48,7 @@ class FrameResponse: Model {
         self.init(JSON: [String: Any]())!
     }
     
-    override func mapping(map: Map) {
+    override public func mapping(map: Map) {
         code <- (map["code"], EnumTransform<ResponseCode>())
         message <- map["message"]
         frames <- map["data"]
