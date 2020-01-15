@@ -12,15 +12,15 @@ import DTMvvm
 import ObjectMapper
 
 public class FrameModel: Model {
-    var id: String = ""
-    var title: String = ""
-    var smallThumb: String = ""
-    var mediumThumb: String = ""
-    var largeThumb: String = ""
-    var status: Int = 1
-    var desc: String = ""
-    var createAt: Int64 = 0
-    var updateAt: Int64 = 0
+    public var id: String = ""
+    public var title: String = ""
+    public var smallThumb: String = ""
+    public var mediumThumb: String = ""
+    public var largeThumb: String = ""
+    public var status: Int = 1
+    public var desc: String = ""
+    public var createAt: Int64 = 0
+    public var updateAt: Int64 = 0
     
     convenience init() {
         self.init(JSON: [String: Any]())!
@@ -41,8 +41,8 @@ public class FrameModel: Model {
 
 public class FrameResponse: Model {
     var code: ResponseCode = .success
-    var message: String = ""
-    var frames: [FrameModel] = []
+    public var message: String = ""
+    public var frames: [FrameModel] = []
     
     convenience init() {
         self.init(JSON: [String: Any]())!
