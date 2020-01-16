@@ -54,18 +54,6 @@ public class GPImageFilter: NSObject {
         if thumbImage != nil {
             return Observable.just(thumbImage)
         }
-        if name.lowercased() == "party" {
-            let image = GPImageFilter.partyFrameImage()
-            return Observable.just(image?.thumbImage())
-        }
-        if name.lowercased() == "petro" {
-            let image = GPImageFilter.petroFrameImage()
-            return Observable.just(image?.thumbImage())
-        }
-        if name.lowercased() == "comic" {
-            let image = GPImageFilter.comicFrameImage()
-            return Observable.just(image?.thumbImage())
-        }
         if frameModel != nil {
             return thumbModelFrameImage(url: frameModel?.smallThumb ?? "")
         } else {
@@ -118,7 +106,6 @@ public class GPImageFilter: NSObject {
         return GPImageFilter.createEndImage(frameImage,
                                             foregroundImage: foregroundImage)
     }
-    
     
     func applyFilter(image: UIImage) -> UIImage? {
         guard let ciImage = image.toCIImage() else { return image }
@@ -236,69 +223,6 @@ public class GPImageFilter: NSObject {
         result = softLightImage.applyingFilter("CIOverlayBlendMode",
                                                parameters: ["inputBackgroundImage": result])
         return result
-    }
-    
-    private static func partyFrameImage() -> UIImage? {
-        return GPImageEditorBundle.imageFromBundle(imageName: "Frame 1")
-    }
-    
-    private static func petroFrameImage() -> UIImage? {
-        return GPImageEditorBundle.imageFromBundle(imageName: "Frame 2")
-    }
-    
-    private static func comicFrameImage() -> UIImage? {
-        return GPImageEditorBundle.imageFromBundle(imageName: "Frame 3")
-    }
-    
-    public static func matbiec1FrameImage() -> UIImage? {
-        return GPImageEditorBundle.imageFromBundle(imageName: "matbiec_filter_1")
-    }
-    
-    public static func matbiec2FrameImage() -> UIImage? {
-        return GPImageEditorBundle.imageFromBundle(imageName: "matbiec_filter_2")
-    }
-    
-    public static func matbiec3FrameImage() -> UIImage? {
-        return GPImageEditorBundle.imageFromBundle(imageName: "matbiec_filter_3")
-    }
-    
-    public static func matbiec4FrameImage() -> UIImage? {
-        return GPImageEditorBundle.imageFromBundle(imageName: "matbiec_filter_4")
-    }
-    
-    public static func partyFrame(foregroundImage: CIImage) -> CIImage? {
-        let frame = GPImageFilter.partyFrameImage()
-        return createEndImage(frame, foregroundImage: foregroundImage)
-    }
-    
-    public static func petroFrame(foregroundImage: CIImage) -> CIImage? {
-        let frame = GPImageFilter.petroFrameImage()
-        return createEndImage(frame, foregroundImage: foregroundImage)
-    }
-    
-    public static func comicFrame(foregroundImage: CIImage) -> CIImage? {
-        let frame = GPImageFilter.comicFrameImage()
-        return createEndImage(frame, foregroundImage: foregroundImage)
-    }
-    
-    public static func matbiec1Frame(foregroundImage: CIImage) -> CIImage? {
-        let frame = GPImageFilter.matbiec1FrameImage()
-        return createEndImage(frame, foregroundImage: foregroundImage)
-    }
-    
-    public static func matbiec2Frame(foregroundImage: CIImage) -> CIImage? {
-        let frame = GPImageFilter.matbiec2FrameImage()
-        return createEndImage(frame, foregroundImage: foregroundImage)
-    }
-    
-    public static func matbiec3Frame(foregroundImage: CIImage) -> CIImage? {
-        let frame = GPImageFilter.matbiec3FrameImage()
-        return createEndImage(frame, foregroundImage: foregroundImage)
-    }
-    
-    public static func matbiec4Frame(foregroundImage: CIImage) -> CIImage? {
-        let frame = GPImageFilter.matbiec4FrameImage()
-        return createEndImage(frame, foregroundImage: foregroundImage)
     }
     
     public static func createEndImage(_ frame: UIImage?,

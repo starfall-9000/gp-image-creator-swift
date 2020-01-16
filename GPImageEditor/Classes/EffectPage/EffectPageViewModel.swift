@@ -120,9 +120,9 @@ public class EffectPageViewModel: NSObject {
             GPImageFilter(name: "Huế", coreImageFilterName: "CIPhotoEffectInstant"),
             GPImageFilter(name: "Hội An", coreImageFilterName: "CIPhotoEffectMono"),
             GPImageFilter(name: "Sài Gòn", coreImageFilterName: "CILinearToSRGBToneCurve"),
-            GPImageFilter(name: "Party", applier: GPImageFilter.partyFrame),
-            GPImageFilter(name: "Petro", applier: GPImageFilter.petroFrame),
-            GPImageFilter(name: "Comic", applier: GPImageFilter.comicFrame),
+            GPImageFilter.initWithType(.party),
+            GPImageFilter.initWithType(.petro),
+            GPImageFilter.initWithType(.comic)
         ]
     }
     
