@@ -25,7 +25,13 @@ extension UIImage {
     }
     
     func toCIImage() -> CIImage? {
-        return self.ciImage ?? CIImage(cgImage: self.cgImage!)
+        if let ciImage = ciImage {
+            return ciImage
+        } else if let cgImage = cgImage {
+            return CIImage(cgImage: cgImage)
+        } else {
+            return nil
+        }
     }
     
     public func fixedOrientation() -> UIImage {
@@ -170,9 +176,12 @@ internal extension CIImage {
          return UIImage(ciImage: self)
          */
         let context: CIContext = CIContext.init(options: nil)
-        let cgImage: CGImage = context.createCGImage(self, from: self.extent)!
-        let image: UIImage = UIImage(cgImage: cgImage)
-        return image
+        if let cgImage: CGImage = context.createCGImage(self, from: self.extent) {
+            let image: UIImage = UIImage(cgImage: cgImage)
+            return image
+        } else {
+            return UIImage(ciImage: self)
+        }
     }
     
     func toCGImage() -> CGImage? {
