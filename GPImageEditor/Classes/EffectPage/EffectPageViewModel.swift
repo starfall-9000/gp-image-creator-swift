@@ -121,11 +121,13 @@ public class EffectPageViewModel: NSObject {
         ]
     }
     
-    func handleMergeGestureFrame(filterFrame: CGRect) -> UIImage? {
+    func handleMergeGestureFrame(filterFrame: CGRect,
+                                 targetSize: CGSize) -> UIImage? {
         guard let filter = rxSelectedFilter.value, filter.allowGesture
         else { return sourceImage }
         let cropImage
             = sourceImage.cropTransformImage(maskFrame: filterFrame,
+                                             targetSize: targetSize,
                                              transform: rxImageTransform.value)
         return filter.applyFilter(image: cropImage)
     }

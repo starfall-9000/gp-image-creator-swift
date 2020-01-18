@@ -44,6 +44,7 @@ public extension UIImage {
     
     // crop image with transform
     func cropTransformImage(maskFrame: CGRect,
+                            targetSize: CGSize,
                             transform: CGAffineTransform,
                             isFlipped: Bool = false) -> UIImage {
         guard
@@ -61,7 +62,8 @@ public extension UIImage {
         guard
             let outputImage = ciFilter.outputImage,
             let imageRef = context.createCGImage(outputImage, from: outputImage.extent),
-            let result = UIImage(cgImage: imageRef).cropImage(in: maskFrame)
+            let result = UIImage(cgImage: imageRef).cropImage(in: maskFrame,
+                                                              targetSize: targetSize)
             else { return self }
         return result
     }

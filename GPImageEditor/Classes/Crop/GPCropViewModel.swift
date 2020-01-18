@@ -25,10 +25,11 @@ public class GPCropViewModel: ViewModel<UIImage> {
     
     var finishedBlock: ((UIImage) -> Void)?
     
-    lazy var doneAction: Action<CGRect, Void> = {
-        return Action(workFactory: { [weak self] maskFrame in
+    lazy var doneAction: Action<(CGRect, CGSize), Void> = {
+        return Action(workFactory: { [weak self] (maskFrame, targetSize) in
             guard let self = self else { return .empty() }
-            return .just(self.handleDone(maskFrame: maskFrame))
+            return .just(self.handleDone(maskFrame: maskFrame,
+                                         targetSize: targetSize))
         })
     }()
     
@@ -71,9 +72,12 @@ public class GPCropViewModel: ViewModel<UIImage> {
             }) => disposeBag
     }
     
-    private func handleDone(maskFrame: CGRect) {
+    private func handleDone(maskFrame: CGRect, targetSize: CGSize) {
         guard let image = model else { return }
-        let result = image.cropTransformImage(maskFrame: maskFrame, transform: rxImageTransform.value, isFlipped: rxIsFlippedImage.value)
+        let result = image.cropTransformImage(maskFrame: maskFrame,
+                                              targetSize: targetSize,
+                                              transform: rxImageTransform.value,
+                                              isFlipped: rxIsFlippedImage.value)
         model = result
         finishedBlock?(result)
     }

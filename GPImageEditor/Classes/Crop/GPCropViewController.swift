@@ -224,7 +224,9 @@ class GPCropViewController: Page<GPCropViewModel> {
         guard let viewModel = viewModel else { return }
         let maskFrame = imageView.calcMaskInImage(imageMask: imageMask,
                                                   imageScale: viewModel.rxImageScale.value)
-        viewModel.doneAction.execute(maskFrame)
+        let targetSize = CGSize(width: imageMask.width * 3,
+                                height: imageMask.height * 3)
+        viewModel.doneAction.execute((maskFrame, targetSize))
         dismissScreen()
     }
     

@@ -304,7 +304,11 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             let filterFrame
                 = imageView.calcMaskInImage(imageMask: frameImageView,
                                             imageScale: viewModel.rxImageScale.value)
-            imageView.image = viewModel.handleMergeGestureFrame(filterFrame: filterFrame)
+            let targetSize = CGSize(width: frameImageView.width * 3,
+                                    height: frameImageView.height * 3)
+            imageView.image =
+                viewModel.handleMergeGestureFrame(filterFrame: filterFrame,
+                                                  targetSize: targetSize)
             viewModel.resetImageTransform()
             viewModel.rxImageCenter.accept(frameImageView.center)
         }

@@ -140,11 +140,15 @@ public extension UIImage {
         return nil
     }
     
-    func cropImage(in rect: CGRect) -> UIImage? {
-        let origin = CGPoint(x: -rect.origin.x, y: -rect.origin.y)
+    func cropImage(in rect: CGRect, targetSize: CGSize) -> UIImage? {
+        let scale = rect.size.width / targetSize.width
+        let imgRect = CGRect(x: -rect.minX / scale,
+                             y: -rect.minY / scale,
+                             width: self.size.width / scale,
+                             height: self.size.height / scale)
         var img: UIImage? = nil
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, self.scale)
-        self.draw(at: origin)
+        UIGraphicsBeginImageContextWithOptions(targetSize, false, self.scale)
+        self.draw(in: imgRect)
         img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return img
