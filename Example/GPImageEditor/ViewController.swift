@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     func moveToEditor(with image: UIImage?) {
         guard let image = image else { return }
         
-        GPImageEditor.present(from: self, image: image, animated: true, finished: { [weak self] (image) in
+        _ = GPImageEditor.present(from: self, image: image, animated: true, finished: { [weak self] (image) in
             self?.imageView.image = image
             }, completion: nil)
     }
