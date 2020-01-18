@@ -29,7 +29,7 @@ public class EffectPageViewModel: NSObject {
     let rxImageTransform = BehaviorRelay<CGAffineTransform> (value: .identity)
     var disposeBag: DisposeBag? = DisposeBag()
     
-    let GP_MIN_FRAME_SCALE: CGFloat = 0.1
+    let GP_MIN_FRAME_SCALE: CGFloat = 0.5
     let GP_MAX_FRAME_SCALE: CGFloat = 5
     
     let stickerAPI: StickerAPIService? = GPImageEditorConfigs.dependencyManager?.getService()
