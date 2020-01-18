@@ -25,7 +25,13 @@ extension UIImage {
     }
     
     func toCIImage() -> CIImage? {
-        return self.ciImage ?? CIImage(cgImage: self.cgImage!)
+        if let ciImage = ciImage {
+            return ciImage
+        } else if let cgImage = cgImage {
+            return CIImage(cgImage: cgImage)
+        } else {
+            return nil
+        }
     }
     
     public func fixedOrientation() -> UIImage {
@@ -129,11 +135,17 @@ extension UIImage {
         guard let frame = frame else {
             return self
         }
-        let frameDrawSize = CGSize(width: size.width, height: size.width * frame.size.height / frame.size.width)
-        let frameDrawRect = CGRect(x: 0, y: size.height - frameDrawSize.height, width: size.width, height: frameDrawSize.height)
-        let imageRect: CGRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        let scale = size.width < frame.size.width && size.width != 0
+            ? ceil(frame.size.width / size.width) : 1
+        let frameDrawSize = CGSize(width: size.width * scale,
+                                   height: size.width * frame.size.height * scale / frame.size.width)
+        let frameDrawRect = CGRect(x: 0, y: size.height * scale - frameDrawSize.height,
+                                   width: size.width * scale,
+                                   height: frameDrawSize.height)
+        let imageRect: CGRect = CGRect(x: 0, y: 0, width: size.width * scale,
+                                       height: size.height * scale)
         
-        UIGraphicsBeginImageContext(size)
+        UIGraphicsBeginImageContext(imageRect.size)
         draw(in: imageRect)
         frame.draw(in: frameDrawRect)
         let endImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -170,9 +182,12 @@ internal extension CIImage {
          return UIImage(ciImage: self)
          */
         let context: CIContext = CIContext.init(options: nil)
-        let cgImage: CGImage = context.createCGImage(self, from: self.extent)!
-        let image: UIImage = UIImage(cgImage: cgImage)
-        return image
+        if let cgImage: CGImage = context.createCGImage(self, from: self.extent) {
+            let image: UIImage = UIImage(cgImage: cgImage)
+            return image
+        } else {
+            return UIImage(ciImage: self)
+        }
     }
     
     func toCGImage() -> CGImage? {
