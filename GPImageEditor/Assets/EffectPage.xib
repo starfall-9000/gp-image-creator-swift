@@ -180,7 +180,7 @@
                             </connections>
                         </button>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFt-0o-xjI">
-                            <rect key="frame" x="16" y="0.0" width="70" height="59.5"/>
+                            <rect key="frame" x="16" y="0.0" width="70" height="61.5"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_editor_privacy.png" translatesAutoresizingMaskIntoConstraints="NO" id="ntz-n2-qLH">
                                     <rect key="frame" x="23" y="0.0" width="24" height="24"/>
@@ -189,17 +189,24 @@
                                         <constraint firstAttribute="height" constant="24" id="9VY-GQ-7j0"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quyền riêng tư" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouT-KS-KiJ">
-                                    <rect key="frame" x="0.0" y="28" width="70" height="31.5"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouT-KS-KiJ">
+                                    <rect key="frame" x="0.0" y="28" width="70" height="33.5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="70" id="Whw-hx-XEI"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <attributedString key="attributedText">
+                                        <fragment content="Quyền riêng tư">
+                                            <attributes>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="NSFont" size="13" name=".AppleSystemUIFont"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="2" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDl-lk-DgF">
-                                    <rect key="frame" x="0.0" y="0.0" width="70" height="59.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="70" height="61.5"/>
                                     <connections>
                                         <action selector="privacyAction" destination="-1" eventType="touchUpInside" id="rgk-28-hvA"/>
                                     </connections>
