@@ -26,6 +26,7 @@ public class EffectPageViewModel: NSObject {
     
     let rxImageCenter = BehaviorRelay<CGPoint> (value: .zero)
     let rxImageScale = BehaviorRelay<CGFloat> (value: 1)
+    let rxImageRotateAngle = BehaviorRelay<CGFloat> (value: 0)
     let rxImageTransform = BehaviorRelay<CGAffineTransform> (value: .identity)
     var disposeBag: DisposeBag? = DisposeBag()
     
@@ -44,10 +45,12 @@ public class EffectPageViewModel: NSObject {
             sourceImage = image
             thumbImage = sourceImage.thumbImage()
         }
-        rxImageScale.subscribe(onNext: { [weak self] (_) in
-            guard let self = self else { return }
-            self.applyImageChange()
-        }) => disposeBag
+        Observable
+            .combineLatest(rxImageScale, rxImageRotateAngle)
+            .subscribe(onNext: { [weak self] (_) in
+                guard let self = self else { return }
+                self.applyImageChange()
+            }) => disposeBag
     }
     
     deinit {
@@ -77,12 +80,16 @@ public class EffectPageViewModel: NSObject {
     
     public func applyImageChange() {
         let imageScale = rxImageScale.value
-        let transform = CGAffineTransform(scaleX: imageScale, y: imageScale)
+        let imageRotateAngle = rxImageRotateAngle.value
+        let transform
+            = CGAffineTransform(scaleX: imageScale, y: imageScale)
+                .rotated(by: imageRotateAngle)
         rxImageTransform.accept(transform)
     }
     
     public func resetImageTransform() {
         rxImageScale.accept(1)
+        rxImageRotateAngle.accept(0)
     }
     
     func maxImageSizeForEditing() -> CGSize {
@@ -166,6 +173,11 @@ public class EffectPageViewModel: NSObject {
         currentCenter = CGPoint(x: currentCenter.x + translation.x,
                                 y: currentCenter.y + translation.y)
         rxImageCenter.accept(currentCenter)
+    }
+    
+    func handleRotate(_ angle: CGFloat) {
+        guard (rxSelectedFilter.value?.allowGesture ?? false) else { return }
+        rxImageRotateAngle.accept(angle)
     }
     
     func recordEditorCancel() {

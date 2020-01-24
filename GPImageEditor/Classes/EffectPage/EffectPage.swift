@@ -61,6 +61,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         imageView.image = viewModel?.sourceImage
         sourceImageView.image = viewModel?.sourceImage
         doneButton.cornerRadius = 18
+        setupImageView()
         setupStoryView()
         setupCollectionView()
         setupTutorial()
@@ -69,6 +70,14 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         bottomGradient.isHidden = true
         bindViewAndViewModel()
         viewModel?.react()
+    }
+    
+    func setupImageView() {
+        if let imageSize = viewModel?.maxImageSizeForEditing() {
+            imageWidth.constant = imageSize.width
+            imageHeight.constant = imageSize.height
+            view.layoutIfNeeded()
+        }
     }
     
     func setupStoryView() {
@@ -108,7 +117,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             .map({ return $0?.defaultForegroundSize })
             .subscribe(onNext: { [weak self] size in
                 guard let self = self else { return }
-                let imageSize = viewModel.maxImageSizeForEditing()
+                let imageSize = self.imageView.calcRectFitSize(imageScale: 1)
                 self.imageWidth.constant = size?.width ?? imageSize.width
                 self.imageHeight.constant = size?.height ?? imageSize.height
             }) => disposeBag
@@ -129,6 +138,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         stickerLayer.addGestureRecognizer(scaleGesture)
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanImage(_:)))
         stickerLayer.addGestureRecognizer(panGesture)
+        let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotateImage(_:)))
+        stickerLayer.addGestureRecognizer(rotateGesture)
     }
     
     @IBAction func backAction() {
@@ -191,6 +202,22 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         if sender.state == .began || sender.state == .changed {
             viewModel?.handlePan(sender.translation(in: sender.view?.superview))
             sender.setTranslation(.zero, in: sender.view?.superview)
+        }
+    }
+    
+    @objc func handleRotateImage(_ sender: UIRotationGestureRecognizer) {
+        var originalRotation = CGFloat()
+        switch sender.state {
+        case .began:
+            sender.rotation = viewModel?.rxImageRotateAngle.value ?? 0
+            originalRotation = sender.rotation
+            break
+        case .changed:
+            let newRotation = sender.rotation + originalRotation
+            viewModel?.handleRotate(newRotation)
+            break
+        default:
+            break
         }
     }
     
@@ -411,7 +438,7 @@ extension EffectPage: GPStickerPageDelegate {
     }
     
     public func stickerDidRotateBackground(_ sender: UIRotationGestureRecognizer) {
-        //
+        handleRotateImage(sender)
     }
 }
 
