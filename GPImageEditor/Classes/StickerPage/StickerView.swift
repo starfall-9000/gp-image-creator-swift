@@ -25,7 +25,7 @@ public class StickersLayerView: UIView {
     
     var offSet: CGPoint!
     var viewTransform: CGAffineTransform!
-    var viewSize: CGSize!
+    var viewSize: CGSize? = .zero
     var isDragging = false
     var isOverlap = false
     var lastRotation: CGFloat = 0
@@ -269,10 +269,12 @@ public class StickersLayerView: UIView {
             break
             
         case .changed:
-            stickerView.widthConstraint.constant = viewSize.width * scale
-            stickerView.heightConstraint.constant = viewSize.height * scale
-            stickerView.layoutIfNeeded()
-            layoutIfNeeded()
+            if let viewSize = viewSize {
+                stickerView.widthConstraint.constant = viewSize.width * scale
+                stickerView.heightConstraint.constant = viewSize.height * scale
+                stickerView.layoutIfNeeded()
+                layoutIfNeeded()
+            }
             break
             
         case .ended:
