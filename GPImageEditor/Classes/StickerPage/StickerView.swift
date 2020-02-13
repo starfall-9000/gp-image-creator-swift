@@ -366,6 +366,7 @@ public class StickerInfo {
         self.colorIndex = colorIndex
         self.alignmentIndex = alignmentIndex
         self.size = size
+        self.stickerId = stickerId
         self.scale = scale
         self.position = position
     }
