@@ -283,7 +283,8 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func stickerTapped() {
-        let stickerVC = StickerPickerPage.addSticker(toView: stickerLayer,
+        let stickerGroupType: StickerGroupType = fromStory ? .story : .imageCreator
+        let stickerVC = StickerPickerPage.addSticker(type: stickerGroupType, toView: stickerLayer,
                                                      completion: { [weak self] (sticker) in
             guard let self = self, let sticker = sticker else { return }
             self.viewModel?.stickerInfos.append(sticker.info)

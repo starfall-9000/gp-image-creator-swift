@@ -32,12 +32,24 @@ class StickerResponse: Model {
     }
 }
 
+class GroupStickerResponse: Model {
+    var code: ResponseCode = .success
+    var message: String = ""
+    var groups: [GroupStickerModel] = []
+    
+    override func mapping(map: Map) {
+        code <- (map["code"], EnumTransform<ResponseCode>())
+        message <- map["message"]
+        groups <- map["data"]
+    }
+}
+
 public class StickerAPIService {
     private let stickerProvider = MoyaProvider<StickerAPI>(plugins: [MoyaCacheablePlugin()])
     
-    func getStickerList(page: Int) -> Single<StickerResponse> {
+    func getStickerList(page: Int, packageId: String) -> Single<StickerResponse> {
         return stickerProvider.rx
-            .request(.getStickerList(page: page))
+            .request(.getStickerList(page: page, packageId: packageId))
             .mapObject(StickerResponse.self)        
     }
     
@@ -45,5 +57,11 @@ public class StickerAPIService {
         return stickerProvider.rx
             .request(.getFrame(fromCache: fromCache))
             .mapObject(FrameResponse.self)
+    }
+    
+    func getPackages(group: StickerGroupType) -> Single<GroupStickerResponse> {
+        return stickerProvider.rx
+            .request(.getPackagesInGroup(group))
+            .mapObject(GroupStickerResponse.self)
     }
 }

@@ -30,3 +30,15 @@ public class StickerModel: Model {
         localFileName <- map["filename"]
     }
 }
+
+class GroupStickerModel: Model {
+    var url: String = ""
+    var fileName: String = ""
+    var id: Int = 1
+    
+    override func mapping(map: Map) {
+        url <- map["url"]
+        fileName <- map["filename"]
+        id <- (map["id"])
+    }
+}
