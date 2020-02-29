@@ -12,6 +12,10 @@ import DTMvvm
 
 private let padding: CGFloat = 20
 
+private struct Constants {
+    static let DEFAULT_PACKAGE_ID = "1"
+}
+
 public class StickerListView: CollectionView<StickerListViewModel> {
     
     private var completion: ((UIImage?, CGSize, String) -> Void)? = nil
@@ -80,7 +84,6 @@ public class StickerListView: CollectionView<StickerListViewModel> {
 }
 
 extension StickerListView {
-    
     static func getInstance(completion: ((UIImage?, CGSize, String) -> Void)?) -> StickerListView {
         let vm = StickerListViewModel(model: nil)
         return StickerListView(viewModel: vm, completion: completion)
@@ -93,12 +96,18 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
     let rxCanLoadMore = BehaviorRelay<Bool>(value: true)
     let stickerService: StickerAPIService? = GPImageEditorConfigs.dependencyManager?.getService()
     var page: Int = 0
+    var packageIds: [String] = [Constants.DEFAULT_PACKAGE_ID]
     var tmpBag: DisposeBag?
+    var stickerGroupType: StickerGroupType = .imageCreator
+    
+    convenience init(stickerGroupType: StickerGroupType) {
+        self.init()
+        self.stickerGroupType = stickerGroupType
+    }
     
     override public func react() {
         rxLoading.accept(true)
-        
-        getStickers(page: 0)
+        getPackages()
     }
     
     func getStickers(page: Int) {
@@ -107,7 +116,8 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
         if page == 0 {
             itemsSource.reset([[]], animated: false)
         }
-        stickerService?.getStickerList(page: page)
+        
+        stickerService?.getStickerList(page: page, packageIds: self.packageIds)
             .subscribe(onSuccess: { [weak self] (response) in
                 guard let self = self else { return }
                 self.rxLoading.accept(false)
@@ -120,11 +130,32 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
                 else {
                     self.rxCanLoadMore.accept(false)
                 }
-                }, onError: { [weak self] (error) in
+            }, onError: { [weak self] (error) in
                     self?.rxLoading.accept(false)
                     self?.rxIsLoadingMore.accept(false)
                     self?.rxCanLoadMore.accept(false)
-            }) => bag
+        }) => bag
+    }
+    
+    func getPackages() {
+        stickerService?.getPackages(group: self.stickerGroupType)
+            .subscribe(onSuccess: { [weak self] (response) in
+                guard let self = self else { return }
+                self.rxLoading.accept(false)
+                if response.code == .success {
+                    let groupIds = response.groups.map { (group) -> String in
+                        return "\(group.id)"
+                    }
+                    let packageIds: [String] = !response.groups.isEmpty ? groupIds : [Constants.DEFAULT_PACKAGE_ID]
+                    self.packageIds = packageIds
+                    self.getStickers(page: 0)
+                }
+                else {
+                    self.rxCanLoadMore.accept(false)
+                }
+            }, onError: { [weak self] (error) in
+                    self?.rxLoading.accept(false)
+            }) => disposeBag
     }
     
     func loadMore() {

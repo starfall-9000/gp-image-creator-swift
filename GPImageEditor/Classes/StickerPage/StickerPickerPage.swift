@@ -95,7 +95,9 @@ public class StickerPickerPage: Page<StickerPickerViewModel> {
         view.addSubview(scrollView)
         scrollView.autoPinEdge(.top, to: .bottom, of: headerView)
         scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
-        stickerListView = StickerListView(viewModel: StickerListViewModel(), completion: { [weak self] (image, size, stickerId) in
+        
+        let stickerType = self.viewModel?.stickerGroupType ?? .imageCreator
+        stickerListView = StickerListView(viewModel: StickerListViewModel(stickerGroupType: stickerType), completion: { [weak self] (image, size, stickerId) in
             self?.finishedPickImage(image: image, size: size, stickerId: stickerId)
         })
         
@@ -127,12 +129,17 @@ public class StickerPickerPage: Page<StickerPickerViewModel> {
 }
 
 public class StickerPickerViewModel: ViewModel<Model> {
+    var stickerGroupType: StickerGroupType = .imageCreator
     
+    convenience init(type: StickerGroupType = .imageCreator) {
+        self.init(model: nil)
+        self.stickerGroupType = type
+    }
 }
 
 extension StickerPickerPage {
-    public static func addSticker(toView view: UIView, completion: ((StickerView?) -> Void)?) -> StickerPickerPage {
-        let vm = StickerPickerViewModel()
+    public static func addSticker(type: StickerGroupType = .imageCreator, toView view: UIView, completion: ((StickerView?) -> Void)?) -> StickerPickerPage {
+        let vm = StickerPickerViewModel(type: type)
         return StickerPickerPage(viewModel: vm, completion: { (image, size, stickerId) in
             if let image = image {
                 let info = StickerInfo(image: image, type: .sticker, size: size, stickerId: stickerId)

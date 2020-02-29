@@ -8,9 +8,15 @@
 import Foundation
 import Moya
 
+public enum StickerGroupType: String {
+    case imageCreator = "image_creator"
+    case story = "story"
+}
+
 enum StickerAPI {
-    case getStickerList(page: Int)
+    case getStickerList(page: Int, packageIds: [String])
     case getFrame(fromCache: Bool)
+    case getPackagesInGroup(StickerGroupType)
 }
 
 extension StickerAPI: TargetType {
@@ -26,12 +32,14 @@ extension StickerAPI: TargetType {
             return GPImageEditorConfigs.stickersAPIPath
         case .getFrame:
             return GPImageEditorConfigs.frameAPIPath
+        case .getPackagesInGroup:
+            return GPImageEditorConfigs.groupStickerPath
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getStickerList, .getFrame:
+        case .getStickerList, .getFrame, .getPackagesInGroup:
             return .get
         }
     }
@@ -42,7 +50,7 @@ extension StickerAPI: TargetType {
     
     var sampleData: Data {
         switch self {
-        case .getStickerList:
+        case .getStickerList, .getPackagesInGroup:
             guard let url = GPImageEditorBundle.getBundle().url(forResource: "stickers_api", withExtension: "json")
                 else { return Data() }
             let contentData = try? Data(contentsOf: url)
@@ -54,14 +62,17 @@ extension StickerAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .getStickerList(let page):
+        case .getStickerList(let page, let packageIds):
             let params: [String: Any] = [
-                "package_id": "1",
+                "package_ids": packageIds,
                 "page" : page
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
         case .getFrame:
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
+        case .getPackagesInGroup(let type):
+            let params = ["type": type.rawValue]
+            return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
         }
     }
 }
@@ -69,7 +80,7 @@ extension StickerAPI: TargetType {
 extension StickerAPI: MoyaCacheable {
     var cachePolicy: MoyaCacheablePolicy {
         switch self {
-        case .getStickerList:
+        case .getStickerList, .getPackagesInGroup:
             return .returnCacheDataElseLoad
         case .getFrame(let fromCache):
             return fromCache ? .returnCacheDataElseLoad : .reloadIgnoringLocalCacheData
