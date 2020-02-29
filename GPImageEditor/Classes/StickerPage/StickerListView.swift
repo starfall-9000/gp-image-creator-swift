@@ -107,7 +107,7 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
     
     override public func react() {
         rxLoading.accept(true)
-        getStickerPackages()
+        getPackages()
     }
     
     func getStickers(page: Int) {
@@ -116,7 +116,8 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
         if page == 0 {
             itemsSource.reset([[]], animated: false)
         }
-        stickerService?.getStickerList(page: page, packageId: self.packageId)
+        
+        stickerService?.getStickerList(page: page, packageIds: self.packageIds)
             .subscribe(onSuccess: { [weak self] (response) in
                 guard let self = self else { return }
                 self.rxLoading.accept(false)
@@ -136,16 +137,17 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
         }) => bag
     }
     
-    func getStickerPackages() {
+    func getPackages() {
         stickerService?.getPackages(group: self.stickerGroupType)
             .subscribe(onSuccess: { [weak self] (response) in
                 guard let self = self else { return }
                 self.rxLoading.accept(false)
                 if response.code == .success {
-                    let packageId: [String] = !response.groups.isEmpty ? response.groups.map({ (model) -> String in
-                        return
-                    }) : [Constants.DEFAULT_PACKAGE_ID]
-                    
+                    let groupIds = response.groups.map { (group) -> String in
+                        return "\(group.id)"
+                    }
+                    let packageIds: [String] = !response.groups.isEmpty ? groupIds : [Constants.DEFAULT_PACKAGE_ID]
+                    self.packageIds = packageIds
                     self.getStickers(page: 0)
                 }
                 else {

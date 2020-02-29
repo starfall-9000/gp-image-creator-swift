@@ -14,7 +14,7 @@ public enum StickerGroupType: String {
 }
 
 enum StickerAPI {
-    case getStickerList(page: Int, packageId: String)
+    case getStickerList(page: Int, packageIds: [String])
     case getFrame(fromCache: Bool)
     case getPackagesInGroup(StickerGroupType)
 }
@@ -62,9 +62,9 @@ extension StickerAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .getStickerList(let page, let packageId):
+        case .getStickerList(let page, let packageIds):
             let params: [String: Any] = [
-                "package_id": packageId,
+                "package_ids": packageIds,
                 "page" : page
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString)

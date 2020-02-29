@@ -47,9 +47,9 @@ class GroupStickerResponse: Model {
 public class StickerAPIService {
     private let stickerProvider = MoyaProvider<StickerAPI>(plugins: [MoyaCacheablePlugin()])
     
-    func getStickerList(page: Int, packageId: String) -> Single<StickerResponse> {
+    func getStickerList(page: Int, packageIds: [String]) -> Single<StickerResponse> {
         return stickerProvider.rx
-            .request(.getStickerList(page: page, packageId: packageId))
+            .request(.getStickerList(page: page, packageIds: packageIds))
             .mapObject(StickerResponse.self)        
     }
     

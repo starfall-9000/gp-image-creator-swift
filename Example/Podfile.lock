@@ -38,7 +38,7 @@ DEPENDENCIES:
   - GPImageEditor (from `../`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Action
     - Alamofire
     - AlamofireImage
