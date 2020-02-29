@@ -12,7 +12,7 @@ import DTMvvm
 import ObjectMapper
 
 public class FrameModel: Model {
-    public var id: String = ""
+    public var id: Int = 0
     public var title: String = ""
     public var smallThumb: String = ""
     public var mediumThumb: String = ""

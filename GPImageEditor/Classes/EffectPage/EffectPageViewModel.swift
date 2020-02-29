@@ -23,6 +23,9 @@ public class EffectPageViewModel: NSObject {
     let rxSelectedFilter = BehaviorRelay<GPImageFilter?>(value: nil)
     let rxHideTutorial = BehaviorRelay<Bool>(value: false)
     var stickerInfos: [StickerInfo] = []
+    public var targetFrame: FrameModel? = nil
+    var targetIndex: Int? = nil
+    var alreadyShowTargetFrame: Bool = false
     
     let rxImageCenter = BehaviorRelay<CGPoint> (value: .zero)
     let rxImageScale = BehaviorRelay<CGFloat> (value: 1)
@@ -72,10 +75,18 @@ public class EffectPageViewModel: NSObject {
     }
     
     func makeListItem(_ frames: [FrameModel]) {
+        handleTargetFrame(frames)
         var listItem = getListDefaultItem()
         let newFrames = frames.map({ return GPImageFilter(frame: $0) })
         listItem.insert(contentsOf: newFrames, at: 1)
         rxListItem.accept(listItem)
+    }
+    
+    func handleTargetFrame(_ frames: [FrameModel]) {
+        if  let targetFrame = targetFrame,
+            let index = frames.firstIndex(where: { $0.id == targetFrame.id }) {
+            targetIndex = index + 1
+        }
     }
     
     public func applyImageChange() {

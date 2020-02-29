@@ -44,7 +44,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     var tutorialTopConstraint: NSLayoutConstraint? = nil
     
     private var isShowingEffectsView: Bool = true
-    var viewModel: EffectPageViewModel?
+    public var viewModel: EffectPageViewModel?
     var isDidAppear: Bool = false
     
     public static func create(with viewModel: EffectPageViewModel?) -> EffectPage {
@@ -125,6 +125,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             .observeOn(Scheduler.shared.mainScheduler)
             .subscribe(onNext: { [weak self] _ in
                 self?.collectionView.reloadData()
+                self?.applyTargetFrameIfNeeded()
             }) => disposeBag
     }
     
@@ -242,6 +243,16 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             let bundle = GPImageEditorBundle.getBundle()
             self.showEffectButton.setImage(UIImage(named: imageName, in: bundle, compatibleWith: nil), for: .normal)
             self.topEffectButton.setImage(UIImage(named: "ic_editor_effect", in: bundle, compatibleWith: nil), for: .normal)
+        }
+    }
+    
+    private func applyTargetFrameIfNeeded() {
+        guard let viewModel = viewModel else { return }
+        if !viewModel.alreadyShowTargetFrame,
+            let targetIndex = viewModel.targetIndex {
+            viewModel.alreadyShowTargetFrame = true
+            let indexPath = IndexPath(row: targetIndex, section: 0)
+            collectionView(collectionView, didSelectItemAt: indexPath)
         }
     }
     
