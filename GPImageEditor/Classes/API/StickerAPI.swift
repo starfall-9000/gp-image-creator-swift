@@ -14,7 +14,7 @@ public enum StickerGroupType: String {
 }
 
 enum StickerAPI {
-    case getStickerList(page: Int, packageIds: [String])
+    case getStickerList(page: Int, packageId: String)
     case getFrame(fromCache: Bool)
     case getPackagesInGroup(StickerGroupType)
 }
@@ -24,12 +24,22 @@ extension StickerAPI: TargetType {
         return ["Authorization": "Bearer \(GPImageEditorConfigs.userToken)"]
     }
     
-    var baseURL: URL { return URL(string: GPImageEditorConfigs.apiDomain)! }
+    var baseURL: URL {
+        switch self {
+        case .getStickerList(_, let packageId):
+            let path = GPImageEditorConfigs.stickersAPIPath + "?package_id=\(packageId)"
+            return URL(string: GPImageEditorConfigs.apiDomain + path)!
+        default:
+            return URL(string: GPImageEditorConfigs.apiDomain)!
+        }
+        
+        
+    }
     
     var path: String {
         switch self {
         case .getStickerList:
-            return GPImageEditorConfigs.stickersAPIPath
+            return ""
         case .getFrame:
             return GPImageEditorConfigs.frameAPIPath
         case .getPackagesInGroup:
@@ -62,12 +72,8 @@ extension StickerAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .getStickerList(let page, let packageIds):
-            let params: [String: Any] = [
-                "package_ids": packageIds,
-                "page" : page
-            ]
-            return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
+        case .getStickerList:
+            return .requestParameters(parameters: [:], encoding: URLEncoding.httpBody)
         case .getFrame:
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .getPackagesInGroup(let type):

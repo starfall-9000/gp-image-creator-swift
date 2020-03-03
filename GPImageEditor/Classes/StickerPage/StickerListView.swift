@@ -111,30 +111,30 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
     }
     
     func getStickers(page: Int) {
+        guard let apiService = stickerService else {return}
         let bag = page != 0 ? tmpBag : disposeBag
         self.page = page
         if page == 0 {
             itemsSource.reset([[]], animated: false)
         }
         
-        stickerService?.getStickerList(page: page, packageIds: self.packageIds)
-            .subscribe(onSuccess: { [weak self] (response) in
-                guard let self = self else { return }
-                self.rxLoading.accept(false)
-                self.rxIsLoadingMore.accept(false)
+        let collection = packageIds.map { (id) in
+            return apiService.getStickerList(page: 0, packageId: id).asObservable()
+        }
+        Observable.zip(collection).subscribe {[weak self] (stickerEvent) in
+            guard let self = self, let responses = stickerEvent.element else { return }
+            self.rxLoading.accept(false)
+            self.rxIsLoadingMore.accept(false)
+            var stickers: [StickerCellViewModel] = []
+            responses.forEach { (response) in
                 if response.code == .success {
-                    let stickers = response.stickers.map{ StickerCellViewModel(model: $0) }
-                    self.itemsSource.append(stickers, animated: false)
-                    self.rxCanLoadMore.accept(stickers.count > 0)
+                    let stickerMap = response.stickers.map({StickerCellViewModel(model: $0)})
+                    stickers += stickerMap
                 }
-                else {
-                    self.rxCanLoadMore.accept(false)
-                }
-            }, onError: { [weak self] (error) in
-                    self?.rxLoading.accept(false)
-                    self?.rxIsLoadingMore.accept(false)
-                    self?.rxCanLoadMore.accept(false)
-        }) => bag
+            }
+            self.itemsSource.append(stickers, animated: false)
+            self.rxCanLoadMore.accept(stickers.count > 0)
+        } => bag
     }
     
     func getPackages() {
