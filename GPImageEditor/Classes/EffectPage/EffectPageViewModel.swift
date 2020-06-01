@@ -164,8 +164,11 @@ public class EffectPageViewModel: NSObject {
         }
         let texts = stickerInfos.filter{ $0.type == .text }
         params[PEAnalyticsEvent.HAVE_TEXT] = texts.count > 0 ? "true" : "false"
-        
-        GPImageEditorConfigs.analyticsTracker?.recordEvent(PEAnalyticsEvent.PHOTO_EDITOR_FINISHED, params: params)
+        if let jsonData = try? JSONSerialization.data(withJSONObject: params, options: []),
+            let jsonString = String(data: jsonData, encoding: .utf8) {
+            let info: [AnyHashable: Any] = ["object_information": jsonString]
+            GPImageEditorConfigs.analyticsTracker?.recordEvent(PEAnalyticsEvent.PHOTO_EDITOR_FINISHED, params: info)
+        }
     }
     
     func handleZoom(_ scale: CGFloat) {
