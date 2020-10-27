@@ -19,6 +19,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     var tutorialView: GPTutorialView? = nil
     var disposeBag: DisposeBag? = nil
     var fromStory: Bool = false
+    var isHiddenPrivacy = true
     public var validInternet: (() -> Bool)? = nil
     
     @IBOutlet weak var sourceImageView: UIImageView!
@@ -84,7 +85,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         let doneText = fromStory ? "Đăng" : "Xong"
         doneButton.setTitle(doneText, for: .normal)
         showEffectButton.isHidden = fromStory
-        privacyView.isHidden = !fromStory
+        privacyView.isHidden = isHiddenPrivacy
         topEffectButton.isHidden = !fromStory
     }
     
