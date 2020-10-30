@@ -11,14 +11,15 @@ import RxSwift
 import RxCocoa
 import Action
 import AlamofireImage
+import SDWebImage
 
 public class StickerCellViewModel: CellViewModel<StickerModel> {
-    let rxImage = BehaviorRelay<NetworkImage>(value: NetworkImage())
+    let rxImage = BehaviorRelay<URL?>(value: nil)
     
     override public func react() {
         super.react()
         guard let model = model else { return }
-        rxImage.accept(NetworkImage(withURL: URL(string: model.imageURL), placeholder: nil, completion: nil))
+        rxImage.accept(URL(string: model.imageURL))
     }
 }
 
@@ -40,6 +41,9 @@ public class StickerCell: CollectionCell<StickerCellViewModel> {
     override public func bindViewAndViewModel() {
         super.bindViewAndViewModel()
         guard let viewModel = viewModel else { return }
-        viewModel.rxImage ~> photoImg.rx.networkImage => disposeBag
+        viewModel.rxImage.subscribe { [photoImg] (url) in
+            photoImg.sd_setImage(with: url, completed: nil)
+        } => disposeBag
+
     }
 }

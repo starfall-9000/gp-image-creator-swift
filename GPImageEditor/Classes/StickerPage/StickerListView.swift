@@ -107,10 +107,11 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
     
     override public func react() {
         rxLoading.accept(true)
-        getPackages()
+        getPackages(fromCache: true)
+        getPackages(fromCache: false)
     }
     
-    func getStickers(page: Int) {
+    func getStickers(page: Int, fromCache: Bool) {
         guard let apiService = stickerService else {return}
         let bag = page != 0 ? tmpBag : disposeBag
         self.page = page
@@ -119,7 +120,7 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
         }
         
         let collection = packageIds.map { (id) in
-            return apiService.getStickerList(page: 0, packageId: id).asObservable()
+            return apiService.getStickerList(page: 0, packageId: id, fromCache: fromCache).asObservable()
         }
         Observable.zip(collection).subscribe {[weak self] (stickerEvent) in
             guard let self = self, let responses = stickerEvent.element else { return }
@@ -137,8 +138,8 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
         } => bag
     }
     
-    func getPackages() {
-        stickerService?.getPackages(group: self.stickerGroupType)
+    func getPackages(fromCache: Bool) {
+        stickerService?.getPackages(group: self.stickerGroupType, fromCache: fromCache)
             .subscribe(onSuccess: { [weak self] (response) in
                 guard let self = self else { return }
                 self.rxLoading.accept(false)
@@ -148,7 +149,7 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
                     }
                     let packageIds: [String] = !response.groups.isEmpty ? groupIds : [Constants.DEFAULT_PACKAGE_ID]
                     self.packageIds = packageIds
-                    self.getStickers(page: 0)
+                    self.getStickers(page: 0, fromCache: fromCache)
                 }
                 else {
                     self.rxCanLoadMore.accept(false)
@@ -166,6 +167,7 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
         rxIsLoadingMore.accept(true)
         page += 1
         
-        getStickers(page: page)
+        getStickers(page: page, fromCache: true)
+        getStickers(page: page, fromCache: false)
     }
 }
