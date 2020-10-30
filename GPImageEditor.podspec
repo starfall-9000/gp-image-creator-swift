@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GPImageEditor'
-  s.version          = '0.1.13'
+  s.version          = '0.1.14'
   s.summary          = 'image editor for swift.'
 
 # This description is used to generate tags and improve search results.
@@ -41,4 +41,5 @@ an awesome library written by swift for editting image.
   # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'DTMvvm'
   s.dependency 'FittedSheets'
+  s.dependency 'SDWebImage'
 end

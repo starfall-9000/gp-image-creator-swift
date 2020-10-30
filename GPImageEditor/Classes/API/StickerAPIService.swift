@@ -47,9 +47,9 @@ class GroupStickerResponse: Model {
 public class StickerAPIService {
     private let stickerProvider = MoyaProvider<StickerAPI>(plugins: [MoyaCacheablePlugin(), NetworkLoggerPlugin()])
     
-    func getStickerList(page: Int, packageId: String) -> Single<StickerResponse> {
+    func getStickerList(page: Int, packageId: String, fromCache: Bool) -> Single<StickerResponse> {
         return stickerProvider.rx
-            .request(.getStickerList(page: page, packageId: packageId))
+            .request(.getStickerList(page: page, packageId: packageId, fromCache: fromCache))
             .mapObject(StickerResponse.self)        
     }
     
@@ -59,9 +59,9 @@ public class StickerAPIService {
             .mapObject(FrameResponse.self)
     }
     
-    func getPackages(group: StickerGroupType) -> Single<GroupStickerResponse> {
+    func getPackages(group: StickerGroupType, fromCache: Bool) -> Single<GroupStickerResponse> {
         return stickerProvider.rx
-            .request(.getPackagesInGroup(group))
+            .request(.getPackagesInGroup(group, fromCache: fromCache))
             .mapObject(GroupStickerResponse.self)
     }
 }
