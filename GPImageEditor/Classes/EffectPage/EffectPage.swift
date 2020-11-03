@@ -48,6 +48,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     public var viewModel: EffectPageViewModel?
     var isDidAppear: Bool = false
     
+    // MARK: Funcs
     public static func create(with viewModel: EffectPageViewModel?) -> EffectPage {
         let vc = EffectPage(nibName: "EffectPage", bundle: GPImageEditorBundle.getBundle())
         vc.viewModel = viewModel
@@ -144,6 +145,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         stickerLayer.addGestureRecognizer(rotateGesture)
     }
     
+    // MARK: Actions
     @IBAction func backAction() {
         UIAlertController
             .showAlertController(in: self,

@@ -41,9 +41,8 @@ public class StickerCell: CollectionCell<StickerCellViewModel> {
     override public func bindViewAndViewModel() {
         super.bindViewAndViewModel()
         guard let viewModel = viewModel else { return }
-        viewModel.rxImage.subscribe { [photoImg] (url) in
-            photoImg.sd_setImage(with: url, completed: nil)
-        } => disposeBag
-
+        viewModel.rxImage.subscribe(onNext: { [weak self] url in
+            self?.photoImg.sd_setImage(with: url, completed: nil)
+        }) => disposeBag
     }
 }

@@ -57,7 +57,14 @@ public class StickersLayerView: UIView {
         stickerView.add(toView: stickersLayer!)
         stickerView.layerView = stickersLayer
         stickersLayer?.activeView = stickerView
-        
+                
+        stickerView.widthConstraint.constant = stickerView.widthConstraint.constant * stickerInfo.scale
+        stickerView.heightConstraint.constant = stickerView.heightConstraint.constant * stickerInfo.scale
+        stickerView.horizontalConstraint.constant = stickerInfo.position.x
+        stickerView.verticalConstraint.constant = stickerInfo.position.y
+        if let transform = stickerInfo.transform {
+            stickerView.transform = transform
+        }
         stickerView.alpha = 0
         UIView.animate(withDuration: 0.2, animations: {
             stickerView.alpha = 1.0
@@ -295,7 +302,7 @@ public class StickersLayerView: UIView {
             activeView = view
             if view.info.type == .text {
                 let editor = GPTextEditorTool.show(inView: self.superview!, completion: nil)
-                editor?.viewModel?.model = view.info
+                editor?.viewModel?.model = view.getFullInfo()
                 deleteSticker(stickerView: view)
             }
         }
@@ -357,9 +364,11 @@ public class StickerInfo {
     public var alignmentIndex: Int = 0
     public var size: CGSize = .zero
     public var scale: CGFloat = 1
+    public var viewSize: CGSize = .zero
     public var position: CGPoint = .zero
+    public var transform: CGAffineTransform?
     
-    public init(image: UIImage, text: String? = nil, type: StickerType = .sticker, fontIndex: Int = 0, bgColorHidden: Bool = true, colorIndex: Int = 0, alignmentIndex: Int = 0, size: CGSize, stickerId: String = "", scale: CGFloat = 1, position: CGPoint = .zero) {
+    public init(image: UIImage, text: String? = nil, type: StickerType = .sticker, fontIndex: Int = 0, bgColorHidden: Bool = true, colorIndex: Int = 0, alignmentIndex: Int = 0, size: CGSize, stickerId: String = "", scale: CGFloat = 1, viewSize: CGSize = .zero, position: CGPoint = .zero, transform: CGAffineTransform? = nil) {
         self.image = image
         self.text = text
         self.fontIndex = fontIndex
@@ -371,6 +380,8 @@ public class StickerInfo {
         self.stickerId = stickerId
         self.scale = scale
         self.position = position
+        self.viewSize = viewSize
+        self.transform = transform
     }
 }
 
@@ -388,6 +399,7 @@ public class StickerView: UIView {
     var currentSize: CGFloat = 0
     var currentCornerRadius: CGFloat = 4
     var currentInsets: UIEdgeInsets = .zero
+    var originalWidth: CGFloat = 1.0
     
     public func add(toView view: UIView) {
         view.addSubview(self)
@@ -414,6 +426,7 @@ public class StickerView: UIView {
         addSubview(imageView)
         imageView.autoPinEdgesToSuperviewEdges()
         
+        originalWidth = size.width
         widthConstraint = autoSetDimension(.width, toSize: size.width)
         heightConstraint = autoSetDimension(.height, toSize: image.size.height/image.size.width * size.width)
     }
@@ -468,6 +481,13 @@ public class StickerView: UIView {
                 self.imageView.image = UIImage.imageWithView(view: textView, size: textView.frame.size)
             }
         }
+    }
+    
+    func getFullInfo() -> StickerInfo {
+        info.position = CGPoint(x: horizontalConstraint.constant, y: verticalConstraint.constant)
+        info.transform = self.transform
+        info.scale = widthConstraint.constant/originalWidth
+        return info
     }
 }
 

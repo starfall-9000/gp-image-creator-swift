@@ -217,6 +217,8 @@ extension GPTextEditorView {
 
 extension GPTextEditorView {
     func captureTextView(scale: CGFloat) -> UIImage? {
+        let isHidden = textView.isHidden
+        textView.isHidden = false
         let originalWidth = textViewWidthConstraint.constant
         let originalHeight = textViewHeight.constant
         let originalFontSize = textView.font?.pointSize ?? 0
@@ -242,6 +244,7 @@ extension GPTextEditorView {
         textView.textContainerInset = .only(top: 10, bottom: 10, left: 10, right: 10)
         stackView.layoutIfNeeded()
         textView.layoutIfNeeded()
+        textView.isHidden = isHidden
         return image
     }
 }
