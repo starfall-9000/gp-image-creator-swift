@@ -117,6 +117,7 @@ public class GPTextEditorTool: View<GPTextEditorViewModel> {
         let trimText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         viewModel.rxText.accept(trimText)
         contentView.textView.resignFirstResponder()
+        contentView.textView.isHidden = true
         contentView.resetView()
         if textView.text.count > 0 {
             let size = textView.frame.size
@@ -155,6 +156,7 @@ extension GPTextEditorTool {
         editor.viewModel?.rxText.accept(nil)
         editor.isHidden = false
         editor.alpha = 0
+        editor.contentView.textView.isHidden = false
         editor.contentView.textView.becomeFirstResponder()
         UIView.animate(withDuration: 0.3) {
             editor.alpha = 1
