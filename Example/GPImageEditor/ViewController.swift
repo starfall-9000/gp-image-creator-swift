@@ -12,6 +12,7 @@ import GPImageEditor
 import RxCocoa
 import DTMvvm
 import RxSwift
+import SDWebImage
 
 class ViewController: UIViewController {
     

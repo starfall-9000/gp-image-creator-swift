@@ -42,4 +42,5 @@ an awesome library written by swift for editting image.
   s.dependency 'DTMvvm'
   s.dependency 'FittedSheets'
   s.dependency 'SDWebImage'
+  s.dependency 'SDWebImageWebPCoder'
 end

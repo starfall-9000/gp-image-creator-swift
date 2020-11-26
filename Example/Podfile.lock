@@ -15,10 +15,20 @@ PODS:
     - RxCocoa
     - RxSwift
   - FittedSheets (1.4.5)
-  - GPImageEditor (0.1.13):
+  - GPImageEditor (0.1.14):
     - DTMvvm
     - FittedSheets
     - SDWebImage
+    - SDWebImageWebPCoder
+  - libwebp (1.1.0):
+    - libwebp/demux (= 1.1.0)
+    - libwebp/mux (= 1.1.0)
+    - libwebp/webp (= 1.1.0)
+  - libwebp/demux (1.1.0):
+    - libwebp/webp
+  - libwebp/mux (1.1.0):
+    - libwebp/demux
+  - libwebp/webp (1.1.0)
   - Moya (13.0.1):
     - Moya/Core (= 13.0.1)
   - Moya/Core (13.0.1):
@@ -36,6 +46,9 @@ PODS:
   - SDWebImage (5.9.4):
     - SDWebImage/Core (= 5.9.4)
   - SDWebImage/Core (5.9.4)
+  - SDWebImageWebPCoder (0.6.1):
+    - libwebp (~> 1.0)
+    - SDWebImage/Core (~> 5.7)
 
 DEPENDENCIES:
   - DTMvvm
@@ -48,6 +61,7 @@ SPEC REPOS:
     - AlamofireImage
     - DTMvvm
     - FittedSheets
+    - libwebp
     - Moya
     - ObjectMapper
     - PureLayout
@@ -56,6 +70,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SDWebImage
+    - SDWebImageWebPCoder
 
 EXTERNAL SOURCES:
   GPImageEditor:
@@ -67,7 +82,8 @@ SPEC CHECKSUMS:
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
   DTMvvm: bd58255e6d8b0d5297b8c22366f7c42d30ee17cc
   FittedSheets: 7f754c9f6fb4ea330cbc57c652b594255f2a6819
-  GPImageEditor: 5f91b35aaa1f74580b76dac08cbca84d9176e6d3
+  GPImageEditor: d40e60cdcf7e6a9f5b01cef415677475cac3725d
+  libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
@@ -76,7 +92,8 @@ SPEC CHECKSUMS:
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
+  SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
 
-PODFILE CHECKSUM: 6c3033fd31b3d9b95399729fa6c424089822efb5
+PODFILE CHECKSUM: c5e80cbdbf0cbd4941dc9c98b7aea90c81fbc7cd
 
 COCOAPODS: 1.10.0
