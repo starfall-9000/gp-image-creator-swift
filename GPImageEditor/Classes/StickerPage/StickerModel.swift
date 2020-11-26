@@ -12,8 +12,12 @@ import DTMvvm
 
 public class StickerModel: Model {
     var id: String = ""
-    var imageURL: String = ""
     var localFileName: String = ""
+    var url: String = ""
+    var media: String = ""
+    var imageURL: String {
+        return media.isEmpty ? url : media
+    }
     
     convenience init(withFileName name: String) {
         self.init(JSON: [:])!
@@ -25,7 +29,8 @@ public class StickerModel: Model {
     }
     
     override public func mapping(map: Map) {
-        imageURL <- map["url"]
+        url <- map["url"]
+        media <- map["media"]
         id <- map["id"]
         localFileName <- map["filename"]
     }

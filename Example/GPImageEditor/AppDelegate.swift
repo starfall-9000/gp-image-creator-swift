@@ -9,6 +9,8 @@
 import UIKit
 import DTMvvm
 import GPImageEditor
+import SDWebImage
+import SDWebImageWebPCoder
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,11 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
         let dependencyManager = DependencyManager.shared
         dependencyManager.registerDefaults()
         GPImageEditorConfigs.dependencyManager = dependencyManager
-        GPImageEditorConfigs.apiDomain = "https://api.gapo.vn/sticker/v1.2"
+        GPImageEditorConfigs.apiDomain = "https://staging-api.gapo.vn/sticker/v1.3"
         GPImageEditorConfigs.stickersAPIPath = "/sticker"
         GPImageEditorConfigs.userToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ0NTc0In0.eyJpc3MiOiJhcGkuZ2Fwby52biIsImF1ZCI6ImFwaS5nYXBvLnZuIiwianRpIjoiNDQ1NzQiLCJpYXQiOjE1Njk0NzIyOTUsIm5iZiI6MTU2OTQ3MjI5NSwiZXhwIjoxNTcwMDc3MDk1LCJ1aWQiOjQ0NTc0LCJwZXJtaXNzaW9uIjowfQ.pWbKt3pwYb7Bfl0YLOklZB6vt2XAg-5ffDAdga7GYc1bJ3zMHUszjyQxtKywEQxP9OvAAP-bL-aak0h3D9XLXyRAnmIHNRIr9iW06vuj4EgqeVf_XRWf-QKDzL2Ahp96BhP88z3FsJEfK3ywEGCp9cE70NzMsgEHwHrZ_AV97tA"
         
