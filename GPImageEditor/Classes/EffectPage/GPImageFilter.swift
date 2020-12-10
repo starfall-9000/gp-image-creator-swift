@@ -76,7 +76,7 @@ public class GPImageFilter: NSObject {
                               target: String = "thumbImage") -> Observable<UIImage?> {
         return Observable.create({ observer -> Disposable in
             if let url = URL(string: url) {
-                Alamofire.request(url)
+                AF.request(url)
                     .responseImage(completionHandler: { [weak self] response in
                         if target == "thumbImage" {
                             self?.thumbImage = response.value
