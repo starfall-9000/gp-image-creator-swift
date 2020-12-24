@@ -1,11 +1,11 @@
 PODS:
-  - Action (4.0.0):
-    - RxCocoa (~> 5.0)
-    - RxSwift (~> 5.0)
-  - Alamofire (4.9.0)
-  - AlamofireImage (3.5.2):
-    - Alamofire (~> 4.8)
-  - DTMvvm (1.5.0):
+  - Action (4.2.0):
+    - RxCocoa (< 7.0, >= 5.0)
+    - RxSwift (< 7.0, >= 5.0)
+  - Alamofire (5.4.1)
+  - AlamofireImage (4.1.0):
+    - Alamofire (~> 5.1)
+  - DTMvvm (1.6.6):
     - Action
     - Alamofire
     - AlamofireImage
@@ -14,8 +14,8 @@ PODS:
     - PureLayout
     - RxCocoa
     - RxSwift
-  - FittedSheets (1.4.5)
-  - GPImageEditor (0.1.14):
+  - FittedSheets (1.4.6)
+  - GPImageEditor (0.1.17):
     - DTMvvm
     - FittedSheets
     - SDWebImage
@@ -29,29 +29,27 @@ PODS:
   - libwebp/mux (1.1.0):
     - libwebp/demux
   - libwebp/webp (1.1.0)
-  - Moya (13.0.1):
-    - Moya/Core (= 13.0.1)
-  - Moya/Core (13.0.1):
-    - Alamofire (~> 4.1)
-    - Result (~> 4.1)
-  - ObjectMapper (3.5.1)
-  - PureLayout (3.1.4)
-  - Result (4.1.0)
-  - RxCocoa (5.0.0):
+  - Moya (14.0.0):
+    - Moya/Core (= 14.0.0)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - ObjectMapper (4.2.0)
+  - PureLayout (3.1.6)
+  - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
-  - RxRelay (5.0.0):
+  - RxRelay (5.1.1):
     - RxSwift (~> 5)
-  - RxSwift (5.0.0)
-  - SDWebImage (5.9.4):
-    - SDWebImage/Core (= 5.9.4)
-  - SDWebImage/Core (5.9.4)
-  - SDWebImageWebPCoder (0.6.1):
+  - RxSwift (5.1.1)
+  - SDWebImage (5.10.0):
+    - SDWebImage/Core (= 5.10.0)
+  - SDWebImage/Core (5.10.0)
+  - SDWebImageWebPCoder (0.8.0):
     - libwebp (~> 1.0)
-    - SDWebImage/Core (~> 5.7)
+    - SDWebImage/Core (~> 5.10)
 
 DEPENDENCIES:
-  - DTMvvm
+  - DTMvvm (from `https://github.com/toandk/DTMvvm.git`)
   - GPImageEditor (from `../`)
 
 SPEC REPOS:
@@ -59,13 +57,11 @@ SPEC REPOS:
     - Action
     - Alamofire
     - AlamofireImage
-    - DTMvvm
     - FittedSheets
     - libwebp
     - Moya
     - ObjectMapper
     - PureLayout
-    - Result
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -73,27 +69,33 @@ SPEC REPOS:
     - SDWebImageWebPCoder
 
 EXTERNAL SOURCES:
+  DTMvvm:
+    :git: https://github.com/toandk/DTMvvm.git
   GPImageEditor:
     :path: "../"
 
+CHECKOUT OPTIONS:
+  DTMvvm:
+    :commit: 66b73e8ea4f555425b58266885c084edf520521c
+    :git: https://github.com/toandk/DTMvvm.git
+
 SPEC CHECKSUMS:
-  Action: 0d14986aad0f1330aa27ce65d0cdeaacbb63d91c
-  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
-  AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
-  DTMvvm: bd58255e6d8b0d5297b8c22366f7c42d30ee17cc
-  FittedSheets: 7f754c9f6fb4ea330cbc57c652b594255f2a6819
-  GPImageEditor: d40e60cdcf7e6a9f5b01cef415677475cac3725d
+  Action: 5dc2194f7a0b77857c82a677b0da655f197c005f
+  Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
+  DTMvvm: 264a8f2d900cb1420d0343108f10efc3913283a4
+  FittedSheets: 7f37fee2567d15dcde391f31eccbffb660ddebf0
+  GPImageEditor: e026fd1bdb62aace9fc82b08e5fbd8f39baf3275
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
-  Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
-  ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
-  PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
-  Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
-  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
-  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
-  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
-  SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
-  SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
+  PureLayout: bd3c4ec3a3819ad387c99ebb72c6b129c3ed4d2d
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
+  SDWebImageWebPCoder: e5f9fae2face076b66b19fba5e13b405e4d3f335
 
-PODFILE CHECKSUM: c5e80cbdbf0cbd4941dc9c98b7aea90c81fbc7cd
+PODFILE CHECKSUM: 18d68b5cd718cc3c177fcdf9f053d6fe79297d7f
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0

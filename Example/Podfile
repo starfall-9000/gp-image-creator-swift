@@ -4,5 +4,15 @@ platform :ios, '10.0'
 
 target 'GPImageEditor_Example' do
   pod 'GPImageEditor', :path => '../'
-  pod 'DTMvvm'
+#  pod 'DTMvvm'
+  pod 'DTMvvm', :git => 'https://github.com/toandk/DTMvvm.git'
 end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
+    end
+  end
+end
+
