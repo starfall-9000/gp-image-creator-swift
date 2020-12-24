@@ -42,6 +42,12 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet var topViews: [UIView]!
     @IBOutlet var bottomViews: [UIView]!
     @IBOutlet weak var bottomMenuHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var askmeContent: UIView!
+    public var askmeView: UIView? = nil {
+        didSet { setupAskmeView() }
+    }
+    
     var tutorialTopConstraint: NSLayoutConstraint? = nil
     
     private var isShowingEffectsView: Bool = true
@@ -275,6 +281,14 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
                 self?.tutorialView?.isHidden = isHidden
             }) => disposeBag
         viewModel.rxHideTutorial.accept(true)
+    }
+    
+    private func setupAskmeView() {
+        if fromStory, let askmeView = askmeView {
+            askmeContent.subviews.forEach { $0.removeFromSuperview() }
+            askmeContent.addSubview(askmeView)
+            askmeView.autoPinEdgesToSuperviewEdges()
+        }
     }
     
     private func handleAddNewSticker(_ stickerView: StickerView,
