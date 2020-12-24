@@ -149,24 +149,26 @@ extension StickerPickerPage {
         })
     }
     
-    public static func mixedImage(originalImage: UIImage, view: UIView, completion: @escaping ((UIImage?) -> Void)) {
-        guard let stickersLayer = view.subviews.first(where: { (subView) -> Bool in
-                subView is StickersLayerView
-            }) as? StickersLayerView
-            else {
-                completion(nil)
-                return
-        }
-        let size = view.frame.size
-        let layer = stickersLayer.layer
-        let scale = originalImage.size.width / stickersLayer.frame.width
-        let imgSize = originalImage.size
-        let imgScale = originalImage.scale
-        DispatchQueue.global(qos: .background).async {
-            let image = stickersLayer.buildImage(image: originalImage, size: size, imgSize: imgSize, imgScale: imgScale, layer: layer, scale: scale)
-            DispatchQueue.main.async {
-                completion(image)
+    public static func mixedImage(originalImage: UIImage, view: UIView, fromStory: Bool = false, completion: @escaping ((UIImage?) -> Void)) {
+            guard let stickersLayer = view.subviews.first(where: { (subView) -> Bool in
+                    subView is StickersLayerView
+                }) as? StickersLayerView
+                else {
+                    completion(nil)
+                    return
+            }
+            let size = view.frame.size
+            let layer = stickersLayer.layer
+            let scale = originalImage.size.width / stickersLayer.frame.width
+            let imgSize = originalImage.size
+            let imgScale = originalImage.scale
+            let finalCropRect = stickersLayer.getFinalCropRectWith(image: originalImage)
+            
+            DispatchQueue.global(qos: .background).async {
+                let image = stickersLayer.buildImage(image: originalImage, size: size, imgSize: imgSize, imgScale: imgScale, layer: layer, scale: scale, finalCropRect: fromStory ? finalCropRect : nil)
+                DispatchQueue.main.async {
+                    completion(image)
+                }
             }
         }
-    }
 }

@@ -358,7 +358,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
             self.doneBlock?(viewModel.sourceImage)
             return
         }
-        StickerPickerPage.mixedImage(originalImage: image, view: stickerLayer) { [weak self] (mixedImage) in
+        StickerPickerPage.mixedImage(originalImage: image, view: stickerLayer, fromStory: fromStory) { [weak self] (mixedImage) in
             guard let self = self else { return }
             if let mixed = mixedImage {
                 self.doneBlock?(mixed)

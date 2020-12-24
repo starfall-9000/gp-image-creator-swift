@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GPImageEditor'
-  s.version          = '0.1.16'
+  s.version          = '0.1.17'
   s.summary          = 'image editor for swift.'
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ an awesome library written by swift for editting image.
   s.source           = { :git => 'https://github.com/starfall-9000/gp-image-creator-swift.git' }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '10.0'
 
   s.source_files = 'GPImageEditor/Classes/**/*'
   

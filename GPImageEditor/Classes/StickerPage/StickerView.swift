@@ -325,9 +325,38 @@ public class StickersLayerView: UIView {
 }
 
 extension StickersLayerView {
-    func buildImage(image: UIImage, size: CGSize, imgSize: CGSize, imgScale: CGFloat, layer: CALayer?, scale: CGFloat) -> UIImage? {
+    func getFinalCropRectWith(image: UIImage) -> CGRect {
+        let scale: CGFloat = image.size.width / width
+        let imageHeightOnView = image.size.height / scale
+        var minY = (height - imageHeightOnView) / 2
+        var maxY = minY + imageHeightOnView
 
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: imgSize.width, height: scale * size.height), false, imgScale)
+        for subview in subviews {
+            if subview is StickerView {
+                if subview.frame.minY < minY {
+                    minY = subview.frame.minY
+                }
+                if subview.frame.maxY > maxY {
+                    maxY = subview.frame.maxY
+                }
+            }
+        }
+        if minY < 0 { minY = 0 }
+        if maxY > height { maxY = height }
+        return CGRect(x: 0,
+                      y: minY * scale,
+                      width: width * scale,
+                      height: (maxY - minY) * scale)
+    }
+
+    func buildImage(image: UIImage, size: CGSize, imgSize: CGSize, imgScale: CGFloat, layer: CALayer?, scale: CGFloat, finalCropRect: CGRect? = nil) -> UIImage? {
+
+        let bounds = CGSize(width: imgSize.width, height: scale * size.height)
+        UIGraphicsBeginImageContextWithOptions(bounds, false, imgScale)
+        UIColor.black.setFill()
+        let round = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
+        UIRectFill(round)
+        
         let imageDrawPoint = CGPoint(x: 0, y: (scale * size.height - imgSize.height)/2)
         image.draw(at: imageDrawPoint)
         if let context = UIGraphicsGetCurrentContext() {
@@ -335,10 +364,16 @@ extension StickersLayerView {
             layer?.render(in: context)
             let tmpImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            let maskFrame = CGRect(x: imageDrawPoint.x * imgScale,
+            var maskFrame = CGRect(x: imageDrawPoint.x * imgScale,
                                    y: imageDrawPoint.y * imgScale,
                                    width: imgSize.width * imgScale,
                                    height: imgSize.height * imgScale)
+            if let finalCropRect = finalCropRect {
+                maskFrame = CGRect(x: finalCropRect.minX * imgScale,
+                                   y: finalCropRect.minY * imgScale,
+                                   width: finalCropRect.width * imgScale,
+                                   height: finalCropRect.height * imgScale)
+            }
             let cropImage = tmpImage?.cropImage(maskFrame)
             return cropImage
         }
