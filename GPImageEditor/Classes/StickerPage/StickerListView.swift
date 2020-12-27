@@ -118,24 +118,13 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
         if page == 0 {
             itemsSource.reset([[]], animated: false)
         }
-        
-        let collection = packageIds.map { (id) in
-            return apiService.getStickerList(page: 0, packageId: id, fromCache: fromCache).asObservable()
-        }
-        Observable.zip(collection).subscribe {[weak self] (stickerEvent) in
-            guard let self = self, let responses = stickerEvent.element else { return }
-            self.rxLoading.accept(false)
-            self.rxIsLoadingMore.accept(false)
-            var stickers: [StickerCellViewModel] = []
-            responses.forEach { (response) in
-                if response.code == .success {
-                    let stickerMap = response.stickers.map({StickerCellViewModel(model: $0)})
-                    stickers += stickerMap
-                }
-            }
-            self.itemsSource.append(stickers, animated: false)
-            self.rxCanLoadMore.accept(stickers.count > 0)
-        } => bag
+        apiService.getStickerList(page: 0, packageIds: packageIds,
+                                  fromCache: fromCache)
+            .subscribe(onSuccess: { [weak self] response in
+                self?.handleGetStickers(response.stickers)
+            }, onError: { [weak self] _ in
+                self?.handleGetStickers([])
+            }) => bag
     }
     
     func getPackages(fromCache: Bool) {
@@ -169,5 +158,14 @@ public class StickerListViewModel: ListViewModel<Model, StickerCellViewModel> {
         
         getStickers(page: page, fromCache: true)
         getStickers(page: page, fromCache: false)
+    }
+    
+    private func handleGetStickers(_ stickers: [StickerModel]) {
+        rxLoading.accept(false)
+        rxIsLoadingMore.accept(false)
+        let cvms: [StickerCellViewModel]
+            = stickers.map { StickerCellViewModel(model: $0) }
+        itemsSource.append(cvms)
+        rxCanLoadMore.accept(stickers.count > 0)
     }
 }
