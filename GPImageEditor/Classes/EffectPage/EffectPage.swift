@@ -47,6 +47,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     public var askmeView: UIView? = nil {
         didSet { setupAskmeView() }
     }
+    private var alreadyAddAskmeView: Bool = false
     
     var tutorialTopConstraint: NSLayoutConstraint? = nil
     
@@ -78,6 +79,7 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
         bottomGradient.isHidden = true
         bindViewAndViewModel()
         viewModel?.react()
+        if !alreadyAddAskmeView { setupAskmeView() }
     }
     
     func setupImageView() {
@@ -284,7 +286,12 @@ public class EffectPage: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     private func setupAskmeView() {
-        if fromStory, let askmeView = askmeView {
+        if fromStory, !alreadyAddAskmeView,
+           let askmeView = askmeView, let askmeContent = askmeContent {
+            // need using `alreadyAddAskmeView` because of when user take photo,
+            // askmeView will be setted before viewDidLoad
+            // lead to crash because of askmeContent is empty
+            alreadyAddAskmeView = true
             askmeContent.subviews.forEach { $0.removeFromSuperview() }
             askmeContent.addSubview(askmeView)
             askmeView.autoPinEdgesToSuperviewEdges()
