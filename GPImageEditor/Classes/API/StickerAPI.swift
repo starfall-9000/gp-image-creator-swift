@@ -66,11 +66,9 @@ extension StickerAPI: TargetType {
     var task: Task {
         switch self {
         case .getStickerList(_, let packageIds, _):
-            let params: [String: Any] = ["package_ids": packageIds]
-            let encoding: URLEncoding = URLEncoding(
-                destination: .methodDependent, arrayEncoding: .noBrackets
-            )
-            return .requestParameters(parameters: params, encoding: encoding)
+            let packageParam: String = packageIds.joined(separator: ",")
+            let params: [String: Any] = ["package_ids": packageParam]
+            return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
         case .getFrame:
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .getPackagesInGroup(let type, _):
